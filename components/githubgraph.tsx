@@ -45,10 +45,10 @@ const GithubGraph = () => {
     const fetchPRs = async () => {
       try {
         const searchQuery = filterType === "merged"
-          ? "author:Kunal type:pr is:merged"
+          ? "author:krockxz type:pr is:merged"
           : filterType === "open"
-            ? "author:Kunal type:pr is:open"
-            : "author:Kunal type:pr is:closed is:unmerged";
+            ? "author:krockxz type:pr is:open"
+            : "author:krockxz type:pr is:closed is:unmerged";
 
         const query = `query {
           search(query: "${searchQuery}", type: ISSUE, first: 12) {
@@ -122,7 +122,7 @@ const GithubGraph = () => {
           {mounted && (
             <>
               <GitHubCalendar
-                username="Kunal"
+                username="krockxz"
                 colorScheme={theme === "dark" ? "dark" : "light"}
                 blockSize={isMobile ? 6 : 10}
                 blockMargin={isMobile ? 2 : 3}

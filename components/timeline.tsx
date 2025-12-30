@@ -88,11 +88,11 @@ export const Timeline = () => {
       ],
     },
     {
-      title: "Chargebee",
-      href: "https://www.chargebee.com/",
+      title: "Internships",
+      href: "",
       content: [
         {
-          title: "Software Engineer Intern (Sept 2024 - April 2025)",
+          title: "Software Engineer Intern @ Chargebee (Sept 2024 - April 2025)",
           description: `
             Refined large-scale data migration systems and optimized database interactions.
             Developed automated validation tools to ensure billing accuracy and performance across global customer environments.
@@ -101,14 +101,8 @@ export const Timeline = () => {
           href: "https://www.chargebee.com/",
           tech: ["java", "cloud"],
         },
-      ],
-    },
-    {
-      title: "AiDash",
-      href: "https://www.linkedin.com/company/aidash/",
-      content: [
         {
-          title: "Software Engineer Intern (Jan 2024 - Sept 2024)",
+          title: "Software Engineer Intern @ AiDash (Jan 2024 - Sept 2024)",
           description: `
             Designed scalable APIs and data retrieval frameworks.
             Implemented efficient paging and filtering logic for massive datasets, ensuring smooth data access for enterprise utility management.
@@ -116,22 +110,6 @@ export const Timeline = () => {
           src: "/images/kunal.jpg",
           href: "https://www.linkedin.com/company/aidash/",
           tech: ["python", "aws"],
-        },
-      ],
-    },
-    {
-      title: "PowerGrid",
-      href: "https://www.powergrid.in/",
-      content: [
-        {
-          title: "Project Intern (June 2023 - July 2023)",
-          description: `
-            Developed internal web tools to streamline project management and resource tracking.
-            Focused on building secure, responsive interfaces for enterprise-level data visualization.
-          `,
-          src: "/images/kunal.jpg",
-          href: "https://www.powergrid.in/",
-          tech: ["react", "node"],
         },
       ],
     }

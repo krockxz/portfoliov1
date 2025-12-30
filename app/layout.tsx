@@ -15,7 +15,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Karn",
+  title: "Kunal",
   description:
     "A perfect portfolio website template that showcases my skills and learning",
 };
