@@ -98,7 +98,7 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
       video: "",
       description: "A high-performance API testing tool built with Go, designed for microservice architectures.",
       tech: ["go", "node"],
-      github: "https://github.com/Kunal/gostman",
+      github: "https://github.com/krockxz/gostman",
       live: "",
     },
     {
@@ -107,7 +107,7 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
       video: "",
       description: "A modern, interactive poker application built with a focus on real-time gameplay.",
       tech: ["react", "node", "express", "socket", "mongo"],
-      github: "https://github.com/Kunal/Poker",
+      github: "https://github.com/krockxz/Poker",
       live: "https://poker-borg.onrender.com/",
     },
     {
@@ -116,7 +116,7 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
       video: "",
       description: "An advanced weather application that provides real-time forecasts and climate data visualization.",
       tech: ["react", "node", "cloud"],
-      github: "https://github.com/Kunal/Climatic",
+      github: "https://github.com/krockxz/Climatic",
       live: "",
     },
   ];
@@ -131,7 +131,7 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
           bg-neutral-100 dark:bg-neutral-900 border-dashed border-neutral-300 dark:border-neutral-700 border
         "
       >
-        I love designing and building thoughtful, production-grade applications.
+        I love crafting production-grade software that solves real problems.
       </p>
 
       {/* GRID */}

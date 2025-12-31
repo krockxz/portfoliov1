@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Blog | Karn Singh",
+  title: "Blog | Kunal",
   description: "Thoughts on software engineering, web development, and technology",
 };
 

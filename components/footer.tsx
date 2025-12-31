@@ -7,7 +7,7 @@ const Footer = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      url: 'https://github.com/Kunal',
+      url: 'https://github.com/krockxz',
       icon: Github
     },
     {

@@ -84,7 +84,7 @@ export default function Contact() {
 
           <div className="mt-10   flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 font-custom2">
             <div className="flex items-center gap-2">
-              <p>Karn Singh</p>
+              <p>Kunal</p>
             </div>
 
             {/* Displacement Text - Visible and Hoverable */}
@@ -100,7 +100,7 @@ export default function Contact() {
 
         <div className="w-full h-60 relative overflow-hidden flex items-center justify-center ">
           <DisplacementText
-            text="KARN"
+            text="KUNAL"
             fontSize={450}
             className="h-full w-full"
             lightColor="#171717"

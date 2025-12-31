@@ -7,7 +7,7 @@ import { getSingleBlog } from "@/util/mdx_clean";
 
 
 export const metadata: Metadata = {
-  title: "Blog | Karn Singh",
+  title: "Blog | Kunal",
   description: "Reading a blog...",
 };
 

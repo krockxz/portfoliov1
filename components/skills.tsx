@@ -17,19 +17,39 @@ import {
     SiGoland,
     SiDjango,
     SiMongodb,
+    SiRedis,
+    SiCelery,
+    SiGooglegemini,
+    SiVuedotjs,
+    SiJenkins,
+    SiAmazons3,
 } from "react-icons/si";
-import { FaDatabase, FaLink, FaAws, FaCode } from "react-icons/fa";
+import { FaAws, FaJava } from "react-icons/fa";
 
 const skills = [
     { name: "Golang", icon: SiGoland },
-    { name: "React", icon: SiReact },
-    { name: "Next.js & SSR", icon: SiNextdotjs },
-    { name: "AWS", icon: FaAws },
-    { name: "Django", icon: SiDjango },
-    { name: "MongoDB", icon: SiMongodb },
-    { name: "MCP", icon: SiNodedotjs },
-    { name: "Express", icon: SiExpress },
+    { name: "Python", icon: SiPython },
+    { name: "Java", icon: FaJava },
     { name: "TypeScript", icon: SiTypescript },
+    { name: "JavaScript", icon: SiJavascript },
+    { name: "React", icon: SiReact },
+    { name: "Next.js", icon: SiNextdotjs },
+    { name: "Vue.js", icon: SiVuedotjs },
+    { name: "Node.js", icon: SiNodedotjs },
+    { name: "Django", icon: SiDjango },
+    { name: "Express", icon: SiExpress },
+    { name: "PostgreSQL", icon: SiPostgresql },
+    { name: "MongoDB", icon: SiMongodb },
+    { name: "Redis", icon: SiRedis },
+    { name: "Prisma", icon: SiPrisma },
+    { name: "AWS", icon: FaAws },
+    { name: "Amazon S3", icon: SiAmazons3 },
+    { name: "Docker", icon: SiDocker },
+    { name: "Kubernetes", icon: SiKubernetes },
+    { name: "Git", icon: SiGit },
+    { name: "Jenkins", icon: SiJenkins },
+    { name: "Celery", icon: SiCelery },
+    { name: "Gemini", icon: SiGooglegemini },
 ];
 
 export default function Skills() {

@@ -18,7 +18,7 @@ export default function Home() {
     {
       name: "GitHub",
       icon: Github,
-      action: () => window.open("https://github.com/Kunal", "_blank"),
+      action: () => window.open("https://github.com/krockxz", "_blank"),
     },
     {
       name: "LinkedIn",
@@ -97,18 +97,18 @@ export default function Home() {
         <div className="text-secondary font-custom2 text-s mt-1">
           <p>
             <span className="text-neutral-950 dark:text-neutral-100 font-semibold font-custom">⚀ </span>
-            <span className="text-neutral-700 dark:text-neutral-300">Full-stack developer — Building clean, user-centric apps.</span>
+            <span className="text-neutral-700 dark:text-neutral-300">Turning caffeine into production-ready code</span>
           </p>
 
           <p>
             <span className="text-neutral-950 dark:text-neutral-100 font-semibold">⚁ </span>
-            <span className="text-neutral-700 dark:text-neutral-300">Creating seamless experiences through efficient architecture.</span>
+            <span className="text-neutral-700 dark:text-neutral-300">Backend systems architect who occasionally touches the frontend (when necessary)</span>
           </p>
 
           <p>
             <span className="text-neutral-950 dark:text-neutral-100 font-semibold">⚂ </span>
             <span className="text-neutral-700 dark:text-neutral-300">
-              Solving complex problems with high-quality software.
+              Building AI tools and debugging why the LLM thinks it's a poet
             </span>
           </p>
         </div>

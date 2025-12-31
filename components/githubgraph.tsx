@@ -111,7 +111,7 @@ const GithubGraph = () => {
       <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) my-[0.4] opacity-90 dark:opacity-15"></div>
       <p className=" font-custom2 text-neutral-700 dark:text-neutral-300 mt-3 px-4 py-[7px]
            text-sm inline-block
-          bg-neutral-100 dark:bg-neutral-900 border-dashed border-neutral-300 dark:border-neutral-700 border mb-6"> I live spending time in open source,building real stuff and solving real problems</p>
+          bg-neutral-100 dark:bg-neutral-900 border-dashed border-neutral-300 dark:border-neutral-700 border mb-6"> building real tools, solving real problems, and leaving a trail of commits to prove it.</p>
 
 
 
