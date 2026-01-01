@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from "next/link";
+import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
 import {
-  SiNextdotjs,
-  SiTypescript,
   SiReact,
-  SiThreedotjs,
-  SiPrisma,
-  SiCloudflare,
-  SiLangchain,
-  SiNodedotjs,
   SiPython,
   SiDjango,
   SiRedis,
@@ -22,20 +16,12 @@ import {
   SiAmazons3,
   SiJenkins,
 } from "react-icons/si";
-import { FaJava, FaAws } from "react-icons/fa";
+import { FaJava } from "react-icons/fa";
 
 type TechKey =
-  | "next"
-  | "ts"
   | "react"
-  | "three"
-  | "prisma"
-  | "cloud"
-  | "langchain"
-  | "node"
   | "python"
   | "java"
-  | "aws"
   | "django"
   | "redis"
   | "celery"
@@ -48,17 +34,9 @@ type TechKey =
   | "jenkins";
 
 const iconMap: Record<TechKey, any> = {
-  next: SiNextdotjs,
-  ts: SiTypescript,
   react: SiReact,
-  three: SiThreedotjs,
-  prisma: SiPrisma,
-  cloud: SiCloudflare,
-  langchain: SiLangchain,
-  node: SiNodedotjs,
   python: SiPython,
   java: FaJava,
-  aws: FaAws,
   django: SiDjango,
   redis: SiRedis,
   celery: SiCelery,
@@ -72,17 +50,9 @@ const iconMap: Record<TechKey, any> = {
 };
 
 const techNames: Record<TechKey, string> = {
-  next: "Next.js",
-  ts: "TypeScript",
   react: "React",
-  three: "Three.js",
-  prisma: "Prisma",
-  cloud: "Cloudflare",
-  langchain: "LangChain",
-  node: "Node.js",
   python: "Python",
   java: "Java",
-  aws: "AWS",
   django: "Django",
   redis: "Redis",
   celery: "Celery",
@@ -95,142 +65,157 @@ const techNames: Record<TechKey, string> = {
   jenkins: "Jenkins",
 };
 
-type Data = {
-  title: string;
-  href?: string;
-  content: {
-    title: string;
-    description: string;
-    src: string;
-    href: string;
-    tech?: TechKey[];
-  }[];
-};
+interface ExperienceItem {
+  company: string;
+  designation: string;
+  date: string;
+  description: string;
+  logo: string;
+  href: string;
+  tech?: TechKey[];
+}
 
 export const Timeline = () => {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  const data: Data[] = [
+  const experiences: ExperienceItem[] = [
     {
-      title: "Indian Kanoon",
+      company: "Indian Kanoon",
+      designation: "Software Developer",
+      date: "April 2025 - Present",
+      description: `Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch.`,
+      logo: "/images/logos/indiankanoon.png",
       href: "https://indiankanoon.org/",
-      content: [
-        {
-          title: "Software Developer (April 2025 - Present)",
-          description: `
-            Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch.
-          `,
-          src: "/images/kunal.jpg",
-          href: "https://indiankanoon.org/",
-          tech: ["python", "django", "react", "redis", "celery", "postgres", "gemini"],
-        },
-      ],
+      tech: ["python", "django", "react", "redis", "celery", "postgres", "gemini"],
     },
     {
-      title: "", // Hiding the "Internships" heading
-      href: "",
-      content: [
-        {
-          title: "Chargebee - Software Engineer Intern (Sept 2024 - April 2025)",
-          description: `
-            Refined large-scale data migration systems and optimized database interactions.
-          `,
-          src: "/images/kunal.jpg",
-          href: "https://www.chargebee.com/",
-          tech: ["java", "vue", "postgres", "docker"],
-        },
-        {
-          title: "AiDash - Software Engineer Intern (Jan 2024 - Sept 2024)",
-          description: `
-            Designed scalable APIs and data retrieval frameworks.
-          `,
-          src: "/images/kunal.jpg",
-          href: "https://www.linkedin.com/company/aidash/",
-          tech: ["java", "python", "django", "mongo", "postgres", "s3", "docker", "jenkins"],
-        },
-      ],
+      company: "Chargebee",
+      designation: "Software Engineer Intern",
+      date: "Sept 2024 - April 2025",
+      description: "Refined large-scale data migration systems and optimized database interactions.",
+      logo: "/images/logos/chargebee.jpg",
+      href: "https://www.chargebee.com/",
+      tech: ["java", "vue", "postgres", "docker"],
+    },
+    {
+      company: "AiDash",
+      designation: "Software Engineer Intern",
+      date: "Jan 2024 - Sept 2024",
+      description: "Designed scalable APIs and data retrieval frameworks.",
+      logo: "/images/logos/aidash.jpg",
+      href: "https://www.linkedin.com/company/aidash/",
+      tech: ["java", "python", "django", "mongo", "postgres", "s3", "docker", "jenkins"],
     }
   ];
 
+  const toggleExpand = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
   return (
-    <div>
-      <h1 className=" text-3xl md:text-3xl font-bold font-custom tracking-tight text-neutral-900 dark:text-neutral-50 pb-2 mt-2">
+    <div className="max-w-4xl mx-auto mb-0">
+      <h1 className="text-3xl font-bold font-custom tracking-tight text-neutral-900 dark:text-neutral-50 py-2 mt-2 ml-6 md:ml-0">
         <span className="link--elara">Experiences</span>
       </h1>
+      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) my-[0.4] opacity-90 dark:opacity-15"></div>
 
-      <div className="pl-6">
-        {data.map((year, idx) => (
-
-          <div key={idx} className=" relative">
-            {year.title && (
-              year.href ? (
+      <div className="flex flex-col gap-4 px-4 md:px-0 my-6">
+        {experiences.map((exp, idx) => (
+          <div
+            key={idx}
+            className="group relative rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 border border-transparent hover:border-neutral-100 dark:hover:border-neutral-800"
+          >
+            {/* Main Row */}
+            <div
+              className="flex items-start gap-4 p-4 cursor-pointer"
+              onClick={() => toggleExpand(idx)}
+            >
+              {/* Logo */}
+              <div className="relative shrink-0 mt-1 z-10">
                 <Link
-                  href={year.href}
+                  href={exp.href}
                   target="_blank"
-                  className="text-neutral-900 dark:text-neutral-50 font-custom font-semibold py-1 tracking-wide text-lg hover:text-neutral-700 dark:hover:text-neutral-200 transition-colors "
+                  onClick={(e) => e.stopPropagation()}
+                  className="block rounded-full transition-transform hover:scale-110 active:scale-95"
                 >
-                  <div className="absolute right-[-56] w-212 h-px bg-(--pattern-fg) border border-dashed opacity-15 dark:opacity-15  "></div>
-
-
-                  <div className="py-3">
-                    {year.title}
-                  </div>
+                  <Image
+                    src={exp.logo}
+                    alt={exp.company}
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover size-12 border border-neutral-200 dark:border-neutral-700 bg-white"
+                  />
                 </Link>
-              ) : (
-                <p className="text-neutral-900 dark:text-neutral-50 font-custom font-semibold py-1 tracking-wide text-lg mt-2">
-                  {year.title}
-                </p>
-              )
-            )}
+              </div>
 
-            {year.content.map((item, idx) => (
-              <div
-                key={item.title}
-                className="flex flex-col gap-4 text-neutral-700 dark:text-neutral-300 font-custom2 text-sm md:text-s mt-3 md:flex-row md:items-center md:justify-between"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center gap-3">
-                    <h3 className="font-medium text-neutral-900 dark:text-neutral-50">{item.title}</h3>
+              {/* Content Container */}
+              <div className="flex flex-col md:flex-row md:justify-between flex-1 gap-2 md:gap-4">
+                {/* Left Side: Company & Designation */}
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-50 font-custom tracking-wide">
+                    {exp.company}
+                  </h3>
+                  <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 font-custom2">
+                    {exp.designation}
+                  </p>
+                </div>
 
-                    {/* 🔹 Icons Updated to match Skills style with Tooltip */}
-                    {item.tech && (
-                      <div className="flex flex-wrap gap-2">
-                        {item.tech.map((key) => {
-                          const Icon = iconMap[key];
-                          // Create a unique ID for each instance to avoid conflicts if same tech appears multiple times
-                          const uniqueId = `${item.title}-${key}`;
-
-                          return (
-                            <div
-                              key={key}
-                              className="group relative cursor-pointer"
-                              onMouseEnter={() => setHoveredTech(uniqueId)}
-                              onMouseLeave={() => setHoveredTech(null)}
-                            >
-                              <Icon
-                                className="w-4 h-4 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors"
-                              />
-
-                              {hoveredTech === uniqueId && (
-                                <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20">
-                                  <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
-                                    {techNames[key]}
-
-                                    {/* Arrow */}
-                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-100 dark:bg-neutral-800 rotate-45 border-b border-r border-neutral-200 dark:border-neutral-700"></div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
+                {/* Right Side: Date & Arrow */}
+                <div className="flex items-center justify-between md:justify-end gap-4 mt-1 md:mt-0">
+                  <span className="text-sm text-neutral-500 dark:text-neutral-500 font-custom2 whitespace-nowrap">
+                    {exp.date}
+                  </span>
+                  <div className={`p-1 rounded-full bg-transparent group-hover:bg-neutral-200 dark:group-hover:bg-neutral-700 transition-all duration-200 ${expandedIndex === idx ? 'rotate-180' : ''}`}>
+                    <ChevronDown size={16} className="text-neutral-500 dark:text-neutral-400" />
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <ul className="py-5 list-disc pl-6">
-                    {item.description
-                      .toString()
+            {/* Expanded Content */}
+            <div
+              className={`
+                grid transition-all duration-300 ease-in-out
+                ${expandedIndex === idx ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}
+              `}
+            >
+              <div className="overflow-hidden">
+                <div className="px-4 pb-4 md:pl-20 md:pr-4">
+                  {/* Tech Stack */}
+                  {exp.tech && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {exp.tech.map((key) => {
+                        const Icon = iconMap[key];
+                        const uniqueId = `${exp.company}-${key}`;
+
+                        return (
+                          <div
+                            key={key}
+                            className="group/tech relative cursor-pointer"
+                            onMouseEnter={() => setHoveredTech(uniqueId)}
+                            onMouseLeave={() => setHoveredTech(null)}
+                          >
+                            <Icon
+                              className="w-4 h-4 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                            />
+                            {hoveredTech === uniqueId && (
+                              <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20">
+                                <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
+                                  {techNames[key]}
+                                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-100 dark:bg-neutral-800 rotate-45 border-b border-r border-neutral-200 dark:border-neutral-700"></div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Description */}
+                  <ul className="list-disc pl-4 space-y-2 text-sm text-neutral-600 dark:text-neutral-300 font-custom2 leading-relaxed">
+                    {exp.description
                       .split("\n")
                       .filter((line) => line.trim() !== "")
                       .map((point, i) => (
@@ -238,16 +223,8 @@ export const Timeline = () => {
                       ))}
                   </ul>
                 </div>
-
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  width={200}
-                  height={120}
-                  className="rounded-full size-10 self-start md:self-auto"
-                />
               </div>
-            ))}
+            </div>
           </div>
         ))}
       </div>

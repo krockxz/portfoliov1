@@ -41,6 +41,7 @@ interface Project {
   title: string;
   src: string;
   video: string;
+  thumbVideo?: string; // New field for video thumbnail
   description: string;
   tech: TechKey[];
   github: string;
@@ -95,11 +96,12 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
     {
       title: "Gostman",
       src: "/images/project3.png",
-      video: "",
+      video: "/videos/gostman.mp4",
+      thumbVideo: "/videos/gostman.mp4",
       description: "A high-performance API testing tool built with Go, designed for microservice architectures.",
       tech: ["go", "node"],
       github: "https://github.com/krockxz/gostman",
-      live: "",
+      live: "https://gostman.vercel.app/",
     },
     {
       title: "Poker App",
@@ -166,14 +168,25 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
               "
             />
 
-            {/* IMAGE */}
+            {/* IMAGE / VIDEO THUMBNAIL */}
             <div className="relative w-full h-44 overflow-hidden">
-              <Image
-                src={project.src}
-                alt={project.title}
-                fill
-                className="object-cover"
-              />
+              {project.thumbVideo ? (
+                <video
+                  src={project.thumbVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={project.src}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                />
+              )}
 
               {/* Black tint overlay */}
               <div
