@@ -98,11 +98,24 @@ export const LogoSlider = ({
 
                 {/* Logo Track */}
                 <ul className="logo-slider__track flex items-center h-full w-fit m-0 p-0 list-none">
+                    {/* First set of logos */}
                     {logos.map((logo, index) => (
                         <li
-                            key={index}
-                            className="logo-slider__item h-4/5 w-[120px] sm:w-[140px] lg:w-[160px] aspect-video grid place-items-center shrink-0"
+                            key={`original-${index}`}
+                            className="logo-slider__item h-4/5 w-[80px] sm:w-[100px] lg:w-[120px] aspect-video grid place-items-center shrink-0"
                             style={{ "--item-index": index } as React.CSSProperties}
+                        >
+                            <div className="w-full h-full flex items-center justify-center [&>svg]:h-[65%] [&>svg]:w-auto [&>svg]:fill-zinc-800 dark:[&>svg]:fill-zinc-200 [&>img]:h-[65%] [&>img]:w-auto [&>img]:object-contain [&>img]:grayscale [&>img]:brightness-50 dark:[&>img]:brightness-125">
+                                {logo}
+                            </div>
+                        </li>
+                    ))}
+                    {/* Duplicate set for seamless loop */}
+                    {logos.map((logo, index) => (
+                        <li
+                            key={`duplicate-${index}`}
+                            className="logo-slider__item h-4/5 w-[80px] sm:w-[100px] lg:w-[120px] aspect-video grid place-items-center shrink-0"
+                            style={{ "--item-index": index + logos.length } as React.CSSProperties}
                         >
                             <div className="w-full h-full flex items-center justify-center [&>svg]:h-[65%] [&>svg]:w-auto [&>svg]:fill-zinc-800 dark:[&>svg]:fill-zinc-200 [&>img]:h-[65%] [&>img]:w-auto [&>img]:object-contain [&>img]:grayscale [&>img]:brightness-50 dark:[&>img]:brightness-125">
                                 {logo}

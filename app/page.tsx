@@ -5,7 +5,7 @@ import { useState } from "react";
 import Container from "@/components/containers";
 
 import Projects from "@/components/projects";
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, FileText } from "lucide-react";
 import Timeline from "@/components/timeline";
 import GithubGraph from "@/components/githubgraph";
 import Skills from "@/components/skills";
@@ -34,6 +34,11 @@ export default function Home() {
       name: "Email",
       icon: Mail,
       action: () => (window.location.href = "mailto:kunalrc.workmail7@gmail.com"),
+    },
+    {
+      name: "Resume",
+      icon: FileText,
+      action: () => window.open("/resume.pdf", "_blank"),
     },
   ];
 

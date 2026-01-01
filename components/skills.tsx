@@ -25,6 +25,7 @@ import {
     SiAmazons3,
 } from "react-icons/si";
 import { FaAws, FaJava } from "react-icons/fa";
+import LogoSlider from "@/components/ui/logo-slider";
 
 const skills = [
     { name: "Golang", icon: SiGoland },
@@ -53,8 +54,6 @@ const skills = [
 ];
 
 export default function Skills() {
-    const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
     return (
         <div className="w-full mt-4 relative">
             <div className="flex flex-col items-start space-y-3">
@@ -66,28 +65,19 @@ export default function Skills() {
                     I love working with these technologies to build beautiful and functional applications.
                 </p>
 
-                <div className="flex flex-wrap items-center gap-4">
-                    {skills.map((skill) => (
-                        <div
-                            key={skill.name}
-                            className="relative cursor-pointer group"
-                            onMouseEnter={() => setHoveredSkill(skill.name)}
-                            onMouseLeave={() => setHoveredSkill(null)}
-                        >
-                            <skill.icon className="w-6 h-6 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors" />
-
-                            {hoveredSkill === skill.name && (
-                                <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20">
-                                    <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
-                                        {skill.name}
-
-                                        {/* Arrow */}
-                                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-100 dark:bg-neutral-800 rotate-45 border-b border-r border-neutral-200 dark:border-neutral-700"></div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                <div className="w-full py-8">
+                    <LogoSlider
+                        logos={skills.map((skill) => (
+                            <div key={skill.name} className="flex flex-col items-center justify-center gap-2 group cursor-default">
+                                <skill.icon className="w-8 h-8 md:w-10 md:h-10 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors" />
+                                <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 font-custom2 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors">
+                                    {skill.name}
+                                </span>
+                            </div>
+                        ))}
+                        speed={40}
+                        pauseOnHover={true}
+                    />
                 </div>
             </div>
         </div>

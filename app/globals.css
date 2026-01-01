@@ -183,3 +183,26 @@
 .link--carme:hover path {
   stroke-dashoffset: 0;
 }
+
+/* === Logo Slider Animation === */
+@keyframes loop-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-slider__track {
+  animation: loop-scroll calc(var(--speed) * 1s) linear infinite;
+  width: max-content;
+}
+
+.logo-slider__container[data-direction="right"] .logo-slider__track {
+  animation-direction: reverse;
+}
+
+.logo-slider__container[data-pause-on-hover="true"]:hover .logo-slider__track {
+  animation-play-state: paused;
+}
