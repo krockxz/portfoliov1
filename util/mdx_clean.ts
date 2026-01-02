@@ -25,7 +25,7 @@ function normalizeSlug(slug: string) {
 
 export const getSingleBlog = async (slug: string): Promise<Blog> => {
   const key = normalizeSlug(slug);
-  if (CACHE.has(key)) return CACHE.get(key)!;
+  if (process.env.NODE_ENV !== 'development' && CACHE.has(key)) return CACHE.get(key)!;
 
   const filePath = path.join(config.DATA_DIR, `${key}.mdx`);
   const raw = await fs.readFile(filePath, "utf-8");
