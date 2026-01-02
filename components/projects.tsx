@@ -11,15 +11,9 @@ import {
   SiTypescript,
   SiReact,
   SiThreedotjs,
-  SiPrisma,
   SiCloudflare,
-  SiLangchain,
   SiNodedotjs,
-  SiFramer,
   SiGoland,
-  SiMongodb,
-  SiExpress,
-  SiSocketdotio,
 } from "react-icons/si";
 
 type TechKey =
@@ -27,15 +21,9 @@ type TechKey =
   | "ts"
   | "react"
   | "three"
-  | "prisma"
   | "cloud"
-  | "langchain"
   | "node"
-  | "motion"
-  | "go"
-  | "mongo"
-  | "express"
-  | "socket";
+  | "go";
 
 interface Project {
   title: string;
@@ -53,15 +41,9 @@ const iconMap: Record<TechKey, any> = {
   ts: SiTypescript,
   react: SiReact,
   three: SiThreedotjs,
-  prisma: SiPrisma,
   cloud: SiCloudflare,
-  langchain: SiLangchain,
   node: SiNodedotjs,
-  motion: SiFramer,
   go: SiGoland,
-  mongo: SiMongodb,
-  express: SiExpress,
-  socket: SiSocketdotio,
 };
 
 const techNames: Record<TechKey, string> = {
@@ -69,18 +51,12 @@ const techNames: Record<TechKey, string> = {
   ts: "TypeScript",
   react: "React",
   three: "Three.js",
-  prisma: "Prisma",
   cloud: "Cloudflare",
-  langchain: "LangChain",
   node: "Node.js",
-  motion: "Framer Motion",
   go: "Go",
-  mongo: "MongoDB",
-  express: "Express",
-  socket: "Socket.io",
 };
 
-const Projects = ({ showAll = false }: { showAll?: boolean }) => {
+const Projects = () => {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
 
@@ -98,28 +74,10 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
       src: "/images/project3.png",
       video: "/videos/gostman.mp4",
       thumbVideo: "/videos/gostman.mp4",
-      description: "A high-performance API testing tool built with Go, designed for microservice architectures.",
-      tech: ["go", "node"],
+      description: "A native, privacy-first API client built with Wails (Go + React). 10x lighter than Postman with native support for REST, GraphQL, and WebSockets. 100% local and private.",
+      tech: ["go", "react"],
       github: "https://github.com/krockxz/gostman",
       live: "https://gostman.vercel.app/",
-    },
-    {
-      title: "Poker App",
-      src: "/images/project1.png",
-      video: "",
-      description: "A modern, interactive poker application built with a focus on real-time gameplay.",
-      tech: ["react", "node", "express", "socket", "mongo"],
-      github: "https://github.com/krockxz/Poker",
-      live: "https://poker-borg.onrender.com/",
-    },
-    {
-      title: "Climatic",
-      src: "/images/project2.png",
-      video: "",
-      description: "An advanced weather application that provides real-time forecasts and climate data visualization.",
-      tech: ["react", "node", "cloud"],
-      github: "https://github.com/krockxz/Climatic",
-      live: "",
     },
   ];
 
@@ -137,8 +95,8 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
       </p>
 
       {/* GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2 gap-5 py-7">
-        {(showAll ? projects : projects.slice(0, 2)).map((project, idx) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 py-7">
+        {projects.map((project, idx) => (
           <motion.div
             key={project.title}
             initial={{ opacity: 0, filter: "blur(10px)" }}
@@ -316,60 +274,18 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
                 <X size={20} className="text-neutral-200" />
               </button>
 
-              {activeVideo.includes("youtube") ? (
-                <iframe
-                  src={activeVideo}
-                  className="w-full aspect-video"
-                  allowFullScreen
-                ></iframe>
-              ) : (
-                <video
-                  src={activeVideo}
-                  className="w-full h-auto"
-                  controls
-                  autoPlay
-                />
-              )}
+              <video
+                src={activeVideo}
+                className="w-full h-auto"
+                controls
+                autoPlay
+              />
 
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, filter: "blur(0px)" }}
-        transition={{
-          duration: 0.6,
-          ease: "easeOut",
-          delay: 2 * 0.12,
-        }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="w-full "
-      >
-        {!showAll && (
-          <div>
-            <div className="flex justify-center" >
-              <div className="flex justify-center mt-2">
-                <Link href="/projects">
-                  <AnimatedButton className="group relative overflow-hidden rounded-lg 
-                            bg-linear-to-b from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 
-                            border border-neutral-200 dark:border-neutral-800 
-                            text-neutral-800 dark:text-neutral-200 text-sm font-medium px-6 py-2.5 
-                            transition-all duration-300 
-                            hover:from-neutral-50 hover:to-neutral-100 dark:hover:from-neutral-800 dark:hover:to-neutral-800
-                            shadow-[0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] 
-                            dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)]"
-                  >
-                    View all projects
-                  </AnimatedButton>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-      </motion.div >
-
-    </div >
+    </div>
   );
 };
 

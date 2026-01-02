@@ -31,7 +31,7 @@ export default function Home() {
 
       <div className="hidden md:block absolute right-6 w-212 h-px bg-(--pattern-fg) my-3 opacity-90 dark:opacity-15"></div>
 
-      <Projects showAll={true}></Projects>
+      <Projects />
 
     </Container>
   )
