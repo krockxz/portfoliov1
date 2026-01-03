@@ -84,7 +84,9 @@ export const Timeline = () => {
       company: "Indian Kanoon",
       designation: "Software Developer",
       date: "April 2025 - Present",
-      description: `Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch.`,
+      description: `Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch.
+Teaching AI to be a lawyer so humans don't have to read 5,000 documents manually.
+Scaled the system to handle 5,000+ concurrent users without the server filing a lawsuit against me.`,
       logo: "/images/logos/indiankanoon.png",
       href: "https://indiankanoon.org/",
       tech: ["python", "django", "react", "redis", "celery", "postgres", "gemini"],
@@ -93,7 +95,9 @@ export const Timeline = () => {
       company: "Chargebee",
       designation: "Software Engineer Intern",
       date: "Sept 2024 - April 2025",
-      description: "Refined large-scale data migration systems and optimized database interactions.",
+      description: `Refined large-scale data migration systems and optimized database interactions.
+Moved 2 million records closer to their new home, reducing query time by 45% because nobody likes waiting.
+Built a validation system that stops bad data at the door, saving 500k subscriptions from an identity crisis.`,
       logo: "/images/logos/chargebee.jpg",
       href: "https://www.chargebee.com/",
       tech: ["java", "vue", "postgres", "docker"],
@@ -102,7 +106,9 @@ export const Timeline = () => {
       company: "AiDash",
       designation: "Software Engineer Intern",
       date: "Jan 2024 - Sept 2024",
-      description: "Designed scalable APIs and data retrieval frameworks.",
+      description: `Designed scalable APIs and data retrieval frameworks.
+Decomposed a massive monolith into microservices because code needs personal space too.
+Optimized SQL pagination so fast it feels like the data was always there.`,
       logo: "/images/logos/aidash.jpg",
       href: "https://www.linkedin.com/company/aidash/",
       tech: ["java", "python", "django", "mongo", "postgres", "s3", "docker", "jenkins"],

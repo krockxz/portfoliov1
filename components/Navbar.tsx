@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +10,7 @@ import { ThemeToggleButton } from "@/components/ui/skiper-ui/skiper26";
 import { CommandMenu } from "@/components/command-menu";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const navItems = [
     { title: "Projects", href: "/projects" },
     { title: "Blog", href: "/blog" },
@@ -35,6 +37,14 @@ const Navbar = () => {
     window.addEventListener("resize", updateViewport);
     return () => window.removeEventListener("resize", updateViewport);
   }, []);
+
+  const isActiveLink = (href: string) => {
+    if (!pathname) return false;
+    return pathname === href || (href !== "/" && pathname.startsWith(href));
+  };
+
+  const THEME_TOGGLE_INDEX = 3;
+  const COMMAND_MENU_INDEX = 4;
 
   return (
     <Container>
@@ -65,23 +75,36 @@ const Navbar = () => {
 
         {/* Navigation links on the right */}
         <div className="ml-auto flex items-center justify-end gap-2" onMouseLeave={() => setHovered(null)}>
-          {navItems.map((item, idx) => (
-            <Link
-              className="relative px-3 py-1.5 text-sm font-medium text-neutral-600 dark:text-neutral-300 transition-colors hover:text-neutral-900 dark:hover:text-neutral-50"
-              href={item.href}
-              key={idx}
-              onMouseEnter={() => setHovered(idx)}
-            >
-              {hovered === idx && (
-                <motion.span
-                  layoutId="nav-item-pill"
-                  className="absolute inset-0 rounded-md bg-neutral-300/25 dark:bg-neutral-800/50 -z-10"
-                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                />
-              )}
-              {item.title}
-            </Link>
-          ))}
+          {navItems.map((item, idx) => {
+            const isActive = isActiveLink(item.href);
+            return (
+              <Link
+                className={`relative px-3 py-1.5 text-sm font-medium transition-colors ${isActive
+                    ? "text-neutral-900 dark:text-neutral-50"
+                    : "text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-50"
+                  }`}
+                href={item.href}
+                key={idx}
+                onMouseEnter={() => setHovered(idx)}
+              >
+                {hovered === idx && (
+                  <motion.span
+                    layoutId="nav-item-pill"
+                    className="absolute inset-0 rounded-md bg-neutral-300/25 dark:bg-neutral-800/50 -z-10"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                {item.title}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active-underline"
+                    className="absolute left-3 right-3 -bottom-1 h-px bg-neutral-900 dark:bg-neutral-50"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
 
           {/* Separator */}
           <div className="h-5 w-px bg-neutral-300/40 dark:bg-neutral-700/50 mx-1" />
@@ -89,9 +112,9 @@ const Navbar = () => {
           {/* Theme Toggle */}
           <div
             className="relative px-1 py-1"
-            onMouseEnter={() => setHovered(3)}
+            onMouseEnter={() => setHovered(THEME_TOGGLE_INDEX)}
           >
-            {hovered === 3 && (
+            {hovered === THEME_TOGGLE_INDEX && (
               <motion.span
                 layoutId="nav-item-pill"
                 className="absolute inset-0 rounded-md bg-neutral-300/25 dark:bg-neutral-800/50 -z-10"
@@ -110,9 +133,9 @@ const Navbar = () => {
           {/* Command Menu */}
           <div
             className="relative px-1 py-1 hidden sm:block"
-            onMouseEnter={() => setHovered(4)}
+            onMouseEnter={() => setHovered(COMMAND_MENU_INDEX)}
           >
-            {hovered === 4 && (
+            {hovered === COMMAND_MENU_INDEX && (
               <motion.span
                 layoutId="nav-item-pill"
                 className="absolute inset-0 rounded-md bg-neutral-300/25 dark:bg-neutral-800/50 -z-10"

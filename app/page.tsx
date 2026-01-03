@@ -131,11 +131,11 @@ export default function Home() {
         <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
 
 
-        <Timeline></Timeline>
+        <Timeline />
 
 
 
-        <GithubGraph></GithubGraph>
+        <GithubGraph />
 
         <br></br>
         <br></br>

@@ -11,13 +11,37 @@ import FractalTree from "@/components/ui/fractal-tree";
 
 const instrumentSerif = Instrument_Serif({
   weight: ["400"],
-  subsets: ["latin"], // 🛠 Fix missing subsets
+  subsets: ["latin"],
+  display: "swap", // 🛠 Fix font loading
 });
 
 export const metadata: Metadata = {
-  title: "Kunal",
+  title: "Kunal | Backend Systems Architect",
   description:
     "A perfect portfolio website template that showcases my skills and learning",
+  openGraph: {
+    title: "Kunal | Backend Systems Architect",
+    description: "Backend systems architect who occasionally touches the frontend. Building AI tools and debugging why the LLM thinks it's a poet.",
+    url: "https://krockxz.com", // Example URL, assume krockxz.com based on handle
+    siteName: "Kunal's Portfolio",
+    images: [
+      {
+        url: "/images/kunal.jpg", // Using avatar as fallback OG image
+        width: 800,
+        height: 600,
+        alt: "Kunal Roy Choudhury",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kunal | Backend Systems Architect",
+    description: "Backend systems architect building AI tools.",
+    creator: "@kunalgoesbyken",
+    images: ["/images/kunal.jpg"],
+  },
 };
 
 export default function RootLayout({

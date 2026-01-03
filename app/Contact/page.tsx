@@ -89,7 +89,6 @@ export default function Contact() {
             </div>
 
             {/* Displacement Text - Visible and Hoverable */}
-            {/* Displacement Text - Visible and Hoverable */}
 
             <div className="flex items-center gap-4">
               <a href="https://x.com/kunalgoesbyken" target="_blank" rel="noopener noreferrer">
