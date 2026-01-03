@@ -42,6 +42,7 @@ const GithubGraph = () => {
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchPRs = async () => {
       try {
         const searchQuery = filterType === "merged"
@@ -78,6 +79,7 @@ const GithubGraph = () => {
             "Authorization": `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`,
           },
           body: JSON.stringify({ query }),
+          signal: controller.signal,
         });
 
         const data = await response.json();
@@ -92,14 +94,17 @@ const GithubGraph = () => {
           setPrs(fetchedPRs);
           setShowAll(false);
         }
-      } catch (error) {
-        console.error("Failed to fetch PRs:", error);
+      } catch (error: any) {
+        if (error.name !== 'AbortError') {
+          console.error("Failed to fetch PRs:", error);
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchPRs();
+    return () => controller.abort();
   }, [filterType]);
 
   return (

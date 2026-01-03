@@ -4,12 +4,15 @@ import { useState } from "react";
 
 import Container from "@/components/containers";
 
-import Projects from "@/components/projects";
-import { Github, Linkedin, Twitter, Mail, FileText } from "lucide-react";
-import Timeline from "@/components/timeline";
-import GithubGraph from "@/components/githubgraph";
-import Skills from "@/components/skills";
-import GetInTouch from "@/components/get-in-touch";
+import dynamic from "next/dynamic";
+import { Github, Linkedin, Mail, FileText } from "lucide-react";
+import { SiX } from "react-icons/si";
+
+const Projects = dynamic(() => import("@/components/projects"));
+const Timeline = dynamic(() => import("@/components/timeline"));
+const GithubGraph = dynamic(() => import("@/components/githubgraph"), { ssr: false });
+const Skills = dynamic(() => import("@/components/skills"));
+const GetInTouch = dynamic(() => import("@/components/get-in-touch"));
 
 export default function Home() {
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
@@ -27,7 +30,7 @@ export default function Home() {
     },
     {
       name: "X",
-      icon: Twitter,
+      icon: SiX,
       action: () => window.open("https://x.com/kunalgoesbyken", "_blank"),
     },
     {

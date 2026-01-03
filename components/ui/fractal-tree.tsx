@@ -9,12 +9,19 @@ export default function FractalTree() {
     const [size, setSize] = useState({ width: 0, height: 0 });
 
     useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
         const updateSize = () => {
-            setSize({ width: window.innerWidth, height: window.innerHeight });
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                setSize({ width: window.innerWidth, height: window.innerHeight });
+            }, 100);
         };
         updateSize();
         window.addEventListener("resize", updateSize);
-        return () => window.removeEventListener("resize", updateSize);
+        return () => {
+            window.removeEventListener("resize", updateSize);
+            clearTimeout(timeoutId);
+        };
     }, []);
 
     useEffect(() => {

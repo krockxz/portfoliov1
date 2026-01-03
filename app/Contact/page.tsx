@@ -1,7 +1,8 @@
 "use client";
 
 import Container from "@/components/containers";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
+import { SiX } from "react-icons/si";
 import DisplacementText from "@/components/ui/displacement-text";
 
 
@@ -91,9 +92,15 @@ export default function Contact() {
             {/* Displacement Text - Visible and Hoverable */}
 
             <div className="flex items-center gap-4">
-              <Twitter size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
-              <Linkedin size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
-              <Github size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
+              <a href="https://x.com/kunalgoesbyken" target="_blank" rel="noopener noreferrer">
+                <SiX size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
+              </a>
+              <a href="https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/" target="_blank" rel="noopener noreferrer">
+                <Linkedin size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
+              </a>
+              <a href="https://github.com/krockxz" target="_blank" rel="noopener noreferrer">
+                <Github size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
+              </a>
             </div>
           </div>
         </div>
