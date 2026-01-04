@@ -4,6 +4,8 @@ import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import { getSingleBlog } from "@/util/mdx_clean";
+import remarkGfm from "remark-gfm";
+import { useMDXComponents } from "@/mdx-components";
 
 
 export const metadata: Metadata = {
@@ -65,7 +67,15 @@ export default async function SingleBlogPage({ params }: { params: any }) {
       ) : null}
 
       <div className="prose tracking-normal font-custom2 mx-auto">
-        <MDXRemote source={content} />
+        <MDXRemote
+          source={content}
+          components={useMDXComponents({})}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm],
+            },
+          }}
+        />
       </div>
     </Container>
   );

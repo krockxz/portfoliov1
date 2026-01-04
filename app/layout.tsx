@@ -7,6 +7,9 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider";
 import FractalTree from "@/components/ui/fractal-tree";
+import dynamic from "next/dynamic";
+
+const Chatbot = dynamic(() => import("@/components/chatbot"));
 
 
 const instrumentSerif = Instrument_Serif({
@@ -62,6 +65,7 @@ export default function RootLayout({
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
+          <Chatbot />
         </ThemeProvider>
       </body>
     </html>
