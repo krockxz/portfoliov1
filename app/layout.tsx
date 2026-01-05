@@ -19,17 +19,18 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://krockxz.com"),
   title: "Kunal | Backend Systems Architect",
   description:
     "A perfect portfolio website template that showcases my skills and learning",
   openGraph: {
     title: "Kunal | Backend Systems Architect",
     description: "Backend systems architect who occasionally touches the frontend. Building AI tools and debugging why the LLM thinks it's a poet.",
-    url: "https://krockxz.com", // Example URL, assume krockxz.com based on handle
+    url: "https://krockxz.com",
     siteName: "Kunal's Portfolio",
     images: [
       {
-        url: "/images/kunal.jpg", // Using avatar as fallback OG image
+        url: "/images/kunal.jpg",
         width: 800,
         height: 600,
         alt: "Kunal Roy Choudhury",
