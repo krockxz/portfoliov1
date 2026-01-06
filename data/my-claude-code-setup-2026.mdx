@@ -1,0 +1,148 @@
+---
+slug: "my-claude-code-setup-2026"
+title: "Stop Using Claude Wrong: My Production-Grade Agentic Stack (2026)"
+description: "Default Claude Code is a toy. Here is how I configured it with Z AI, MCP, and custom semantic skills to ship production Go & React apps."
+date: "2026-01-07"
+image: "/claude.gif"
+author: Kunal
+tags:
+  - claude-code
+  - mcp
+  - engineering
+  - productivity
+---
+
+Most developers are using AI tools like it's still 2024. They paste code into a chat window, wait for a response, paste it back, and fix the syntax errors.
+
+I don't use AI to write boilerplate. **I use it to architect systems.**
+
+While `claude-code` is impressive out of the box, the default configuration feels like driving a Ferrari in a school zone. As a full-stack engineer shipping indie projects and managing complex Go/TypeScript backends, I need an agent that understands *context*, manages its own memory, and refuses to generate generic "AI slop."
+
+Here is the exact stack, configuration, and reasoning behind my agentic workflow in 2026.
+
+---
+
+## 1. The Engine: Z AI
+
+Direct API usage burns money and adds latency. I route everything through **Z AI** (Zhipu AI)—a platform providing GLM models with an Anthropic-compatible API endpoint.
+
+The beauty of Z AI is that it's a drop-in replacement. Configure once, and Claude Code works exactly the same—but with GLM-4.7 handling the heavy lifting.
+
+**The config:**
+
+```json
+// ~/.claude/settings.json
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+    "ANTHROPIC_API_KEY": "your-zai-key"
+  },
+  "model": "opus",
+  "alwaysThinkingEnabled": true
+}
+```
+
+**Model mapping** (Claude names → GLM models):
+
+| Claude | Maps to |
+|--------|---------|
+| `haiku` | `glm-4.5-air` |
+| `sonnet` | `glm-4.7` |
+| `opus` | `glm-4.7` |
+
+---
+
+## 2. The Brain: MCP Servers
+
+The **Model Context Protocol (MCP)** is what separates a chatbot from a co-worker. It gives Claude eyes and ears inside your development environment.
+
+Without MCP, Claude hallucinates based on training data from months ago. With MCP, it looks at *reality*.
+
+### My Must-Have Triad
+
+| Tool | Problem | Solution |
+| :--- | :--- | :--- |
+| **Context7** | "Hallucinated APIs" | Fetches *live* documentation. No more guessing React 19 syntax or Go 1.25 changes. |
+| **Serena** | "Grep is dumb" | Provides *semantic* code intelligence. Knows `User` in `models.go` is referenced in `handlers.go`. |
+| **Claude-Mem** | "Amnesia" | Persistent memory. Remembers I prefer `sqlx` over `GORM` so I don't repeat myself. |
+
+### Context7 in Action
+
+When integrating a new library, I don't copy-paste docs:
+
+```bash
+>> /resolve-library "stripe-node"
+>> /query-docs "how to handle webhook signatures in v16"
+```
+
+Claude reads the actual current docs and writes the implementation correctly the first time.
+
+---
+
+## 3. Custom Skills
+
+This is where the setup gets opinionated. I've written custom skill definitions to force Claude to adhere to **my** engineering standards—not the "average" of the internet.
+
+### The Anti-Slop Frontend Designer
+
+Most AI-generated UI looks identical: boring rounded corners, generic blue buttons, and "Inter" font. I built a skill to fight this.
+
+```yaml
+# ~/.claude/skills/frontend-design
+name: frontend-design
+description: Create distinctive, production-grade frontend interfaces
+
+instructions: |
+  - REJECT generic AI aesthetics (bootstrap-style layouts)
+  - USE "brutalist" or "Swiss" design principles unless specified
+  - TYPOGRAPHY: Commit to bold choices. No Roboto. No Inter.
+  - CODE: Accessible (ARIA), responsive (mobile-first), strictly typed
+  - PREFERENCE: Tailwind v4 over CSS-in-JS
+```
+
+### The Senior Engineer Code Reviewer
+
+I don't need an AI to tell me about indentation. I need it to spot architectural flaws that wake me up at 3 AM.
+
+```yaml
+# ~/.claude/skills/local-code-reviewer
+name: local-code-reviewer
+description: High-signal security and performance review
+
+instructions: |
+  Focus ONLY on critical failure points. Ignore style nits.
+
+  1. Security: SQLi, XSS, IDOR, improper access control
+  2. Performance: N+1 queries, memory leaks, unnecessary re-renders
+  3. Concurrency: Race conditions in Go routines or Node promises
+  4. Database: Missing indexes on foreign keys
+```
+
+---
+
+## The Workflow
+
+Here's what a typical feature implementation looks like. Let's say I'm building a webhook handler:
+
+| Step | Action |
+|------|--------|
+| **1** | `claude-mem` loads my Hexagonal Architecture preference |
+| **2** | `/map-dependencies` (Serena) maps the call hierarchy |
+| **3** | `Context7` pulls latest Stripe docs for signature verification |
+| **4** | Claude writes the code with `alwaysThinking` handling edge cases |
+| **5** | `/review` flags a database deadlock I missed |
+| **6** | `go test ./...` passes. Ship. |
+
+---
+
+## Final Thoughts
+
+The difference between a 10x developer and a 1x developer in 2026 is tool mastery.
+
+By pointing `claude-code` at Z AI and giving it the right MCP tools, I've stopped treating AI as a search engine and started treating it as a Senior Staff Engineer that lives in my terminal.
+
+If you aren't customizing your agent, you're playing on hard mode.
+
+---
+
+*Check out the [MCP Protocol](https://modelcontextprotocol.io/) to write your own server.*
