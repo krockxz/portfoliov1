@@ -14,6 +14,7 @@ import {
   SiCloudflare,
   SiNodedotjs,
   SiGoland,
+  SiBun,
 } from "react-icons/si";
 
 type TechKey =
@@ -23,17 +24,18 @@ type TechKey =
   | "three"
   | "cloud"
   | "node"
-  | "go";
+  | "go"
+  | "bun";
 
 interface Project {
   title: string;
   src: string;
-  video: string;
+  video?: string;
   thumbVideo?: string; // New field for video thumbnail
   description: string;
   tech: TechKey[];
   github: string;
-  live: string;
+  live?: string;
 }
 
 const iconMap: Record<TechKey, any> = {
@@ -44,6 +46,7 @@ const iconMap: Record<TechKey, any> = {
   cloud: SiCloudflare,
   node: SiNodedotjs,
   go: SiGoland,
+  bun: SiBun,
 };
 
 const techNames: Record<TechKey, string> = {
@@ -54,6 +57,7 @@ const techNames: Record<TechKey, string> = {
   cloud: "Cloudflare",
   node: "Node.js",
   go: "Go",
+  bun: "Bun",
 };
 
 const Projects = () => {
@@ -78,6 +82,13 @@ const Projects = () => {
       tech: ["go", "react"],
       github: "https://github.com/krockxz/gostman",
       live: "https://gostman.vercel.app/",
+    },
+    {
+      title: "Un-Nexted",
+      src: "/images/un-nexted.png",
+      description: "De-mystifying the meta-framework. A raw implementation of Next.js core features like SSR, hydration, and file-system routing from scratch, revealing the magic behind modern web frameworks.",
+      tech: ["bun", "react", "ts"],
+      github: "https://github.com/krockxz/Un-nexted",
     },
   ];
 
@@ -113,6 +124,7 @@ const Projects = () => {
               bg-white dark:bg-black
               hover:shadow-md
               transition-all duration-300
+              flex flex-col h-full
             "
           >
             {/* Glow */}
@@ -127,7 +139,7 @@ const Projects = () => {
             />
 
             {/* IMAGE / VIDEO THUMBNAIL */}
-            <div className="relative w-full h-44 overflow-hidden">
+            <div className="relative w-full h-44 overflow-hidden shrink-0">
               {project.thumbVideo ? (
                 <video
                   src={project.thumbVideo}
@@ -156,35 +168,37 @@ const Projects = () => {
                 "
               />
 
-              {/* PLAY BUTTON */}
-              <div
-                onClick={() => setActiveVideo(project.video)}
-                className="
-                  absolute inset-0 z-20 flex items-center justify-center
-                  opacity-0 group-hover:opacity-100
-                  transition duration-300 cursor-pointer
-                "
-              >
+              {/* PLAY BUTTON - Only if video exists */}
+              {project.video && (
                 <div
+                  onClick={() => setActiveVideo(project.video!)}
                   className="
-                    h-12 w-12 bg-white/90 dark:bg-black/75 rounded-full 
-                    flex items-center justify-center shadow-md backdrop-blur-md
+                    absolute inset-0 z-20 flex items-center justify-center
+                    opacity-0 group-hover:opacity-100
+                    transition duration-300 cursor-pointer
                   "
                 >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='currentColor'
-                    viewBox='0 0 24 24'
-                    className='w-6 h-6 text-black dark:text-white'
+                  <div
+                    className="
+                      h-12 w-12 bg-white/90 dark:bg-black/75 rounded-full 
+                      flex items-center justify-center shadow-md backdrop-blur-md
+                    "
                   >
-                    <path d='M5.25 5.653v12.694c0 .856.926 1.39 1.668.958l11.1-6.347a1.125 1.125 0 000-1.916L6.918 4.695c-.742-.432-1.668.102-1.668.958z' />
-                  </svg>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='currentColor'
+                      viewBox='0 0 24 24'
+                      className='w-6 h-6 text-black dark:text-white'
+                    >
+                      <path d='M5.25 5.653v12.694c0 .856.926 1.39 1.668.958l11.1-6.347a1.125 1.125 0 000-1.916L6.918 4.695c-.742-.432-1.668.102-1.668.958z' />
+                    </svg>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* CONTENT */}
-            <div className="p-5">
+            <div className="p-5 flex flex-col flex-grow">
 
               <div className="flex items-center justify-between mb-2">
                 <h2 className="text-lg font-custom font-semibold text-neutral-900 dark:text-neutral-50">
@@ -192,11 +206,13 @@ const Projects = () => {
                 </h2>
 
                 <div className="flex gap-3">
-                  <Globe
-                    size={17}
-                    onClick={() => window.open(project.live, "_blank")}
-                    className="opacity-75 hover:opacity-100 transition cursor-pointer text-neutral-700 dark:text-neutral-300"
-                  />
+                  {project.live && (
+                    <Globe
+                      size={17}
+                      onClick={() => window.open(project.live, "_blank")}
+                      className="opacity-75 hover:opacity-100 transition cursor-pointer text-neutral-700 dark:text-neutral-300"
+                    />
+                  )}
                   <Github
                     size={17}
                     onClick={() => window.open(project.github, "_blank")}
@@ -210,7 +226,7 @@ const Projects = () => {
               </p>
 
               {/* TECH STACK */}
-              <p className="text-xs text-neutral-500 font-medium mb-2 font-custom2">
+              <p className="text-xs text-neutral-500 font-medium mb-2 font-custom2 mt-auto">
                 Tech Stack
               </p>
 
@@ -269,9 +285,9 @@ const Projects = () => {
             >
               <button
                 onClick={() => setActiveVideo(null)}
-                className="absolute top-3 right-3 p-2 bg-neutral-500 rounded-full cursor-pointer"
+                className="absolute top-3 right-3 p-2 bg-neutral-500 dark:bg-neutral-600 rounded-full cursor-pointer hover:bg-neutral-600 dark:hover:bg-neutral-500 transition-colors"
               >
-                <X size={20} className="text-neutral-200" />
+                <X size={20} className="text-neutral-200 dark:text-neutral-300" />
               </button>
 
               <video
