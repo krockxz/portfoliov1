@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import AnimatedButton from "@/components/ui/AnimatedButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Github, X } from "lucide-react";
 import {
@@ -154,6 +152,8 @@ const Projects = () => {
                   src={project.src}
                   alt={project.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority={idx === 0 || (idx === 1 && projects[0].thumbVideo !== undefined)}
                   className="object-cover"
                 />
               )}
@@ -171,12 +171,21 @@ const Projects = () => {
               {/* PLAY BUTTON - Only if video exists */}
               {project.video && (
                 <div
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setActiveVideo(project.video!)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveVideo(project.video!);
+                    }
+                  }}
                   className="
                     absolute inset-0 z-20 flex items-center justify-center
                     opacity-0 group-hover:opacity-100
                     transition duration-300 cursor-pointer
                   "
+                  aria-label={`Play video for ${project.title}`}
                 >
                   <div
                     className="
@@ -207,17 +216,27 @@ const Projects = () => {
 
                 <div className="flex gap-3">
                   {project.live && (
-                    <Globe
-                      size={17}
+                    <button
                       onClick={() => window.open(project.live, "_blank")}
-                      className="opacity-75 hover:opacity-100 transition cursor-pointer text-neutral-700 dark:text-neutral-300"
-                    />
+                      className="opacity-75 hover:opacity-100 transition cursor-pointer"
+                      aria-label={`View live site for ${project.title}`}
+                    >
+                      <Globe
+                        size={17}
+                        className="text-neutral-700 dark:text-neutral-300"
+                      />
+                    </button>
                   )}
-                  <Github
-                    size={17}
+                  <button
                     onClick={() => window.open(project.github, "_blank")}
-                    className="opacity-75 hover:opacity-100 transition cursor-pointer text-neutral-700 dark:text-neutral-300"
-                  />
+                    className="opacity-75 hover:opacity-100 transition cursor-pointer"
+                    aria-label={`View GitHub repository for ${project.title}`}
+                  >
+                    <Github
+                      size={17}
+                      className="text-neutral-700 dark:text-neutral-300"
+                    />
+                  </button>
                 </div>
               </div>
 
@@ -244,10 +263,11 @@ const Projects = () => {
                     >
                       <Icon
                         className="w-5 h-5 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                        aria-label={techNames[key]}
                       />
 
                       {hoveredTech === uniqueId && (
-                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20">
+                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20" role="tooltip">
                           <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
                             {techNames[key]}
 
@@ -286,6 +306,7 @@ const Projects = () => {
               <button
                 onClick={() => setActiveVideo(null)}
                 className="absolute top-3 right-3 p-2 bg-neutral-500 dark:bg-neutral-600 rounded-full cursor-pointer hover:bg-neutral-600 dark:hover:bg-neutral-500 transition-colors"
+                aria-label="Close video modal"
               >
                 <X size={20} className="text-neutral-200 dark:text-neutral-300" />
               </button>

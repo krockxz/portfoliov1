@@ -607,7 +607,6 @@ export const ThemeToggleButton = ({
       }}
       aria-label="Toggle theme"
     >
-      <span className="sr-only">Toggle theme</span>
       <svg
         className="w-5 h-5 text-neutral-800 dark:text-neutral-100"
         viewBox="0 0 24 24"

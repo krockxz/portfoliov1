@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
+import DOMPurify from 'isomorphic-dompurify';
 import {
   SiReact,
   SiPython,
@@ -124,7 +125,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
       <h1 className="text-3xl font-bold font-custom tracking-tight text-neutral-900 dark:text-neutral-50 py-2">
         <span className="link--elara">Experiences</span>
       </h1>
-      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) my-[0.4] opacity-90 dark:opacity-15"></div>
+      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] my-[0.4] opacity-90 dark:opacity-15"></div>
 
       <div className="flex flex-col gap-4 px-4 md:px-0 my-6">
         {experiences.map((exp, idx) => (
@@ -136,6 +137,15 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
             <div
               className="flex items-start gap-4 p-4 cursor-pointer"
               onClick={() => toggleExpand(idx)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  toggleExpand(idx);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-expanded={expandedIndex === idx}
             >
               {/* Logo */}
               <div className="relative shrink-0 mt-1 z-10">
@@ -204,9 +214,10 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
                           >
                             <Icon
                               className="w-4 h-4 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                              aria-label={techNames[key]}
                             />
                             {hoveredTech === uniqueId && (
-                              <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20">
+                              <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20" role="tooltip">
                                 <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
                                   {techNames[key]}
                                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-100 dark:bg-neutral-800 rotate-45 border-b border-r border-neutral-200 dark:border-neutral-700"></div>
@@ -225,7 +236,15 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
                       .split("\n")
                       .filter((line) => line.trim() !== "")
                       .map((point, i) => (
-                        <li key={i} dangerouslySetInnerHTML={{ __html: point }} />
+                        <li
+                          key={i}
+                          dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(point, {
+                              ALLOWED_TAGS: ['a'],
+                              ALLOWED_ATTR: ['href', 'class', 'target', 'rel'],
+                            })
+                          }}
+                        />
                       ))}
                   </ul>
                 </div>

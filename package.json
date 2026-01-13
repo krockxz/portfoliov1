@@ -27,6 +27,7 @@
     "framer-motion": "^12.23.26",
     "github-calendar": "^2.3.4",
     "gray-matter": "^4.0.3",
+    "isomorphic-dompurify": "^2.35.0",
     "lucide-react": "^0.548.0",
     "motion": "^12.23.26",
     "next": "^16.0.8",

@@ -222,6 +222,7 @@ export default function Chatbot() {
                           <button
                             key={suggestion}
                             onClick={() => setInput(suggestion)}
+                            aria-label={`Send: ${suggestion}`}
                             className="px-3 py-1.5 text-xs bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors font-custom2"
                           >
                             {suggestion}

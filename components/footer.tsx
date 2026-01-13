@@ -37,7 +37,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-700 dark:text-neutral-50 opacity-70 hover:opacity-100 transition cursor-pointer "
-                title={link.name}
+                aria-label={`Visit ${link.name} profile`}
               >
                 <IconComponent size={15} />
               </Link>

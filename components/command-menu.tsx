@@ -233,7 +233,7 @@ export function CommandMenu() {
                         </div>
                     </div>
                     <div className="flex items-center gap-1 text-[10px] text-neutral-500">
-                        <span className="font-mono">esc</span>
+                        <kbd className="font-mono">esc</kbd>
                         <span>to close</span>
                     </div>
                 </div>
