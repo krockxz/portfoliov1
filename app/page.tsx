@@ -47,20 +47,20 @@ export default function Home() {
 
   return (
     <div className="relative flex min-h-screen justify-center font-sans overflow-hidden">
-      <Container className="min-h-[200vh] px-8 pt-24 md:p-20 md:pb-10 mx-auto ">
+      <Container className="min-h-[200vh] px-8 pt-24 md:p-20 md:pb-10 mx-auto">
 
         {/* RIGHT BORDER */}
         <div
-          className="absolute right-0 top-0 h-full w-6 border-x border-x-(--pattern-fg) opacity-80 dark:opacity-12
+          className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)] opacity-80 dark:opacity-12
           bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-size-[10px_10px] bg-fixed"
+          bg-[length:10px_10px] bg-fixed"
         > </div>
 
         {/* LEFT BORDER */}
         <div
-          className="absolute left-0 top-0 h-full w-6 border-x border-x-(--pattern-fg) opacity-80 dark:opacity-12
+          className="absolute left-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)] opacity-80 dark:opacity-12
           bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-size-[10px_10px] bg-fixed"
+          bg-[length:10px_10px] bg-fixed"
         ></div>
 
         {/* ---------------------------------------- */}
@@ -121,14 +121,14 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) my-3 opacity-90 dark:opacity-15"></div>
+        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] my-3 opacity-90 dark:opacity-15"></div>
 
 
 
         <Projects />
 
         <br />
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
+        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
 
 
         <Timeline />
@@ -137,19 +137,19 @@ export default function Home() {
 
         <GithubGraph />
 
-        <br></br>
-        <br></br>
-        <br></br>
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) opacity-90 dark:opacity-15 "></div>
+        <br />
+        <br />
+        <br />
+        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
 
         <Skills />
-        <br></br>
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) opacity-90 dark:opacity-15 "></div>
+        <br />
+        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
 
         <GetInTouch />
 
 
-      </Container >
-    </div >
+      </Container>
+    </div>
   );
 }

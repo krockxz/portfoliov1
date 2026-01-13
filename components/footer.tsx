@@ -25,7 +25,7 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-neutral-50 dark:bg-neutral-950">
-      <Container className="flex flex-col items-center justify-between gap-4 py-2  sm:flex-row border border-neutral-200 dark:border-neutral-800">
+      <Container className="flex flex-col items-center justify-between gap-4 py-2 sm:flex-row border border-neutral-200 dark:border-neutral-800">
         {/* Built with love by Kunal Roy Choudhury removed */}
         <div className="flex items-center gap-4 ml-9">
           {socialLinks.map((link) => {

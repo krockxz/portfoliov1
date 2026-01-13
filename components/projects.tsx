@@ -183,7 +183,7 @@ const Projects = () => {
                   className="
                     absolute inset-0 z-20 flex items-center justify-center
                     opacity-0 group-hover:opacity-100
-                    transition duration-300 cursor-pointer
+                    transition-all duration-300 ease-out cursor-pointer
                   "
                   aria-label={`Play video for ${project.title}`}
                 >
@@ -222,7 +222,7 @@ const Projects = () => {
                       aria-label={`View live site for ${project.title}`}
                     >
                       <Globe
-                        size={17}
+                        size={16}
                         className="text-neutral-700 dark:text-neutral-300"
                       />
                     </button>
@@ -233,7 +233,7 @@ const Projects = () => {
                     aria-label={`View GitHub repository for ${project.title}`}
                   >
                     <Github
-                      size={17}
+                      size={16}
                       className="text-neutral-700 dark:text-neutral-300"
                     />
                   </button>
@@ -305,10 +305,10 @@ const Projects = () => {
             >
               <button
                 onClick={() => setActiveVideo(null)}
-                className="absolute top-3 right-3 p-2 bg-neutral-500 dark:bg-neutral-600 rounded-full cursor-pointer hover:bg-neutral-600 dark:hover:bg-neutral-500 transition-colors"
+                className="absolute top-3 right-3 p-2 bg-neutral-200 dark:bg-neutral-700 rounded-full cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors"
                 aria-label="Close video modal"
               >
-                <X size={20} className="text-neutral-200 dark:text-neutral-300" />
+                <X size={20} className="text-neutral-900 dark:text-neutral-100" />
               </button>
 
               <video

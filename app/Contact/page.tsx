@@ -89,7 +89,7 @@ export default function Contact() {
             </button>
           </form>
 
-          <div className="mt-10   flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 font-custom2">
+          <div className="mt-10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-500 dark:text-neutral-400 font-custom2">
             <div className="flex items-center gap-2">
               <p>Kunal</p>
             </div>
@@ -110,7 +110,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="w-full h-60 relative overflow-hidden flex items-center justify-center ">
+        <div className="w-full h-60 relative overflow-hidden flex items-center justify-center">
           <DisplacementText
             text="KUNAL"
             fontSize={450}
