@@ -46,7 +46,7 @@ export default function Contact() {
                 type="text"
                 id="name"
                 placeholder="Tyler Durden"
-                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
+                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
               />
             </div>
 
@@ -58,7 +58,7 @@ export default function Contact() {
                 type="email"
                 id="email"
                 placeholder="tyler@projectmayhem.com"
-                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
+                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
               />
             </div>
 
@@ -70,7 +70,7 @@ export default function Contact() {
                 id="message"
                 rows={5}
                 placeholder="You're crazy good, never change."
-                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 resize-none"
+                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 resize-none"
               />
             </div>
 

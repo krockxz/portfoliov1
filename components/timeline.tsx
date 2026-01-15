@@ -125,7 +125,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
       <h1 className="text-3xl font-bold font-custom tracking-tight text-neutral-900 dark:text-neutral-50 py-2">
         <span className="link--elara">Experiences</span>
       </h1>
-      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] my-[0.4] opacity-90 dark:opacity-15"></div>
+      <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] my-[0.4] opacity-90 dark:opacity-15"></div>
 
       <div className="flex flex-col gap-4 px-4 md:px-0 my-6">
         {experiences.map((exp, idx) => (
@@ -206,11 +206,14 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
                         const uniqueId = `${exp.company}-${key}`;
 
                         return (
-                          <div
+                          <button
                             key={key}
-                            className="group/tech relative cursor-pointer"
+                            type="button"
+                            className="group/tech relative cursor-pointer bg-transparent border-0 p-0"
                             onMouseEnter={() => setHoveredTech(uniqueId)}
                             onMouseLeave={() => setHoveredTech(null)}
+                            onFocus={() => setHoveredTech(uniqueId)}
+                            onBlur={() => setHoveredTech(null)}
                           >
                             <Icon
                               className="w-4 h-4 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
@@ -224,7 +227,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
                                 </div>
                               </div>
                             )}
-                          </div>
+                          </button>
                         );
                       })}
                     </div>

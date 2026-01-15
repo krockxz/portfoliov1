@@ -255,11 +255,14 @@ const Projects = () => {
                   const uniqueId = `${project.title}-${key}`;
 
                   return (
-                    <div
+                    <button
                       key={key}
-                      className="relative cursor-pointer"
+                      type="button"
+                      className="relative cursor-pointer bg-transparent border-0 p-0"
                       onMouseEnter={() => setHoveredTech(uniqueId)}
                       onMouseLeave={() => setHoveredTech(null)}
+                      onFocus={() => setHoveredTech(uniqueId)}
+                      onBlur={() => setHoveredTech(null)}
                     >
                       <Icon
                         className="w-5 h-5 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
@@ -276,7 +279,7 @@ const Projects = () => {
                           </div>
                         </div>
                       )}
-                    </div>
+                    </button>
                   );
                 })}
               </div>

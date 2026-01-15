@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { getSingleBlog } from "@/util/mdx_clean";
 import remarkGfm from "remark-gfm";
 import { useMDXComponents } from "@/mdx-components";
+import rehypePrettyCode from "rehype-pretty-code";
 
 
 export const metadata: Metadata = {
@@ -13,9 +14,13 @@ export const metadata: Metadata = {
   description: "Reading a blog...",
 };
 
-export default async function SingleBlogPage({ params }: { params: any }) {
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export default async function SingleBlogPage({ params }: PageProps) {
   // `params` may be a Promise in some Next versions; await to unwrap it safely
-  const resolvedParams = (await params) as { slug?: string };
+  const resolvedParams = await params;
   const slug = resolvedParams?.slug;
 
   if (!slug) {
@@ -73,6 +78,15 @@ export default async function SingleBlogPage({ params }: { params: any }) {
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],
+              rehypePlugins: [
+                [
+                  rehypePrettyCode,
+                  {
+                    theme: "github-dark-dimmed",
+                    keepBackground: true,
+                  },
+                ],
+              ],
             },
           }}
         />

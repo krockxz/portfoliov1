@@ -13,7 +13,7 @@
 /* Custom selection color */
 ::selection {
   background: #c7c6c6;
-  
+
   /* bright yellow highlight */
   color: #000;
   /* black text */
@@ -62,7 +62,7 @@
   --muted-foreground: oklch(0.705 0.015 286.067);
   --border: oklch(0.274 0.006 286.033);
   --pattern-fg: #404040;
-  
+
 }
 
 /* === Minimal SVG Underline Animation (Elara style) === */
@@ -123,18 +123,35 @@
   @apply text-amber-700 dark:text-amber-400 underline decoration-amber-700/30 dark:decoration-amber-400/30 underline-offset-2 hover:decoration-amber-700 dark:hover:decoration-amber-400 transition-all duration-200;
 }
 
-/* Inline code - warm monospace styling */
-.prose code {
-  @apply bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 px-1.5 py-0.5 rounded text-sm font-mono border border-neutral-200 dark:border-neutral-700;
+/* Code blocks - Modern SaaS style (rehype-pretty-code) */
+.prose figure[data-rehype-pretty-code-figure] {
+  @apply my-6;
 }
 
-/* Code blocks - editorial terminal style */
 .prose pre {
-  @apply bg-neutral-900 dark:bg-neutral-950 text-neutral-100 dark:text-neutral-100 p-4 rounded-lg overflow-x-auto border border-neutral-800 dark:border-neutral-800 my-6;
+  @apply p-4 rounded-lg overflow-x-auto border border-neutral-800 dark:border-neutral-800 my-0 bg-[var(--shiki-light-bg)] dark:bg-[var(--shiki-dark-bg)];
 }
 
-.prose pre code {
-  @apply bg-transparent border-none p-0 text-neutral-100 dark:text-neutral-100;
+.prose pre>code {
+  @apply grid;
+}
+
+.prose code {
+  @apply text-sm font-mono;
+}
+
+/* Inline code (not in pre) */
+.prose :not(pre)>code {
+  @apply bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 px-1.5 py-0.5 rounded border border-neutral-200 dark:border-neutral-700;
+}
+
+/* Syntax Highlighting overrides if needed */
+.prose [data-line] {
+  @apply px-4 border-l-2 border-transparent;
+}
+
+.prose [data-highlighted-line] {
+  @apply bg-neutral-800/50 border-neutral-500;
 }
 
 .prose strong {
@@ -178,55 +195,14 @@
 }
 
 
-/* === Scribble Animated Underline for Headings (.link--carme) === */
 
-.link--carme {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 14px;
-  /* Space for underline */
-  cursor: pointer;
-  font-size: inherit;
-  /* Keeps original text size (e.g. h1, h2) */
-  font-weight: inherit;
-}
-
-/* Inline SVG container (automatically positioned) */
-.link--carme svg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 120px;
-  /* Adjust length of scribble */
-  height: 18px;
-  pointer-events: none;
-}
-
-/* Scribble line style */
-.link--carme path {
-  stroke: currentColor;
-  /* Matches text color */
-  stroke-width: 2.3px;
-  fill: none;
-  stroke-linecap: round;
-
-  /* Hide stroke initially (for animation) */
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
-
-  transition: stroke-dashoffset 0.5s ease-out;
-}
-
-/* Animate on hover */
-.link--carme:hover path {
-  stroke-dashoffset: 0;
-}
 
 /* === Logo Slider Animation === */
 @keyframes loop-scroll {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }

@@ -1,29 +1,26 @@
 # Portfolio Website
 
-A modern, responsive, and fast developer portfolio built using Next.js, Tailwind CSS, TypeScript, Framer Motion, MDX, and GitHub API integration.  
+A modern, responsive, and fast developer portfolio built using Next.js, Tailwind CSS, TypeScript, Framer Motion, MDX, and GitHub API integration.
 Features include blog support, project pages, contribution graph, SEO optimization, and a clean minimal design.
 
 ---
 
-<img width="1184" height="946" alt="Screenshot 2025-11-19 151858" src="https://github.com/user-attachments/assets/b733ff81-b547-4ed0-9f11-8f8a55d9b761" />
-
-
-
 ## Live Demo
 
-https://www.kunal.tech/
+[kunalrc.vercel.app](https://kunalrc.vercel.app/)
+
 ---
 
 ## Features
 
-- Next.js App Router architecture  
-- Tailwind CSS with Shadcn UI  
-- MDX support for blogs and project pages  
-- GitHub Contribution Graph integration  
-- Fetch GitHub repositories using API  
-- Framer Motion animations  
-- SEO and Open Graph metadata  
-- Fully responsive and accessible  
+- **Next.js App Router** architecture
+- **Tailwind CSS** with Shadcn UI
+- **MDX** support for blogs and project pages
+- **GitHub Contribution Graph** integration
+- **GitHub API** integration to fetch repositories
+- **Framer Motion** animations
+- **SEO** and Open Graph metadata
+- Fully responsive and accessible
 
 ---
 
@@ -42,39 +39,57 @@ https://www.kunal.tech/
 
 ---
 
-## Environment Variables
+## Getting Started
 
-Create a `.env` file in the root directory:
+### Prerequisites
 
-```env
+- Node.js or Bun installed on your machine.
+- A GitHub Personal Access Token (for fetching pinned repositories).
 
+### Installation
 
-# Required for GitHub API repo fetching
-#So create .env in your root and add your github token 
-GITHUB_TOKEN="your_github_personal_access_token"
+1. **Clone the repository:**
 
+   ```bash
+   git clone https://github.com/krockxz/Portfoliov1.git
+   cd Portfoliov1
+   ```
 
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
+2. **Install dependencies:**
 
-npm install
-# or
-bun install
+   ```bash
+   npm install
+   # or
+   bun install
+   ```
 
-Run the development server
-npm run dev
-# or
-bun dev
+3. **Set up Environment Variables:**
 
-http://localhost:3000
+   Create a `.env` file in the root directory:
 
+   ```env
+   # Required for GitHub API repo fetching
+   GITHUB_TOKEN="your_github_personal_access_token"
+   ```
 
-Deployment
-Deploy to Vercel
+4. **Run the development server:**
 
-After deploying, set the GITHUB_TOKEN in Vercel Environment Settings if needed.
+   ```bash
+   npm run dev
+   # or
+   bun dev
+   ```
 
-License
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-This project is licensed under the MIT License
+## Deployment
 
+Deploy to **Vercel** for the best experience.
+
+> **Note:** After deploying, remember to set the `GITHUB_TOKEN` in your Vercel Project Settings > Environment Variables.
+
+---
+
+## License
+
+This project is licensed under the MIT License.

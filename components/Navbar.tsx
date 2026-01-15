@@ -69,7 +69,7 @@ const Navbar = () => {
             src="/images/kunal.jpg"
             width={100}
             height={100}
-            alt="Avatar"
+            alt="Kunal Roy Choudhury"
           />
         </Link>
 

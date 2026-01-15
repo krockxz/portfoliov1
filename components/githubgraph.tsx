@@ -109,7 +109,7 @@ const GithubGraph = () => {
 
   return (
     <div>
-      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
+      <div className="hidden md:block absolute right-6 left-0 h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
 
 
       <h1 className="text-neutral-900 dark:text-neutral-50 font-custom font-bold  text-3xl tracking-tight  py-2"><span className="link--elara">Proof Of Work</span></h1>
@@ -166,13 +166,14 @@ const GithubGraph = () => {
               <span className="link--elara">Pull Requests</span>
             </h2>
             <div className="flex items-center gap-2">
-              <div className="flex gap-1 bg-black/5 dark:bg-white/5 rounded-lg p-1 border border-neutral-300/30 dark:border-neutral-700/30 ">
+              <div role="group" aria-label="Filter pull requests by status" className="flex gap-1 bg-black/5 dark:bg-white/5 rounded-lg p-1 border border-neutral-300/30 dark:border-neutral-700/30 ">
                 <button
                   onClick={() => setFilterType("merged")}
                   className={`px-3 py-1.5 rounded text-xs font-medium transition-all duration-200 ${filterType === "merged"
                     ? "bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 shadow-sm"
                     : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                     }`}
+                  aria-pressed={filterType === "merged"}
                 >
                   Merged
                 </button>
@@ -182,6 +183,7 @@ const GithubGraph = () => {
                     ? "bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 shadow-sm"
                     : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                     }`}
+                  aria-pressed={filterType === "open"}
                 >
                   Open
                 </button>
@@ -191,6 +193,7 @@ const GithubGraph = () => {
                     ? "bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 shadow-sm"
                     : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                     }`}
+                  aria-pressed={filterType === "closed"}
                 >
                   Closed
                 </button>
@@ -206,7 +209,7 @@ const GithubGraph = () => {
                 ? "Active pull requests"
                 : "Closed pull requests"}
           </p>
-          <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
+          <div className="hidden md:block absolute right-6 left-0 h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
 
           {loading ? (
             <div className="text-neutral-600 dark:text-neutral-400 font-custom2 text-sm mt-4">Loading pull requests...</div>

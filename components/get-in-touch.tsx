@@ -14,8 +14,8 @@ export default function GetInTouch() {
                     </h1>
                 </div>
 
-                <p className="font-custom2 text-neutral-700 dark:text-neutral-300 px-4 py-1 text-sm inline-block bg-neutral-100 dark:bg-neutral-900 border-dashed border-neutral-300 dark:border-neutral-700 border">
-                    Hi there — I’m currently open to meaningful work.
+                <p role="status" className="font-custom2 text-neutral-700 dark:text-neutral-300 px-4 py-1 text-sm inline-block bg-neutral-100 dark:bg-neutral-900 border-dashed border-neutral-300 dark:border-neutral-700 border">
+                    Hi there — I'm currently open to meaningful work.
                 </p>
 
                 <div className="w-full max-w-2xl flex gap-4">

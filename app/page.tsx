@@ -74,12 +74,18 @@ export default function Home() {
 
           <div className="flex flex-wrap gap-4 sm:justify-end">
             {socials.map((social) => (
-              <div
+              <button
                 key={social.name}
-                className="relative cursor-pointer group"
+                className="relative cursor-pointer group bg-transparent border-0 p-0"
                 onMouseEnter={() => setHoveredSocial(social.name)}
                 onMouseLeave={() => setHoveredSocial(null)}
                 onClick={social.action}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    social.action();
+                  }
+                }}
               >
                 <social.icon
                   size={20}
@@ -93,7 +99,7 @@ export default function Home() {
                     </div>
                   </div>
                 )}
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -121,7 +127,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] my-3 opacity-90 dark:opacity-15"></div>
+        <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] my-3 opacity-90 dark:opacity-15"></div>
 
 
 

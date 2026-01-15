@@ -114,6 +114,7 @@ const Options = ({
           <div className="flex flex-wrap items-center justify-end gap-1">
             <button
               onClick={() => setVariant("circle")}
+              aria-pressed={variant === "circle"}
               className={cn(
                 "cursor-pointer px-1 text-sm transition-opacity",
                 variant === "circle"
@@ -125,6 +126,7 @@ const Options = ({
             </button>
             <button
               onClick={() => setVariant("rectangle")}
+              aria-pressed={variant === "rectangle"}
               className={cn(
                 "cursor-pointer px-1 text-sm transition-opacity",
                 variant === "rectangle"
@@ -136,6 +138,7 @@ const Options = ({
             </button>
             <button
               onClick={() => setVariant("gif")}
+              aria-pressed={variant === "gif"}
               className={cn(
                 "cursor-pointer px-1 text-sm transition-opacity",
                 variant === "gif"
@@ -147,6 +150,7 @@ const Options = ({
             </button>
             <button
               onClick={() => setVariant("polygon")}
+              aria-pressed={variant === "polygon"}
               className={cn(
                 "cursor-pointer px-1 text-sm transition-opacity",
                 variant === "polygon"
@@ -158,6 +162,7 @@ const Options = ({
             </button>
             <button
               onClick={() => setVariant("circle-blur")}
+              aria-pressed={variant === "circle-blur"}
               className={cn(
                 "cursor-pointer px-1 text-sm transition-opacity",
                 variant === "circle-blur"
@@ -175,6 +180,7 @@ const Options = ({
           <div className="flex flex-wrap items-center justify-end gap-1">
             <button
               onClick={() => setBlur(false)}
+              aria-pressed={!blur}
               className={cn(
                 "cursor-pointer px-1 text-sm transition-opacity",
                 !blur
@@ -186,6 +192,7 @@ const Options = ({
             </button>
             <button
               onClick={() => setBlur(true)}
+              aria-pressed={blur}
               className={cn(
                 "cursor-pointer px-1 text-sm transition-opacity",
                 blur
@@ -371,6 +378,7 @@ const Options = ({
                     "https://media.giphy.com/media/KBbr4hHl9DSahKvInO/giphy.gif?cid=790b76112m5eeeydoe7et0cr3j3ekb1erunxozyshuhxx2vl&ep=v1_stickers_search&rid=giphy.gif&ct=s",
                   );
                 }}
+                aria-pressed={gifType === "1"}
                 className={cn(
                   "cursor-pointer px-1 text-sm transition-opacity",
                   gifType === "1"
@@ -387,6 +395,7 @@ const Options = ({
                     "https://media.giphy.com/media/5PncuvcXbBuIZcSiQo/giphy.gif?cid=ecf05e47j7vdjtytp3fu84rslaivdun4zvfhej6wlvl6qqsz&ep=v1_stickers_search&rid=giphy.gif&ct=s",
                   );
                 }}
+                aria-pressed={gifType === "2"}
                 className={cn(
                   "cursor-pointer px-1 text-sm transition-opacity",
                   gifType === "2"
@@ -403,6 +412,7 @@ const Options = ({
                     "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3JwcXdzcHd5MW92NWprZXVpcTBtNXM5cG9obWh0N3I4NzFpaDE3byZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/WgsVx6C4N8tjy/giphy.gif",
                   );
                 }}
+                aria-pressed={gifType === "3"}
                 className={cn(
                   "cursor-pointer px-1 text-sm transition-opacity",
                   gifType === "3"
@@ -414,6 +424,7 @@ const Options = ({
               </button>
               <button
                 onClick={() => setGifType("custom")}
+                aria-pressed={gifType === "custom"}
                 className={cn(
                   "cursor-pointer px-1 text-sm transition-opacity",
                   gifType === "custom"
@@ -430,8 +441,9 @@ const Options = ({
         {/* Show input only when gif variant and custom type are selected */}
         {variant === "gif" && gifType === "custom" && (
           <div className="mt-1 flex flex-col gap-1 py-1">
-            <p className="text-sm opacity-50">gif url :</p>
+            <label htmlFor="gif-url-input" className="text-sm opacity-50">gif url :</label>
             <input
+              id="gif-url-input"
               type="text"
               value={gifUrl}
               onChange={(e) => setGifUrl(e.target.value)}

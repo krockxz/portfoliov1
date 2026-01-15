@@ -171,6 +171,7 @@ export default function FractalTree() {
     return (
         <div
             className="fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden z-[-1]"
+            aria-hidden="true"
             style={{
                 maskImage: mask,
                 WebkitMaskImage: mask,

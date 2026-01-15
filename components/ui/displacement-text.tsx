@@ -282,7 +282,7 @@ const DisplacementText = ({
   }, [text, fontSize, font, color, lightColor, darkColor]);
 
   return (
-    <div ref={containerRef} className={cn("relative h-200 w-full", className)} />
+    <div ref={containerRef} className={cn("relative h-200 w-full", className)} aria-hidden="true" />
   );
 };
 
