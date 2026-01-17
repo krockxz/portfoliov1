@@ -55,7 +55,7 @@ const skills = [
 
 export default function Skills() {
     return (
-        <div className="w-full mt-4 relative">
+        <div className="w-full mt-16 relative">
             <div className="flex flex-col items-start space-y-3">
                 <h1 className="text-3xl md:text-3xl font-bold font-custom tracking-tight text-neutral-900 dark:text-neutral-50">
                     <span className="link--elara">Skills</span>

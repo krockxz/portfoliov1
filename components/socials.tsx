@@ -1,0 +1,66 @@
+"use client";
+
+import { useState } from "react";
+import { Github, Linkedin, Mail, FileText } from "lucide-react";
+import { SiX } from "react-icons/si";
+
+const ICON_SIZE = 20;
+
+export default function Socials() {
+    const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
+
+    const socials = [
+        {
+            name: "GitHub",
+            icon: Github,
+            action: () => window.open("https://github.com/krockxz", "_blank"),
+        },
+        {
+            name: "LinkedIn",
+            icon: Linkedin,
+            action: () => window.open("https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/", "_blank"),
+        },
+        {
+            name: "X",
+            icon: SiX,
+            action: () => window.open("https://x.com/kunalgoesbyken", "_blank"),
+        },
+        {
+            name: "Email",
+            icon: Mail,
+            action: () => (window.location.href = "mailto:kunalrc.workmail7@gmail.com"),
+        },
+        {
+            name: "Resume",
+            icon: FileText,
+            action: () => window.open("/resume.pdf", "_blank"),
+        },
+    ];
+
+    return (
+        <div className="flex flex-wrap gap-4 sm:justify-end">
+            {socials.map((social) => (
+                <button
+                    key={social.name}
+                    className="relative cursor-pointer group bg-transparent border-0 p-0 rounded-full focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:dark:ring-neutral-600 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    onMouseEnter={() => setHoveredSocial(social.name)}
+                    onMouseLeave={() => setHoveredSocial(null)}
+                    onClick={social.action}
+                >
+                    <social.icon
+                        size={ICON_SIZE}
+                        className="text-neutral-900 dark:text-neutral-50 opacity-70 hover:opacity-100 transition-opacity duration-200 ease-in-out"
+                    />
+                    {hoveredSocial === social.name && (
+                        <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20">
+                            <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
+                                {social.name}
+                                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-100 dark:bg-neutral-800 rotate-45 border-t border-l border-neutral-200 dark:border-neutral-700"></div>
+                            </div>
+                        </div>
+                    )}
+                </button>
+            ))}
+        </div>
+    );
+}

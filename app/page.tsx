@@ -1,49 +1,17 @@
-"use client";
-
-import { useState } from "react";
-
 import Container from "@/components/containers";
+import Socials from "@/components/socials";
+import { getGithubData } from "@/lib/github";
 
 import dynamic from "next/dynamic";
-import { Github, Linkedin, Mail, FileText } from "lucide-react";
-import { SiX } from "react-icons/si";
 
 const Projects = dynamic(() => import("@/components/projects"));
 const Timeline = dynamic(() => import("@/components/timeline"));
-const GithubGraph = dynamic(() => import("@/components/githubgraph"), { ssr: false });
+const GithubGraph = dynamic(() => import("@/components/githubgraph"));
 const Skills = dynamic(() => import("@/components/skills"));
 const GetInTouch = dynamic(() => import("@/components/get-in-touch"));
 
-export default function Home() {
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
-
-  const socials = [
-    {
-      name: "GitHub",
-      icon: Github,
-      action: () => window.open("https://github.com/krockxz", "_blank"),
-    },
-    {
-      name: "LinkedIn",
-      icon: Linkedin,
-      action: () => window.open("https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/", "_blank"),
-    },
-    {
-      name: "X",
-      icon: SiX,
-      action: () => window.open("https://x.com/kunalgoesbyken", "_blank"),
-    },
-    {
-      name: "Email",
-      icon: Mail,
-      action: () => (window.location.href = "mailto:kunalrc.workmail7@gmail.com"),
-    },
-    {
-      name: "Resume",
-      icon: FileText,
-      action: () => window.open("/resume.pdf", "_blank"),
-    },
-  ];
+export default async function Home() {
+  const githubData = await getGithubData();
 
   return (
     <div className="relative flex min-h-screen justify-center font-sans overflow-hidden">
@@ -72,36 +40,7 @@ export default function Home() {
             <span className="link--elara">Kunal Roy Choudhury</span>
           </h1>
 
-          <div className="flex flex-wrap gap-4 sm:justify-end">
-            {socials.map((social) => (
-              <button
-                key={social.name}
-                className="relative cursor-pointer group bg-transparent border-0 p-0"
-                onMouseEnter={() => setHoveredSocial(social.name)}
-                onMouseLeave={() => setHoveredSocial(null)}
-                onClick={social.action}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    social.action();
-                  }
-                }}
-              >
-                <social.icon
-                  size={20}
-                  className="text-neutral-900 dark:text-neutral-50 opacity-70 hover:opacity-100 transition"
-                />
-                {hoveredSocial === social.name && (
-                  <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20">
-                    <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
-                      {social.name}
-                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-100 dark:bg-neutral-800 rotate-45 border-t border-l border-neutral-200 dark:border-neutral-700"></div>
-                    </div>
-                  </div>
-                )}
-              </button>
-            ))}
-          </div>
+          <Socials />
         </div>
 
         {/* ---------------------------------------- */}
@@ -133,7 +72,6 @@ export default function Home() {
 
         <Projects />
 
-        <br />
         <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
 
 
@@ -141,16 +79,13 @@ export default function Home() {
 
 
 
-        <GithubGraph />
+        <GithubGraph data={githubData} />
 
-        <br />
-        <br />
-        <br />
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
+        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15 mt-12"></div>
 
         <Skills />
-        <br />
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
+
+        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15 mt-4"></div>
 
         <GetInTouch />
 

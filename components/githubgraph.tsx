@@ -4,24 +4,18 @@ import { useEffect, useState, cloneElement } from "react";
 import { GitHubCalendar } from "react-github-calendar";
 import { useTheme } from "next-themes";
 import { Tooltip } from "react-tooltip";
+import { GithubData, PR } from "@/lib/github";
 
-interface PR {
-  id: number;
-  title: string;
-  url: string;
-  repository: {
-    nameWithOwner: string;
-  };
-  state: string;
-  createdAt: string;
-  mergedAt?: string;
-  closedAt?: string;
+interface GithubGraphProps {
+  data: GithubData;
 }
 
-const GithubGraph = () => {
+const GithubGraph = ({ data }: GithubGraphProps) => {
   const { theme } = useTheme();
-  const [prs, setPrs] = useState<PR[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Flatten data based on filter or keep it structured.
+  // The original component had state `prs` and `filterType`.
+  // We can derive `prs` from `data` and `filterType`.
+
   const [showAll, setShowAll] = useState(false);
   const [filterType, setFilterType] = useState<"merged" | "open" | "closed">("merged");
   const [showPRSection, setShowPRSection] = useState(true);
@@ -41,79 +35,16 @@ const GithubGraph = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchPRs = async () => {
-      try {
-        const searchQuery = filterType === "merged"
-          ? "author:krockxz type:pr is:merged"
-          : filterType === "open"
-            ? "author:krockxz type:pr is:open"
-            : "author:krockxz type:pr is:closed is:unmerged";
-
-        const query = `query {
-          search(query: "${searchQuery}", type: ISSUE, first: 12) {
-            edges {
-              node {
-                ... on PullRequest {
-                  id
-                  title
-                  url
-                  repository {
-                    nameWithOwner
-                  }
-                  state
-                  createdAt
-                  mergedAt
-                  closedAt
-                }
-              }
-            }
-          }
-        }`;
-
-        const response = await fetch("https://api.github.com/graphql", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`,
-          },
-          body: JSON.stringify({ query }),
-          signal: controller.signal,
-        });
-
-        const data = await response.json();
-        if (data.data?.search?.edges) {
-          const fetchedPRs = data.data.search.edges.map((edge: any) => edge.node);
-          // Sort by date (newest first)
-          fetchedPRs.sort((a: PR, b: PR) => {
-            const dateA = new Date(b.mergedAt || b.closedAt || b.createdAt).getTime();
-            const dateB = new Date(a.mergedAt || a.closedAt || a.createdAt).getTime();
-            return dateA - dateB;
-          });
-          setPrs(fetchedPRs);
-          setShowAll(false);
-        }
-      } catch (error: any) {
-        if (error.name !== 'AbortError') {
-          console.error("Failed to fetch PRs:", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPRs();
-    return () => controller.abort();
-  }, [filterType]);
+  // Determine which list to show based on filterType
+  const prs: PR[] = data[filterType] || [];
 
   return (
     <div>
-      <div className="hidden md:block absolute right-6 left-0 h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
+      <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
 
 
       <h1 className="text-neutral-900 dark:text-neutral-50 font-custom font-bold  text-3xl tracking-tight  py-2"><span className="link--elara">Proof Of Work</span></h1>
-      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) my-[0.4] opacity-90 dark:opacity-15"></div>
+      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] my-0.5 opacity-90 dark:opacity-15"></div>
       <p className=" font-custom2 text-neutral-700 dark:text-neutral-300 mt-3 px-4 py-[7px]
            text-sm inline-block
           bg-neutral-100 dark:bg-neutral-900 border-dashed border-neutral-300 dark:border-neutral-700 border mb-6"> building real tools, solving real problems, and leaving a trail of commits to prove it.</p>
@@ -209,21 +140,19 @@ const GithubGraph = () => {
                 ? "Active pull requests"
                 : "Closed pull requests"}
           </p>
-          <div className="hidden md:block absolute right-6 left-0 h-px bg-(--pattern-fg) opacity-90 dark:opacity-15"></div>
+          <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
 
-          {loading ? (
-            <div className="text-neutral-600 dark:text-neutral-400 font-custom2 text-sm mt-4">Loading pull requests...</div>
-          ) : prs.length > 0 ? (
+          {prs.length > 0 ? (
             <div>
               <div className="space-y-2 mt-5">
                 {prs.slice(0, showAll ? prs.length : initialCount).filter(pr => !closedPRIds.has(pr.id)).map((pr, index) => (
                   <div key={pr.id} className="group flex items-start gap-3 p-3 rounded-md transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 border border-transparent hover:border-neutral-300/50 dark:hover:border-neutral-700/50">
                     <div className="shrink-0 mt-0.5">
                       <div className={`w-1 h-1 rounded-full group-hover:scale-150 transition-transform duration-200 ${filterType === "merged"
-                        ? "bg-linear-to-r from-purple-400 to-pink-400"
+                        ? "bg-gradient-to-r from-purple-400 to-pink-400"
                         : filterType === "open"
-                          ? "bg-linear-to-r from-green-400 to-emerald-400"
-                          : "bg-linear-to-r from-red-400 to-rose-400"
+                          ? "bg-gradient-to-r from-green-400 to-emerald-400"
+                          : "bg-gradient-to-r from-red-400 to-rose-400"
                         }`}></div>
                     </div>
                     <a
@@ -247,7 +176,7 @@ const GithubGraph = () => {
                   <button
                     onClick={() => setShowAll(!showAll)}
                     className="group relative overflow-hidden rounded-lg  w-full
-                            bg-linear-to-b from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 
+                            bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 
                             border border-neutral-200 dark:border-neutral-800 
                             text-neutral-800 dark:text-neutral-200 text-sm font-medium px-6 py-2.5 
                             transition-all duration-300 
