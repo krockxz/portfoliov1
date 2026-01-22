@@ -303,6 +303,8 @@ const Projects = () => {
                   className="w-full h-auto"
                   controls
                   autoPlay
+                  muted
+                  playsInline
                 />
               ) : (
                 <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
