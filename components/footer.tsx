@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-import { Github, Linkedin } from 'lucide-react'
-import { SiX } from 'react-icons/si'
+import GithubIcon from "@/components/ui/github-icon";
+import LinkedinIcon from "@/components/ui/linkedin-icon";
+import TwitterXIcon from "@/components/ui/twitter-x-icon";
 import Container from './containers'
 
 const Footer = () => {
@@ -9,17 +10,17 @@ const Footer = () => {
     {
       name: 'GitHub',
       url: 'https://github.com/krockxz',
-      icon: Github
+      icon: GithubIcon
     },
     {
       name: 'X',
       url: 'https://x.com/kunalgoesbyken',
-      icon: SiX
+      icon: TwitterXIcon
     },
     {
       name: 'LinkedIn',
       url: 'https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/',
-      icon: Linkedin
+      icon: LinkedinIcon
     },
   ]
 

@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Github, Linkedin, Mail, FileText } from "lucide-react";
-import { SiX } from "react-icons/si";
+import GithubIcon from "@/components/ui/github-icon";
+import LinkedinIcon from "@/components/ui/linkedin-icon";
+import MailFilledIcon from "@/components/ui/mail-filled-icon";
+import FileDescriptionIcon from "@/components/ui/file-description-icon";
+import TwitterXIcon from "@/components/ui/twitter-x-icon";
 
 const ICON_SIZE = 20;
 
@@ -12,27 +15,27 @@ export default function Socials() {
     const socials = [
         {
             name: "GitHub",
-            icon: Github,
+            icon: GithubIcon,
             action: () => window.open("https://github.com/krockxz", "_blank"),
         },
         {
             name: "LinkedIn",
-            icon: Linkedin,
+            icon: LinkedinIcon,
             action: () => window.open("https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/", "_blank"),
         },
         {
             name: "X",
-            icon: SiX,
+            icon: TwitterXIcon,
             action: () => window.open("https://x.com/kunalgoesbyken", "_blank"),
         },
         {
             name: "Email",
-            icon: Mail,
+            icon: MailFilledIcon,
             action: () => (window.location.href = "mailto:kunalrc.workmail7@gmail.com"),
         },
         {
             name: "Resume",
-            icon: FileText,
+            icon: FileDescriptionIcon,
             action: () => window.open("/resume.pdf", "_blank"),
         },
     ];

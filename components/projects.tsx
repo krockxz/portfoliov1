@@ -4,7 +4,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Github, X } from "lucide-react";
+import { Globe, X } from "lucide-react";
+import GithubIcon from "@/components/ui/github-icon";
 import {
   SiNextdotjs,
   SiTypescript,
@@ -62,7 +63,7 @@ const techNames: Record<TechKey, string> = {
 
 const Projects = () => {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+
   const [activeMedia, setActiveMedia] = useState<{ type: 'image' | 'video', src: string } | null>(null);
 
   useEffect(() => {
@@ -146,8 +147,6 @@ const Projects = () => {
             <div
               className="relative w-full h-44 overflow-hidden shrink-0 cursor-pointer"
               style={{ aspectRatio: '16/9' }} // Lock aspect ratio to prevent CLS
-              onMouseEnter={() => project.thumbVideo && setHoveredProject(project.title)}
-              onMouseLeave={() => setHoveredProject(null)}
               onClick={() => {
                 if (project.thumbVideo) {
                   setActiveMedia({ type: 'video', src: project.video || project.thumbVideo });
@@ -157,7 +156,17 @@ const Projects = () => {
               }}
             >
               {/* Show poster or regular image by default */}
-              {!hoveredProject || hoveredProject !== project.title ? (
+              {project.thumbVideo ? (
+                <video
+                  src={project.thumbVideo}
+                  poster={project.poster || project.src}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : (
                 <Image
                   src={project.poster || project.src}
                   alt={project.title}
@@ -165,16 +174,6 @@ const Projects = () => {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority={idx === 0}
                   className="object-cover"
-                />
-              ) : (
-                /* Load preview video only on hover */
-                <video
-                  src={project.thumbVideo}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
                 />
               )}
 
@@ -215,7 +214,7 @@ const Projects = () => {
                     className="opacity-75 hover:opacity-100 transition cursor-pointer"
                     aria-label={`View GitHub repository for ${project.title}`}
                   >
-                    <Github
+                    <GithubIcon
                       size={16}
                       className="text-neutral-700 dark:text-neutral-300"
                     />
