@@ -79,13 +79,13 @@ export function CommandMenu() {
                 // Links
                 else if (key === 'x') {
                     e.preventDefault()
-                    runCommand(() => window.open("https://twitter.com", "_blank"))
+                    runCommand(() => window.open("https://x.com/kunalgoesbyken", "_blank"))
                 } else if (key === 'l') {
                     e.preventDefault()
-                    runCommand(() => window.open("https://linkedin.com", "_blank"))
+                    runCommand(() => window.open("https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/", "_blank"))
                 } else if (key === 'g') {
                     e.preventDefault()
-                    runCommand(() => window.open("https://github.com", "_blank"))
+                    runCommand(() => window.open("https://github.com/krockxz", "_blank"))
                 } else if (key === 'e') {
                     e.preventDefault()
                     runCommand(() => router.push("/Contact"))
@@ -166,17 +166,17 @@ export function CommandMenu() {
                     <CommandSeparator className="my-2" />
 
                     <CommandGroup heading="Links">
-                        <CommandItem onSelect={() => runCommand(() => window.open("https://twitter.com", "_blank"))} className="rounded-lg py-3">
+                        <CommandItem onSelect={() => runCommand(() => window.open("https://x.com/kunalgoesbyken", "_blank"))} className="rounded-lg py-3">
                             <TwitterXIcon className="mr-2 h-4 w-4 text-neutral-500" />
                             <span>X Profile</span>
                             <CommandShortcut className="font-mono text-[10px] bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded border border-neutral-200 dark:border-neutral-700">shift + X</CommandShortcut>
                         </CommandItem>
-                        <CommandItem onSelect={() => runCommand(() => window.open("https://linkedin.com", "_blank"))} className="rounded-lg py-3">
+                        <CommandItem onSelect={() => runCommand(() => window.open("https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/", "_blank"))} className="rounded-lg py-3">
                             <LinkedinIcon className="mr-2 h-4 w-4 text-neutral-500" />
                             <span>LinkedIn Profile</span>
                             <CommandShortcut className="font-mono text-[10px] bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded border border-neutral-200 dark:border-neutral-700">shift + L</CommandShortcut>
                         </CommandItem>
-                        <CommandItem onSelect={() => runCommand(() => window.open("https://github.com", "_blank"))} className="rounded-lg py-3">
+                        <CommandItem onSelect={() => runCommand(() => window.open("https://github.com/krockxz", "_blank"))} className="rounded-lg py-3">
                             <GithubIcon className="mr-2 h-4 w-4 text-neutral-500" />
                             <span>GitHub Profile</span>
                             <CommandShortcut className="font-mono text-[10px] bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded border border-neutral-200 dark:border-neutral-700">shift + G</CommandShortcut>
