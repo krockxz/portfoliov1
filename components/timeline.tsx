@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-import DOMPurify from 'isomorphic-dompurify';
+
 import {
   SiReact,
   SiPython,
@@ -243,12 +243,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
                       .map((point, i) => (
                         <li
                           key={i}
-                          dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(point, {
-                              ALLOWED_TAGS: ['a'],
-                              ALLOWED_ATTR: ['href', 'class', 'target', 'rel'],
-                            })
-                          }}
+                          dangerouslySetInnerHTML={{ __html: point }}
                         />
                       ))}
                   </ul>

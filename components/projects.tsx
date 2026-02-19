@@ -15,6 +15,8 @@ import {
   SiNodedotjs,
   SiGoland,
   SiBun,
+  SiSupabase,
+  SiPrisma,
 } from "react-icons/si";
 
 type TechKey =
@@ -25,7 +27,9 @@ type TechKey =
   | "cloud"
   | "node"
   | "go"
-  | "bun";
+  | "bun"
+  | "supabase"
+  | "prisma";
 
 interface Project {
   title: string;
@@ -48,6 +52,8 @@ const iconMap: Record<TechKey, any> = {
   node: SiNodedotjs,
   go: SiGoland,
   bun: SiBun,
+  supabase: SiSupabase,
+  prisma: SiPrisma,
 };
 
 const techNames: Record<TechKey, string> = {
@@ -59,12 +65,14 @@ const techNames: Record<TechKey, string> = {
   node: "Node.js",
   go: "Go",
   bun: "Bun",
+  supabase: "Supabase",
+  prisma: "Prisma",
 };
 
 const Projects = () => {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-
   const [activeMedia, setActiveMedia] = useState<{ type: 'image' | 'video', src: string } | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -89,6 +97,17 @@ const Projects = () => {
       live: "https://gostman.vercel.app/",
     },
     {
+      title: "TaskFlow",
+      src: "/images/taskflow-poster.jpg",
+      poster: "/images/taskflow-poster.jpg",
+      video: "/videos/taskflow-full.mp4",
+      thumbVideo: "/videos/taskflow-preview.mp4",
+      description: "Async team coordination hub for tracking work handoffs across timezones. Real-time task updates, bulk operations, analytics dashboard, GitHub OAuth & issue sync, and self-hostable with Docker.",
+      tech: ["next", "ts", "supabase", "prisma"],
+      github: "https://github.com/krockxz/TaskFlow",
+      live: "https://taskflow-deploy-eta.vercel.app",
+    },
+    {
       title: "Un-Nexted",
       src: "/images/un-nexted.avif",
       description: "De-mystifying the meta-framework. A raw implementation of Next.js core features like SSR, hydration, and file-system routing from scratch, revealing the magic behind modern web frameworks.",
@@ -96,6 +115,8 @@ const Projects = () => {
       github: "https://github.com/krockxz/Un-nexted",
     },
   ];
+
+  const visibleProjects = showAll ? projects : projects.slice(0, 2);
 
   return (
     <div className="mt-8">
@@ -112,7 +133,7 @@ const Projects = () => {
 
       {/* GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 py-7">
-        {projects.map((project, idx) => (
+        {visibleProjects.map((project, idx) => (
           <motion.div
             key={project.title}
             initial={{ opacity: 0, filter: "blur(10px)" }}
@@ -270,6 +291,46 @@ const Projects = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* SHOW MORE — normal-flow gradient, sits below the grid, no overlap */}
+      {!showAll && projects.length > 2 && (
+        <div
+          onClick={() => setShowAll(true)}
+          className="
+            flex justify-center items-center cursor-pointer
+            pt-4 pb-6
+          "
+        >
+          <span className="
+            font-custom2 text-xs text-neutral-500 dark:text-neutral-400
+            border-b border-dashed border-neutral-300 dark:border-neutral-700
+            pb-[2px] tracking-wide
+            hover:text-neutral-900 dark:hover:text-neutral-100
+            hover:border-neutral-500 dark:hover:border-neutral-400
+            transition-colors duration-200
+          ">
+            Show {projects.length - 2} more project{projects.length - 2 > 1 ? 's' : ''}
+          </span>
+        </div>
+      )}
+
+      {/* SHOW LESS */}
+      {showAll && projects.length > 2 && (
+        <div className="flex justify-center pt-2 pb-6">
+          <button
+            onClick={() => setShowAll(false)}
+            className="
+              font-custom2 text-xs text-neutral-400 dark:text-neutral-500
+              border-b border-dashed border-neutral-200 dark:border-neutral-800
+              pb-[2px] tracking-wide cursor-pointer bg-transparent
+              hover:text-neutral-700 dark:hover:text-neutral-300
+              transition-colors duration-200
+            "
+          >
+            ↑ Show less
+          </button>
+        </div>
+      )}
 
       {/* LIGHTBOX MODAL */}
       <AnimatePresence>
