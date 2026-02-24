@@ -73,6 +73,7 @@ const Projects = () => {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
   const [activeMedia, setActiveMedia] = useState<{ type: 'image' | 'video', src: string } | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -144,6 +145,8 @@ const Projects = () => {
               delay: idx * 0.12,
             }}
             viewport={{ once: true, amount: 0.2 }}
+            onMouseEnter={() => setHoveredProject(project.title)}
+            onMouseLeave={() => setHoveredProject(null)}
             className="
               relative group overflow-hidden rounded-xl
               border border-neutral-200 dark:border-neutral-800
@@ -167,7 +170,7 @@ const Projects = () => {
             {/* IMAGE / VIDEO THUMBNAIL */}
             <div
               className="relative w-full h-44 overflow-hidden shrink-0 cursor-pointer"
-              style={{ aspectRatio: '16/9' }} // Lock aspect ratio to prevent CLS
+              style={{ aspectRatio: '16/9' }}
               onClick={() => {
                 if (project.thumbVideo) {
                   setActiveMedia({ type: 'video', src: project.video || project.thumbVideo });
@@ -176,25 +179,26 @@ const Projects = () => {
                 }
               }}
             >
-              {/* Show poster or regular image by default */}
-              {project.thumbVideo ? (
+              {/* Always render poster image for first-frame feel */}
+              <Image
+                src={project.poster || project.src}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={idx === 0}
+                className={`object-cover transition-opacity duration-300 ${project.thumbVideo && hoveredProject === project.title ? 'opacity-0' : 'opacity-100'
+                  }`}
+              />
+
+              {/* Preview video: only mount when hovered, fades in over the poster */}
+              {project.thumbVideo && hoveredProject === project.title && (
                 <video
                   src={project.thumbVideo}
-                  poster={project.poster || project.src}
                   autoPlay
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <Image
-                  src={project.poster || project.src}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority={idx === 0}
-                  className="object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               )}
 
