@@ -89,7 +89,7 @@ const Projects = () => {
     {
       title: "Gostman",
       src: "/images/project3.png",
-      poster: "/images/gostman-poster.avif",
+      poster: "/images/gostman-poster.jpg",
       video: "/videos/gostman-full.mp4",
       thumbVideo: "/videos/gostman-preview.mp4",
       description: "A native, privacy-first API client built with Wails (Go + React). 10x lighter than Postman with native support for REST, GraphQL, and WebSockets. 100% local and private.",
