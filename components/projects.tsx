@@ -17,6 +17,8 @@ import {
   SiBun,
   SiSupabase,
   SiPrisma,
+  SiTailwindcss,
+  SiGmail,
 } from "react-icons/si";
 
 type TechKey =
@@ -29,7 +31,9 @@ type TechKey =
   | "go"
   | "bun"
   | "supabase"
-  | "prisma";
+  | "prisma"
+  | "tailwind"
+  | "gmail";
 
 interface Project {
   title: string;
@@ -54,6 +58,8 @@ const iconMap: Record<TechKey, any> = {
   bun: SiBun,
   supabase: SiSupabase,
   prisma: SiPrisma,
+  tailwind: SiTailwindcss,
+  gmail: SiGmail,
 };
 
 const techNames: Record<TechKey, string> = {
@@ -67,6 +73,8 @@ const techNames: Record<TechKey, string> = {
   bun: "Bun",
   supabase: "Supabase",
   prisma: "Prisma",
+  tailwind: "Tailwind CSS",
+  gmail: "Gmail API",
 };
 
 const Projects = () => {
@@ -114,6 +122,14 @@ const Projects = () => {
       description: "De-mystifying the meta-framework. A raw implementation of Next.js core features like SSR, hydration, and file-system routing from scratch, revealing the magic behind modern web frameworks.",
       tech: ["bun", "react", "ts"],
       github: "https://github.com/krockxz/Un-nexted",
+    },
+    {
+      title: "MailFlowAI",
+      src: "/images/mailflow-ai.png",
+      description: "Next-gen AI email assistant with Gmail integration and CopilotKit for natural language control. Features 30s auto-sync, AI-powered drafting, and a sleek modern UI.",
+      tech: ["react", "ts", "tailwind", "gmail"],
+      github: "https://github.com/krockxz/MailFlowAI",
+      live: "https://ai-mail-app-pearl.vercel.app/",
     },
   ];
 

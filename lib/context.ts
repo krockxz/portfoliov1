@@ -37,6 +37,15 @@ Designed scalable APIs and data retrieval frameworks.
 
 # Projects
 
+## MailFlowAI
+Next-gen AI email assistant with Gmail integration and CopilotKit for natural language control.
+- Gmail integration with 30s auto-sync
+- CopilotKit AI assistant for natural language control and drafting
+- Built with React 19 and Tailwind CSS v4
+- GitHub: https://github.com/krockxz/MailFlowAI
+- Live: https://ai-mail-app-pearl.vercel.app/
+- Technologies: React, TypeScript, Tailwind CSS, Gmail API
+
 ## Gostman
 A native, privacy-first API client built with Wails (Go + React).
 - 10x lighter than Postman
@@ -45,6 +54,19 @@ A native, privacy-first API client built with Wails (Go + React).
 - GitHub: https://github.com/krockxz/gostman
 - Live: https://gostman.vercel.app/
 - Technologies: Go, React
+
+## TaskFlow
+Async team coordination hub for tracking work handoffs across timezones.
+- Real-time task updates and bulk operations
+- GitHub OAuth & issue sync
+- Technologies: Next.js, TypeScript, Supabase, Prisma
+- GitHub: https://github.com/krockxz/TaskFlow
+
+## Un-Nexted
+De-mystifying the meta-framework by building Next.js from scratch.
+- Implementation of SSR, hydration, and file-system routing
+- Technologies: Bun, React, TypeScript
+- GitHub: https://github.com/krockxz/Un-nexted
 
 # Technical Skills
 - Languages: Golang, Python, Java, TypeScript, JavaScript

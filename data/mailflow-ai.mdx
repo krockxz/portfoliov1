@@ -1,0 +1,113 @@
+---
+title: 'MailFlowAI: Next-Gen AI Email Assistant'
+description: 'AI-powered email assistant with Gmail integration and CopilotKit for natural language control.'
+date: '2026-02-25'
+tags: ['react', 'ai', 'gmail-api', 'copilotkit', 'zustand', 'tailwind-v4']
+repo: 'https://github.com/krockxz/MailFlowAI'
+slug: 'mailflow-ai'
+image: '/images/mailflow-ai.png'
+author: 'Kunal'
+---
+
+# MailFlowAI
+
+The next generation AI-powered email assistant with Gmail integration and CopilotKit AI assistant for natural language control.
+
+## Visual Architecture
+
+![MailFlowAI Architecture](/images/mailflow-ai.png)
+
+## Architecture Decisions & Trade-offs
+
+### 1. Polling for Email Sync
+**Decision:** Use periodic polling (30-second interval) for email updates.
+**Rationale:**
+- Simple implementation with no server-side infrastructure required
+- Works reliably in all environments without external dependencies
+- Sufficient for personal email client use cases
+**Trade-off:** Not instant like push notifications, but 30-second delay is acceptable for most use cases.
+
+### 2. CopilotKit for AI Integration
+**Decision:** Used CopilotKit instead of building a custom AI backend.
+**Rationale:**
+- Provides `useCopilotReadable` for context injection and `useCopilotAction` for callable functions with type safety.
+- Significantly reduces development time for AI-controlled UIs.
+**Trade-off:** Vendor dependency, but mitigated by clear action interfaces that could be replaced if necessary.
+
+### 3. Zustand for State Management
+**Decision:** Zustand over Redux or Context API.
+**Rationale:**
+- Offers minimal boilerplate, better performance than Context API (avoiding unnecessary re-renders), and built-in persistence via middleware.
+**Trade-off:** Smaller ecosystem than Redux, but simpler and sufficient for this application's complexity.
+
+### 4. React 19 & Tailwind CSS v4
+**Decision:** Adopted latest versions (React 19, Tailwind v4).
+**Rationale:**
+- React 19 offers improved compiler optimizations and Suspense support.
+- Tailwind v4 provides a significantly faster engine and CSS-first configuration.
+**Trade-off:** Newer tools may have fewer community resources or edge-case documentation, but offer better long-term maintainability.
+
+---
+
+## How to Set It Up and Run It Locally
+
+### Prerequisites
+- Node.js 20+
+- Google Cloud Project with Gmail API enabled
+- OAuth 2.0 credentials
+
+### Installation & Configuration
+
+1. **Configure Google Cloud**
+   - Enable Gmail API in Google Cloud Console
+   - Create OAuth 2.0 credentials (Web application)
+   - Set authorized origin: `http://localhost:3000`
+   - Set redirect URI: `http://localhost:3000/auth/callback`
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment**
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` with your credentials:
+   ```env
+   # Google OAuth
+   VITE_GMAIL_CLIENT_ID=your-client-id.apps.googleusercontent.com
+   VITE_GMAIL_CLIENT_SECRET=your-client-secret
+   VITE_GMAIL_REDIRECT_URI=http://localhost:3000/auth/callback
+
+   # CopilotKit AI Assistant (optional)
+   VITE_COPILOT_API_KEY=
+   VITE_COPILOT_ENDPOINT=
+   ```
+
+4. **Run the Application**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:3000` and sign in with Google.
+
+---
+
+## Email Sync Architecture
+
+The application uses periodic polling for email updates:
+- Client polls Gmail API every 30 seconds for new emails
+- When authenticated, initial fetch happens immediately
+- Manual refresh button available for on-demand sync
+- Polling automatically pauses when user is not authenticated
+
+This approach ensures no server-side infrastructure is required, works in any deployment environment, and provides consistent behavior across all platforms.
+
+## Future Improvements
+- **Multi-account Support:** Support switching between different Gmail accounts
+- **Conversation View:** Group emails by thread with expanded/collapsed replies
+- **Attachment Support:** Add functionality to view and send file attachments
+- **Email Actions:** Implement archive, delete, label, and star functionality
+- **Advanced Search UI:** Create a visual interface for complex queries
+- **E2E Tests:** Integrate Playwright for full user flow testing
+- **Push Notifications:** Implement service workers for background notifications
