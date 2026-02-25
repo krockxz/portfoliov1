@@ -82,6 +82,7 @@ const Projects = ({ full = false }: { full?: boolean }) => {
   const [activeMedia, setActiveMedia] = useState<{ type: 'image' | 'video', src: string } | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  const [videoReadyStates, setVideoReadyStates] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -195,26 +196,44 @@ const Projects = ({ full = false }: { full?: boolean }) => {
                 }
               }}
             >
-              {/* Always render poster image for first-frame feel */}
+              {/* Poster stays visible until video is ready to play */}
               <Image
                 src={project.poster || project.src}
                 alt={project.title}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority={idx === 0}
-                className={`object-cover transition-opacity duration-300 ${project.thumbVideo && hoveredProject === project.title ? 'opacity-0' : 'opacity-100'
-                  }`}
+                className={`object-cover transition-opacity duration-500 ease-out ${
+                  project.thumbVideo && hoveredProject === project.title && videoReadyStates[project.title]
+                    ? 'opacity-0'
+                    : 'opacity-100'
+                }`}
               />
 
-              {/* Preview video: only mount when hovered, fades in over the poster */}
-              {project.thumbVideo && hoveredProject === project.title && (
+              {/* Preview video: always mounted for preloading, hidden by default */}
+              {project.thumbVideo && (
                 <video
                   src={project.thumbVideo}
-                  autoPlay
+                  preload="metadata"
                   muted
                   loop
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
+                  onCanPlay={() => setVideoReadyStates(prev => ({ ...prev, [project.title]: true }))}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out ${
+                    hoveredProject === project.title && videoReadyStates[project.title]
+                      ? 'opacity-100'
+                      : 'opacity-0 pointer-events-none'
+                  }`}
+                  ref={(video) => {
+                    if (video && hoveredProject === project.title && !video.getAttribute('data-playing')) {
+                      video.play().catch(() => {});
+                      video.setAttribute('data-playing', 'true');
+                    } else if (video && hoveredProject !== project.title && video.getAttribute('data-playing')) {
+                      video.pause();
+                      video.currentTime = 0;
+                      video.removeAttribute('data-playing');
+                    }
+                  }}
                 />
               )}
 
