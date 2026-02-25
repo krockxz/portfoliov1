@@ -77,7 +77,7 @@ const techNames: Record<TechKey, string> = {
   gmail: "Gmail API",
 };
 
-const Projects = () => {
+const Projects = ({ full = false }: { full?: boolean }) => {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
   const [activeMedia, setActiveMedia] = useState<{ type: 'image' | 'video', src: string } | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -133,7 +133,7 @@ const Projects = () => {
     },
   ];
 
-  const visibleProjects = showAll ? projects : projects.slice(0, 2);
+  const visibleProjects = (showAll || full) ? projects : projects.slice(0, 2);
 
   return (
     <div className="mt-8">
@@ -313,7 +313,7 @@ const Projects = () => {
       </div>
 
       {/* SHOW MORE — normal-flow gradient, sits below the grid, no overlap */}
-      {!showAll && projects.length > 2 && (
+      {!showAll && !full && projects.length > 2 && (
         <div
           onClick={() => setShowAll(true)}
           className="
@@ -335,7 +335,7 @@ const Projects = () => {
       )}
 
       {/* SHOW LESS */}
-      {showAll && projects.length > 2 && (
+      {showAll && !full && projects.length > 2 && (
         <div className="flex justify-center pt-2 pb-6">
           <button
             onClick={() => setShowAll(false)}
