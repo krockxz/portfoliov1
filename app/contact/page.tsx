@@ -94,7 +94,7 @@ export default function Contact() {
 
   return (
     <div className="relative flex min-h-screen justify-center font-sans overflow-hidden">
-      <Container className="min-h-[200vh] px-8 pt-24 md:p-20 md:pb-10 mx-auto">
+      <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 mx-auto">
         {/* Background Pattern & Borders */}
         <div
           className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]

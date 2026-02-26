@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <div className="relative flex min-h-screen justify-center font-sans overflow-hidden">
-      <Container className="min-h-[200vh] px-8 pt-24 md:p-20 md:pb-10 mx-auto">
+      <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 mx-auto">
 
         {/* RIGHT BORDER */}
         <div

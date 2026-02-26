@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://krockxz.com"),
   title: "Kunal",
   description:
-    "A perfect portfolio website template that showcases my skills and learning",
+    "Backend systems engineer building scalable systems, AI tools, and production-grade web apps.",
   openGraph: {
     title: "Kunal",
     description: "Backend systems architect who occasionally touches the frontend. Building AI tools and debugging why the LLM thinks it's a poet.",

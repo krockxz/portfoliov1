@@ -18,16 +18,16 @@ export default async function BlogIndex() {
 
     <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 relative mx-auto">
       <div
-        className="absolute right-0 top-0 h-full w-6 border-x border-x-(--pattern-fg)
+        className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
           bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-size-[10px_10px] bg-fixed opacity-80 dark:opacity-12"
+          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
       />
 
       {/* LEFT BORDER */}
       <div
-        className="absolute left-0 top-0 h-full w-6 border-x border-x-(--pattern-fg)
+        className="absolute left-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
           bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-size-[10px_10px] bg-fixed opacity-80 dark:opacity-12"
+          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
       />
       <div className="max-w-4xl mx-auto ">
 
@@ -38,7 +38,7 @@ export default async function BlogIndex() {
 
           <p className="text-s text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1 tracking-tight font-custom2 max-w-xl">
             I am a software engineer with a passion for building scalable
-            and efficient systems. I spend my days solving problems at Google
+            and efficient systems. I spend my days building legal tech infrastructure
             while tinkering with ideas after hours.
           </p>
         </div>
