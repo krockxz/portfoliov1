@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Container from "@/components/containers";
-import { Github, Linkedin } from "lucide-react";
+import { Github, Linkedin, Check, AlertCircle, X } from "lucide-react";
 import { SiX } from "react-icons/si";
 import DisplacementText from "@/components/ui/displacement-text";
 
@@ -130,10 +130,15 @@ export default function Contact() {
                 aria-invalid={errors.name ? "true" : "false"}
                 aria-describedby={errors.name ? "name-error" : undefined}
                 placeholder="Tyler Durden"
-                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
+                className={`w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border rounded-lg outline-none transition-all duration-200 font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400
+                  ${errors.name
+                    ? "border-red-300 dark:border-red-800 focus-visible:ring-2 focus-visible:ring-red-200 dark:focus-visible:ring-red-900/50"
+                    : "border-neutral-200 dark:border-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 focus:border-neutral-300 dark:focus:border-neutral-700"
+                  }`}
               />
               {errors.name && (
-                <p id="name-error" className="text-sm text-red-500 mt-1" role="alert">
+                <p id="name-error" className="text-sm text-red-500 dark:text-red-400 mt-1 font-custom2 flex items-center gap-1.5 animate-in fade-in slide-in-from-left-1 duration-200" role="alert">
+                  <AlertCircle size={14} strokeWidth={2} />
                   {errors.name}
                 </p>
               )}
@@ -152,10 +157,15 @@ export default function Contact() {
                 aria-invalid={errors.email ? "true" : "false"}
                 aria-describedby={errors.email ? "email-error" : undefined}
                 placeholder="tyler@projectmayhem.com"
-                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400"
+                className={`w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border rounded-lg outline-none transition-all duration-200 font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400
+                  ${errors.email
+                    ? "border-red-300 dark:border-red-800 focus-visible:ring-2 focus-visible:ring-red-200 dark:focus-visible:ring-red-900/50"
+                    : "border-neutral-200 dark:border-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 focus:border-neutral-300 dark:focus:border-neutral-700"
+                  }`}
               />
               {errors.email && (
-                <p id="email-error" className="text-sm text-red-500 mt-1" role="alert">
+                <p id="email-error" className="text-sm text-red-500 dark:text-red-400 mt-1 font-custom2 flex items-center gap-1.5 animate-in fade-in slide-in-from-left-1 duration-200" role="alert">
+                  <AlertCircle size={14} strokeWidth={2} />
                   {errors.email}
                 </p>
               )}
@@ -174,10 +184,15 @@ export default function Contact() {
                 aria-describedby={errors.message ? "message-error" : undefined}
                 rows={5}
                 placeholder="You're crazy good, never change."
-                className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600 focus:border-transparent outline-none transition-all font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 resize-none"
+                className={`w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900 border rounded-lg outline-none transition-all duration-200 font-custom2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 resize-none
+                  ${errors.message
+                    ? "border-red-300 dark:border-red-800 focus-visible:ring-2 focus-visible:ring-red-200 dark:focus-visible:ring-red-900/50"
+                    : "border-neutral-200 dark:border-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 focus:border-neutral-300 dark:focus:border-neutral-700"
+                  }`}
               />
               {errors.message && (
-                <p id="message-error" className="text-sm text-red-500 mt-1" role="alert">
+                <p id="message-error" className="text-sm text-red-500 dark:text-red-400 mt-1 font-custom2 flex items-center gap-1.5 animate-in fade-in slide-in-from-left-1 duration-200" role="alert">
+                  <AlertCircle size={14} strokeWidth={2} />
                   {errors.message}
                 </p>
               )}
@@ -230,19 +245,60 @@ export default function Contact() {
               </span>
             </button>
 
-            {/* Status Message */}
+            {/* Status Message - Matches site's neutral palette aesthetic */}
             {submitStatus.type && (
               <div
                 id="submit-status"
                 role="status"
                 aria-live="polite"
-                className={`mt-4 p-3 rounded-lg text-sm font-custom2 ${
-                  submitStatus.type === "success"
-                    ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800"
-                    : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800"
-                }`}
+                className={`mt-4 rounded-lg text-sm font-custom2 overflow-hidden
+                  bg-gradient-to-b from-white to-neutral-50 dark:from-neutral-900 dark:to-neutral-950
+                  border ${submitStatus.type === "success"
+                    ? "border-neutral-200/80 dark:border-neutral-700/50"
+                    : "border-red-200/60 dark:border-red-900/30"
+                  }
+                  shadow-[0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)]
+                  dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)]
+                  animate-in fade-in slide-in-from-top-2 duration-300 ease-out
+                  ${submitStatus.type === "success" ? "text-neutral-700 dark:text-neutral-300" : "text-red-700 dark:text-red-400"}`}
               >
-                {submitStatus.message}
+                <div className="flex items-start gap-3 p-4">
+                  <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5
+                    ${submitStatus.type === "success"
+                      ? "bg-neutral-100 dark:bg-neutral-800"
+                      : "bg-red-50 dark:bg-red-900/20"
+                    }`}>
+                    {submitStatus.type === "success" ? (
+                      <Check size={12} className="text-neutral-600 dark:text-neutral-400" strokeWidth={3} />
+                    ) : (
+                      <AlertCircle size={12} className="text-red-500 dark:text-red-400" strokeWidth={2.5} />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium">{submitStatus.type === "success" ? "Message sent" : "Something went wrong"}</p>
+                    <p className={`mt-0.5 text-xs ${submitStatus.type === "success"
+                      ? "text-neutral-500 dark:text-neutral-500"
+                      : "text-red-600/80 dark:text-red-400/80"
+                    }`}>
+                      {submitStatus.message}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSubmitStatus({ type: null, message: "" })}
+                    className="flex-shrink-0 p-1 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800
+                      text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300
+                      transition-colors duration-200"
+                    aria-label="Dismiss"
+                  >
+                    <X size={14} strokeWidth={2} />
+                  </button>
+                </div>
+                {/* Subtle accent bar */}
+                <div className={`h-0.5 w-full ${submitStatus.type === "success"
+                  ? "bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-700"
+                  : "bg-gradient-to-r from-transparent via-red-200 to-transparent dark:via-red-900/50"
+                }`}></div>
               </div>
             )}
           </form>
