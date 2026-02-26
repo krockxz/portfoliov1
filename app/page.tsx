@@ -1,5 +1,6 @@
 import Container from "@/components/containers";
 import Socials from "@/components/socials";
+import Separator from "@/components/separator";
 import { getGithubData } from "@/lib/github";
 
 import dynamic from "next/dynamic";
@@ -66,13 +67,13 @@ export default async function Home() {
           </p>
         </div>
 
-        <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] my-3 opacity-90 dark:opacity-15"></div>
+        <Separator fullWidth className="my-3" />
 
 
 
         <Projects />
 
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
+        <Separator />
 
 
         <Timeline />
@@ -81,11 +82,11 @@ export default async function Home() {
 
         <GithubGraph data={githubData} />
 
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15 mt-12"></div>
+        <Separator className="mt-12" />
 
         <Skills />
 
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15 mt-4"></div>
+        <Separator className="mt-4" />
 
         <GetInTouch />
 

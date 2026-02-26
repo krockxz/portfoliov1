@@ -14,28 +14,30 @@ const Navbar = () => {
   const navItems = [
     { title: "Projects", href: "/projects" },
     { title: "Blog", href: "/blog" },
-    { title: "Contact", href: "/Contact" }
+    { title: "Contact", href: "/contact" }
 
   ];
 
   const [hovered, setHovered] = useState<number | null>(null);
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 20);
   });
 
   useEffect(() => {
-    const updateViewport = () => {
-      if (typeof window === "undefined") return;
-      setIsDesktop(window.innerWidth >= 768);
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
     };
 
-    updateViewport();
-    window.addEventListener("resize", updateViewport);
-    return () => window.removeEventListener("resize", updateViewport);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   const isActiveLink = (href: string) => {
@@ -46,23 +48,51 @@ const Navbar = () => {
   const THEME_TOGGLE_INDEX = 3;
   const COMMAND_MENU_INDEX = 4;
 
+  // Animation variants based on motion preference
+  const navVariants = prefersReducedMotion ? {} : {
+    scrolled: {
+      scaleY: 0.95,
+      translateY: -4,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    },
+    top: {
+      scaleY: 1,
+      translateY: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <Container>
       <motion.nav
         initial={false}
-        animate={{
-          boxShadow: scrolled ? "var(--shadow-input)" : "none",
-          width: scrolled ? (isDesktop ? "40rem" : "90%") : (isDesktop ? "48rem" : "100%"),
-          top: scrolled ? 12 : 0,
-          borderRadius: "2.5rem",
+        animate={scrolled ? "scrolled" : "top"}
+        variants={navVariants}
+        className="fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-4xl items-center justify-between gap-4 rounded-[2.5rem] bg-neutral-50/80 px-4 py-3 font-custom text-neutral-900 backdrop-blur-lg transition-opacity duration-300 dark:bg-neutral-950/70 dark:text-neutral-50 md:gap-8 md:px-6"
+        style={{
+          // Use transform-origin for scale animation to anchor from top
+          transformOrigin: "top center",
+          // Use will-change to hint browser for optimization
+          willChange: prefersReducedMotion ? "auto" : "transform"
         }}
-        transition={{
-          duration: 0.3,
-          ease: "easeOut",
-        }}
-        className="fixed inset-x-0 top-0 z-50 flex w-full mx-auto items-center justify-between
-        px-4 py-3 bg-neutral-50/80 dark:bg-neutral-950/70 backdrop-blur-lg font-custom text-neutral-900 dark:text-neutral-50 transition-all duration-300"
       >
+        {/* Box shadow overlay - animated via opacity instead of box-shadow property */}
+        {!prefersReducedMotion && (
+          <motion.div
+            className="absolute inset-0 rounded-[2.5rem] shadow-[var(--shadow-input)] pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: scrolled ? 1 : 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            style={{ zIndex: -1 }}
+          />
+        )}
+
         <Link href="/" className="hover:opacity-75 transition-opacity duration-300">
           <Image
             className="w-9 h-9 rounded-full shadow-sm"

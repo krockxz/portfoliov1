@@ -1,10 +1,20 @@
 "use client"
 
 import { useEffect, useState, cloneElement } from "react";
-import { GitHubCalendar } from "react-github-calendar";
+import Separator from "@/components/separator";
 import { useTheme } from "next-themes";
-import { Tooltip } from "react-tooltip";
+import dynamic from "next/dynamic";
 import { GithubData, PR } from "@/lib/github";
+
+// Dynamic imports for code splitting - these load separately from the PR list
+const GitHubCalendar = dynamic(() => import("react-github-calendar").then(mod => ({ default: mod.GitHubCalendar })), {
+  loading: () => <div className="w-full flex justify-center p-8">Loading GitHub activity...</div>,
+  ssr: false
+});
+
+const Tooltip = dynamic(() => import("react-tooltip").then(mod => ({ default: mod.Tooltip })), {
+  ssr: false
+});
 
 interface GithubGraphProps {
   data: GithubData;
@@ -18,8 +28,6 @@ const GithubGraph = ({ data }: GithubGraphProps) => {
 
   const [showAll, setShowAll] = useState(false);
   const [filterType, setFilterType] = useState<"merged" | "open" | "closed">("merged");
-  const [showPRSection, setShowPRSection] = useState(true);
-  const [closedPRIds, setClosedPRIds] = useState<Set<number>>(new Set());
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -40,11 +48,11 @@ const GithubGraph = ({ data }: GithubGraphProps) => {
 
   return (
     <div>
-      <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
+      <Separator fullWidth />
 
 
       <h1 className="text-neutral-900 dark:text-neutral-50 font-custom font-bold  text-3xl tracking-tight  py-2"><span className="link--elara">Proof Of Work</span></h1>
-      <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-[var(--pattern-fg)] my-0.5 opacity-90 dark:opacity-15"></div>
+      <Separator className="my-0.5" />
       <p className=" font-custom2 text-neutral-700 dark:text-neutral-300 mt-3 px-4 py-[7px]
            text-sm inline-block
           bg-neutral-100 dark:bg-neutral-900 border-dashed border-neutral-300 dark:border-neutral-700 border mb-6"> building real tools, solving real problems, and leaving a trail of commits to prove it.</p>
@@ -90,8 +98,9 @@ const GithubGraph = ({ data }: GithubGraphProps) => {
           )}
         </div>
       </div>
-      {showPRSection && (
-        <div className="mt-4">
+
+      {/* PR Section - always shown */}
+      <div className="mt-4">
           <div className="mb-1 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-neutral-900 dark:text-neutral-50 font-custom font-bold text-2xl tracking-tight">
               <span className="link--elara">Pull Requests</span>
@@ -140,12 +149,12 @@ const GithubGraph = ({ data }: GithubGraphProps) => {
                 ? "Active pull requests"
                 : "Closed pull requests"}
           </p>
-          <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] opacity-90 dark:opacity-15"></div>
+          <Separator fullWidth />
 
           {prs.length > 0 ? (
             <div>
               <div className="space-y-2 mt-5">
-                {prs.slice(0, showAll ? prs.length : initialCount).filter(pr => !closedPRIds.has(pr.id)).map((pr, index) => (
+                {prs.slice(0, showAll ? prs.length : initialCount).map((pr, index) => (
                   <div key={pr.id} className="group flex items-start gap-3 p-3 rounded-md transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 border border-transparent hover:border-neutral-300/50 dark:hover:border-neutral-700/50">
                     <div className="shrink-0 mt-0.5">
                       <div className={`w-1 h-1 rounded-full group-hover:scale-150 transition-transform duration-200 ${filterType === "merged"
@@ -175,16 +184,14 @@ const GithubGraph = ({ data }: GithubGraphProps) => {
                 <div className="flex justify-center mt-6">
                   <button
                     onClick={() => setShowAll(!showAll)}
-                    className="group relative overflow-hidden rounded-lg  w-full
-                            bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 
-                            border border-neutral-200 dark:border-neutral-800 
-                            text-neutral-800 dark:text-neutral-200 text-sm font-medium px-6 py-2.5 
-                            transition-all duration-300 
-                            hover:from-neutral-50 hover:to-neutral-100 dark:hover:from-neutral-800 dark:hover:to-neutral-800
-                            shadow-[0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)] 
-                            dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)]"
+                    className="btn-elevated group relative overflow-hidden rounded-lg  w-full
+                            bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900
+                            border border-neutral-200 dark:border-neutral-800
+                            text-neutral-800 dark:text-neutral-200 text-sm font-medium px-6 py-2.5
+                            transition-all duration-300
+                            hover:from-neutral-50 hover:to-neutral-100 dark:hover:from-neutral-800 dark:hover:to-neutral-800"
                   >
-                    {showAll ? "↑ Collapse" : `↓ Expand • ${prs.length - closedPRIds.size - initialCount} more`}
+                    {showAll ? "↑ Collapse" : `↓ Expand • ${prs.length - initialCount} more`}
                   </button>
                 </div>
               )}
@@ -193,7 +200,6 @@ const GithubGraph = ({ data }: GithubGraphProps) => {
             <div className="text-secondary font-custom2 text-sm mt-4">No pull requests found</div>
           )}
         </div>
-      )}
     </div>
 
   );

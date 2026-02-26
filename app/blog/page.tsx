@@ -1,5 +1,6 @@
 
 import Container from "@/components/containers";
+import Separator from "@/components/separator";
 import { getAllBlogs } from "@/util/mdx_clean";
 import type { Metadata } from "next";
 import Link from 'next/link';
@@ -41,7 +42,7 @@ export default async function BlogIndex() {
             while tinkering with ideas after hours.
           </p>
         </div>
-        <div className="hidden md:block absolute right-6 w-[53rem] h-px bg-(--pattern-fg) opacity-90 dark:opacity-15 "></div>
+        <Separator />
 
         {/* Blog Posts List */}
         <div className="flex flex-col gap-4 mt-8">

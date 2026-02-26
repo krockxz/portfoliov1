@@ -7,6 +7,40 @@ export default function FractalTree() {
     const el = useRef<HTMLCanvasElement>(null);
     const { theme } = useTheme();
     const [size, setSize] = useState({ width: 0, height: 0 });
+    const [shouldAnimate, setShouldAnimate] = useState(true);
+    const [isLargeScreen, setIsLargeScreen] = useState(false);
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+    // Track if component is mounted on large screens only (md breakpoint: 768px)
+    useEffect(() => {
+        const checkScreenSize = () => {
+            const isLarge = window.innerWidth >= 768;
+            setIsLargeScreen(isLarge);
+        };
+
+        checkScreenSize();
+        const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+        const handleChange = (e: MediaQueryListEvent) => {
+            setIsLargeScreen(e.matches);
+        };
+
+        mediaQuery.addEventListener("change", handleChange);
+        return () => mediaQuery.removeEventListener("change", handleChange);
+    }, []);
+
+    // Check for reduced motion preference
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+        setPrefersReducedMotion(mediaQuery.matches);
+
+        const handleChange = (e: MediaQueryListEvent) => {
+            setPrefersReducedMotion(e.matches);
+        };
+
+        mediaQuery.addEventListener("change", handleChange);
+        return () => mediaQuery.removeEventListener("change", handleChange);
+    }, []);
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
@@ -27,6 +61,9 @@ export default function FractalTree() {
     useEffect(() => {
         const canvas = el.current;
         if (!canvas || size.width === 0 || size.height === 0) return;
+
+        // Don't render if on small screen
+        if (!isLargeScreen) return;
 
         const ctx = canvas.getContext("2d")!;
 
@@ -90,10 +127,57 @@ export default function FractalTree() {
                 steps.push(() => step(nx, ny, rad2, counter));
         };
 
+        const randomMiddle = () => random() * 0.6 + 0.2;
+
+        // For reduced motion, render static version only
+        const drawStatic = () => {
+            ctx.clearRect(0, 0, size.width, size.height);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = color;
+
+            // Draw a few static fractal branches
+            const drawStaticBranch = (x: number, y: number, rad: number, depth: number = 0) => {
+                if (depth > 8) return;
+
+                const length = random() * len * 2;
+                const [nx, ny] = polar2cart(x, y, length, rad);
+
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(nx, ny);
+                ctx.stroke();
+
+                if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100)
+                    return;
+
+                const rad1 = rad + random() * r15;
+                const rad2 = rad - random() * r15;
+
+                drawStaticBranch(nx, ny, rad1, depth + 1);
+                if (random() < 0.7) {
+                    drawStaticBranch(nx, ny, rad2, depth + 1);
+                }
+            };
+
+            if (size.width < 500) {
+                drawStaticBranch(randomMiddle() * size.width, -5, r90);
+                drawStaticBranch(randomMiddle() * size.width, size.height + 5, -r90);
+            } else {
+                drawStaticBranch(randomMiddle() * size.width, -5, r90);
+                drawStaticBranch(randomMiddle() * size.width, size.height + 5, -r90);
+                drawStaticBranch(-5, randomMiddle() * size.height, 0);
+                drawStaticBranch(size.width + 5, randomMiddle() * size.height, r180);
+            }
+        };
+
+        // If reduced motion is preferred, just draw static once and return
+        if (prefersReducedMotion) {
+            drawStatic();
+            return;
+        }
+
         let lastTime = performance.now();
         const interval = 1000 / 40; // 50fps
-
-        const randomMiddle = () => random() * 0.6 + 0.2;
 
         const randomRoot = () => {
             const type = random() > 0.5 ? 'vertical' : 'horizontal';
@@ -111,6 +195,11 @@ export default function FractalTree() {
         };
 
         const frame = () => {
+            // Stop animation if shouldAnimate is false or prefers reduced motion
+            if (!shouldAnimate || prefersReducedMotion) {
+                return;
+            }
+
             if (performance.now() - lastTime < interval) {
                 animationId = requestAnimationFrame(frame);
                 return;
@@ -161,10 +250,31 @@ export default function FractalTree() {
 
         start();
 
+        // Handle visibility change to stop/start animation
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                setShouldAnimate(false);
+                cancelAnimationFrame(animationId);
+            } else {
+                setShouldAnimate(true);
+                if (!prefersReducedMotion) {
+                    start();
+                }
+            }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
         return () => {
             cancelAnimationFrame(animationId);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
         };
-    }, [size, theme]);
+    }, [size, theme, shouldAnimate, prefersReducedMotion, isLargeScreen]);
+
+    // Don't render anything on small screens
+    if (!isLargeScreen) {
+        return null;
+    }
 
     const mask = "radial-gradient(circle, transparent, black)";
 

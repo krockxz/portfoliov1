@@ -88,7 +88,7 @@ export function CommandMenu() {
                     runCommand(() => window.open("https://github.com/krockxz", "_blank"))
                 } else if (key === 'e') {
                     e.preventDefault()
-                    runCommand(() => router.push("/Contact"))
+                    runCommand(() => router.push("/contact"))
                 }
 
                 // General
@@ -181,7 +181,7 @@ export function CommandMenu() {
                             <span>GitHub Profile</span>
                             <CommandShortcut className="font-mono text-[10px] bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded border border-neutral-200 dark:border-neutral-700">shift + G</CommandShortcut>
                         </CommandItem>
-                        <CommandItem onSelect={() => runCommand(() => router.push("/Contact"))} className="rounded-lg py-3">
+                        <CommandItem onSelect={() => runCommand(() => router.push("/contact"))} className="rounded-lg py-3">
                             <MailFilledIcon className="mr-2 h-4 w-4 text-neutral-500" />
                             <span>Email</span>
                             <CommandShortcut className="font-mono text-[10px] bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded border border-neutral-200 dark:border-neutral-700">shift + E</CommandShortcut>

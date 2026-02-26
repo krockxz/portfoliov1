@@ -203,14 +203,12 @@ export default function Contact() {
               disabled={isSubmitting}
               aria-disabled={isSubmitting}
               aria-describedby={submitStatus.type ? "submit-status" : undefined}
-              className="group relative overflow-hidden rounded-lg  w-full
+              className="btn-elevated group relative overflow-hidden rounded-lg  w-full
                             bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900
                             border border-neutral-200 dark:border-neutral-800
                             text-neutral-800 dark:text-neutral-200 text-sm font-medium px-6 py-2.5
                             transition-all duration-300
                             hover:from-neutral-50 hover:to-neutral-100 dark:hover:from-neutral-800 dark:hover:to-neutral-800
-                            shadow-[0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)]
-                            dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)]
                             disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
@@ -257,8 +255,7 @@ export default function Contact() {
                     ? "border-neutral-200/80 dark:border-neutral-700/50"
                     : "border-red-200/60 dark:border-red-900/30"
                   }
-                  shadow-[0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,1)]
-                  dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)]
+                  btn-elevated
                   animate-in fade-in slide-in-from-top-2 duration-300 ease-out
                   ${submitStatus.type === "success" ? "text-neutral-700 dark:text-neutral-300" : "text-red-700 dark:text-red-400"}`}
               >
