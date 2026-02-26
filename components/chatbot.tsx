@@ -20,7 +20,7 @@ export default function Chatbot() {
   const [showButton, setShowButton] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const hasShownTooltip = useRef(false);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Check if tooltip was already shown

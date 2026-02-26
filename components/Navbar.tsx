@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/containers";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, type Variants } from "framer-motion";
 import { ThemeToggleButton } from "@/components/ui/skiper-ui/skiper26";
 import { CommandMenu } from "@/components/command-menu";
 
@@ -49,24 +49,26 @@ const Navbar = () => {
   const COMMAND_MENU_INDEX = 4;
 
   // Animation variants based on motion preference
-  const navVariants = prefersReducedMotion ? {} : {
-    scrolled: {
-      scaleY: 0.95,
-      translateY: -4,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut"
-      }
-    },
-    top: {
-      scaleY: 1,
-      translateY: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut"
-      }
-    }
-  };
+  const navVariants: Variants | undefined = prefersReducedMotion
+    ? undefined
+    : {
+        scrolled: {
+          scaleY: 0.95,
+          translateY: -4,
+          transition: {
+            duration: 0.3,
+            ease: "easeOut",
+          },
+        },
+        top: {
+          scaleY: 1,
+          translateY: 0,
+          transition: {
+            duration: 0.3,
+            ease: "easeOut",
+          },
+        },
+      };
 
   return (
     <Container>
