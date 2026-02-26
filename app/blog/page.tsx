@@ -38,7 +38,7 @@ export default async function BlogIndex() {
 
           <p className="text-s text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1 tracking-tight font-custom2 max-w-xl">
             I am a software engineer with a passion for building scalable
-            and efficient systems. I spend my days building legal tech infrastructure
+            and efficient systems. I spend my days crafting backend infrastructure
             while tinkering with ideas after hours.
           </p>
         </div>
