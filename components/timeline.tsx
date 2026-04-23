@@ -18,7 +18,11 @@ import {
   SiMongodb,
   SiAmazons3,
   SiJenkins,
+  SiRust,
+  SiFlutter,
+  SiAwsamplify,
 } from "react-icons/si";
+import type { IconType } from "react-icons";
 import { FaJava } from "react-icons/fa";
 
 type TechKey =
@@ -34,9 +38,12 @@ type TechKey =
   | "docker"
   | "mongo"
   | "s3"
-  | "jenkins";
+  | "jenkins"
+  | "rust"
+  | "flutter"
+  | "aws";
 
-const iconMap: Record<TechKey, any> = {
+const iconMap: Record<TechKey, IconType> = {
   react: SiReact,
   python: SiPython,
   java: FaJava,
@@ -50,6 +57,9 @@ const iconMap: Record<TechKey, any> = {
   mongo: SiMongodb,
   s3: SiAmazons3,
   jenkins: SiJenkins,
+  rust: SiRust,
+  flutter: SiFlutter,
+  aws: SiAwsamplify,
 };
 
 const techNames: Record<TechKey, string> = {
@@ -66,6 +76,9 @@ const techNames: Record<TechKey, string> = {
   mongo: "MongoDB",
   s3: "Amazon S3",
   jenkins: "Jenkins",
+  rust: "Rust",
+  flutter: "Flutter",
+  aws: "AWS",
 };
 
 interface ExperienceItem {
@@ -74,7 +87,9 @@ interface ExperienceItem {
   date: string;
   description: string;
   logo: string;
-  href: string;
+  logoWidth?: number;
+  logoHeight?: number;
+  href?: string;
   tech?: TechKey[];
 }
 
@@ -83,6 +98,16 @@ export const Timeline = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const experiences: ExperienceItem[] = [
+    {
+      company: "CollectEdge",
+      designation: "Software Development Engineer",
+      date: "March 2026 - Present",
+      description: ``,
+      logo: "/images/logos/collectedge.svg",
+      logoWidth: 199,
+      logoHeight: 36,
+      tech: ["rust", "flutter", "aws", "react", "postgres"],
+    },
     {
       company: "Indian Kanoon",
       designation: "Software Developer",
@@ -151,20 +176,38 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
             >
               {/* Logo */}
               <div className="relative shrink-0 mt-1 z-10">
-                <Link
-                  href={exp.href}
-                  target="_blank"
-                  onClick={(e) => e.stopPropagation()}
-                  className="block rounded-full transition-transform hover:scale-110 active:scale-95"
-                >
-                  <Image
-                    src={exp.logo}
-                    alt={exp.company}
-                    width={48}
-                    height={48}
-                    className="rounded-full object-cover size-12 border border-neutral-200 dark:border-neutral-700 bg-white"
-                  />
-                </Link>
+                {exp.href ? (
+                  <Link
+                    href={exp.href}
+                    target="_blank"
+                    onClick={(e) => e.stopPropagation()}
+                    className="block rounded-full transition-transform hover:scale-110 active:scale-95"
+                  >
+                    <Image
+                      src={exp.logo}
+                      alt={exp.company}
+                      width={exp.logoWidth ?? 48}
+                      height={exp.logoHeight ?? 48}
+                      className={
+                        exp.company === "CollectEdge"
+                          ? "size-12 rounded-full object-contain p-1 border border-neutral-200 dark:border-neutral-700 bg-white"
+                          : "rounded-full object-cover size-12 border border-neutral-200 dark:border-neutral-700 bg-white"
+                      }
+                    />
+                  </Link>
+                ) : (
+                    <Image
+                      src={exp.logo}
+                      alt={exp.company}
+                      width={exp.logoWidth ?? 48}
+                      height={exp.logoHeight ?? 48}
+                      className={
+                        exp.company === "CollectEdge"
+                          ? "size-12 rounded-full object-contain p-1 border border-neutral-200 dark:border-neutral-700 bg-white"
+                          : "rounded-full object-cover size-12 border border-neutral-200 dark:border-neutral-700 bg-white"
+                      }
+                    />
+                )}
               </div>
 
               {/* Content Container */}

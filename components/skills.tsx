@@ -23,6 +23,8 @@ import {
     SiVuedotjs,
     SiJenkins,
     SiAmazons3,
+    SiRust,
+    SiFlutter,
 } from "react-icons/si";
 import { FaAws, FaJava } from "react-icons/fa";
 import LogoSlider from "@/components/ui/logo-slider";
@@ -33,6 +35,8 @@ const skills = [
     { name: "Java", icon: FaJava },
     { name: "TypeScript", icon: SiTypescript },
     { name: "JavaScript", icon: SiJavascript },
+    { name: "Rust", icon: SiRust },
+    { name: "Flutter", icon: SiFlutter },
     { name: "React", icon: SiReact },
     { name: "Next.js", icon: SiNextdotjs },
     { name: "Vue.js", icon: SiVuedotjs },
