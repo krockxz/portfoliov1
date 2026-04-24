@@ -114,7 +114,7 @@ Implemented a real-time credit risk engine with 18 parallel rule workers on reac
     {
       company: "Indian Kanoon",
       designation: "Software Developer",
-      date: "April 2025 - Present",
+      date: "April 2025 - Feb 2026",
       description: `Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch.
 Teaching AI to be a lawyer so humans don't have to read 5,000 documents manually.
 Scaled the system to handle 5,000+ concurrent users without the server filing a lawsuit against me.`,
