@@ -102,8 +102,11 @@ export const Timeline = () => {
       company: "CollectEdge",
       designation: "Software Development Engineer",
       date: "March 2026 - Present",
-      description: ``,
-      logo: "/images/logos/collectedge.svg",
+      description: `Scaled event-driven microservices architecture in Rust to 50K+ daily messages via horizontal partitioning across 10+ AWS SQS queues, with backpressure-aware consumers, circuit-breaker controls, and idempotent processing for AI voice bots, async transcription workers, and WhatsApp campaigns.
+Architected an AI-powered call analytics platform in React Native with polyglot persistence (S3 + PostgreSQL) and CQRS read/write separation, delivering async audio pipelines with ML inference for sentiment/disposition extraction and automatic interaction synthesis.
+Built a self-optimizing predictive dialer using weighted fair queueing, 5-tier priority strata, graph-based contact scoring to maximize agent utilization through real-time routing and ML-assisted dial timing.
+Implemented a real-time credit risk engine with 18 parallel rule workers on reactive streams, multi-bureau aggregation and 40% cost optimization via LRU cache plus request batching, achieving sub-100ms risk scoring.`,
+      logo: "/images/logos/collectedge.jpeg",
       logoWidth: 199,
       logoHeight: 36,
       tech: ["rust", "flutter", "aws", "react", "postgres"],
@@ -115,7 +118,7 @@ export const Timeline = () => {
       description: `Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch.
 Teaching AI to be a lawyer so humans don't have to read 5,000 documents manually.
 Scaled the system to handle 5,000+ concurrent users without the server filing a lawsuit against me.`,
-      logo: "/images/logos/indiankanoon.png",
+      logo: "/images/logos/indian_kanoon_logo.jpeg",
       href: "https://indiankanoon.org/",
       tech: ["python", "django", "react", "redis", "celery", "postgres", "gemini"],
     },
@@ -181,18 +184,14 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
                     href={exp.href}
                     target="_blank"
                     onClick={(e) => e.stopPropagation()}
-                    className="block rounded-full transition-transform hover:scale-110 active:scale-95"
+                    className="block"
                   >
                     <Image
                       src={exp.logo}
                       alt={exp.company}
                       width={exp.logoWidth ?? 48}
                       height={exp.logoHeight ?? 48}
-                      className={
-                        exp.company === "CollectEdge"
-                          ? "size-12 rounded-full object-contain p-1 border border-neutral-200 dark:border-neutral-700 bg-white"
-                          : "rounded-full object-cover size-12 border border-neutral-200 dark:border-neutral-700 bg-white"
-                      }
+                      className="size-12 rounded-lg object-contain"
                     />
                   </Link>
                 ) : (
@@ -201,11 +200,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
                       alt={exp.company}
                       width={exp.logoWidth ?? 48}
                       height={exp.logoHeight ?? 48}
-                      className={
-                        exp.company === "CollectEdge"
-                          ? "size-12 rounded-full object-contain p-1 border border-neutral-200 dark:border-neutral-700 bg-white"
-                          : "rounded-full object-cover size-12 border border-neutral-200 dark:border-neutral-700 bg-white"
-                      }
+                      className="size-12 rounded-lg object-contain"
                     />
                 )}
               </div>
