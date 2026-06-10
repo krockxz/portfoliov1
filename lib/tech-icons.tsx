@@ -27,6 +27,7 @@ import {
   SiRust,
   SiFlutter,
   SiAwsamplify,
+  SiOnnx,
 } from "react-icons/si";
 
 export type TechKey =
@@ -56,7 +57,8 @@ export type TechKey =
   | "jenkins"
   | "rust"
   | "flutter"
-  | "aws";
+  | "aws"
+  | "onnx";
 
 export const iconMap: Record<TechKey, IconType> = {
   next: SiNextdotjs,
@@ -86,6 +88,7 @@ export const iconMap: Record<TechKey, IconType> = {
   rust: SiRust,
   flutter: SiFlutter,
   aws: SiAwsamplify,
+  onnx: SiOnnx,
 };
 
 export const techNames: Record<TechKey, string> = {
@@ -116,4 +119,5 @@ export const techNames: Record<TechKey, string> = {
   rust: "Rust",
   flutter: "Flutter",
   aws: "AWS",
+  onnx: "ONNX",
 };

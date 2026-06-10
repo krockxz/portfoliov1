@@ -145,6 +145,13 @@ const Projects = ({ full = false }: { full?: boolean }) => {
       github: "https://github.com/krockxz/MailFlowAI",
       live: "https://ai-mail-app-pearl.vercel.app/",
     },
+    {
+      title: "codebase-indexer",
+      src: "/images/codebase-indexer.svg",
+      description: "Offline semantic code search. Walks a codebase, chunks source files with tree-sitter ASTs, embeds them with nomic-embed (INT8 ONNX), and indexes for hybrid BM25 + vector search with RRF fusion.",
+      tech: ["rust", "onnx"],
+      github: "https://github.com/krockxz/codebase-indexer",
+    },
   ];
 
   const visibleProjects = (showAll || full) ? projects : projects.slice(0, 2);
