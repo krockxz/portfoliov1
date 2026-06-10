@@ -10,6 +10,7 @@ export type BlogMeta = {
   description?: string;
   image?: string;
   tags?: string[];
+  externalUrl?: string;
 };
 
 export type Blog = {

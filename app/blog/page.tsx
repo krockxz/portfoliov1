@@ -5,7 +5,8 @@ import PageBorder from "@/components/ui/page-border";
 import { getAllBlogs } from "@/util/mdx_clean";
 import type { Metadata } from "next";
 import Link from 'next/link';
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
+import { SiMedium } from "react-icons/si";
 
 export const metadata: Metadata = {
   title: "Blog | Kunal",
@@ -40,7 +41,8 @@ export default async function BlogIndex() {
           {posts.map((p) => (
             <Link
               key={p.slug}
-              href={`/blog/${p.slug}`}
+              href={p.externalUrl ?? `/blog/${p.slug}`}
+              {...(p.externalUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="group relative overflow-hidden rounded-xl 
                         border border-neutral-200 dark:border-neutral-800/50
                         bg-transparent
@@ -56,6 +58,10 @@ export default async function BlogIndex() {
                     <h2 className="text-lg md:text-xl font-bold font-custom text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
                       {p.title ?? p.slug}
                     </h2>
+
+                    {p.externalUrl && (
+                      <SiMedium className="w-4 h-4 shrink-0 text-neutral-400 dark:text-neutral-500" />
+                    )}
 
                     {/* Arrow for mobile, visible inline with title */}
                     <ArrowRight className="w-4 h-4 text-neutral-400 md:hidden -rotate-45" />
@@ -81,8 +87,8 @@ export default async function BlogIndex() {
 
                   {/* Arrow for desktop, slides up from bottom */}
                   <div className="absolute bottom-4 right-6 hidden md:flex items-center gap-1 text-xs font-medium text-neutral-500 dark:text-neutral-400 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <span>Read</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>{p.externalUrl ? "Read on Medium" : "Read"}</span>
+                    {p.externalUrl ? <ExternalLink className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                   </div>
                 </div>
               </div>

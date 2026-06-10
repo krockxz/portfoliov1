@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getSingleBlog } from "@/util/mdx_clean";
 import type { BlogMeta } from "@/util/mdx_clean";
 import remarkGfm from "remark-gfm";
@@ -44,6 +45,10 @@ export default async function SingleBlogPage({ params }: PageProps) {
     frontmatter = res.data || {};
   } catch {
     notFound();
+  }
+
+  if (frontmatter.externalUrl) {
+    redirect(frontmatter.externalUrl);
   }
 
   return (
