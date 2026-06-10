@@ -273,7 +273,7 @@ const Projects = ({ full = false }: { full?: boolean }) => {
 };
 
 // Extracted ProjectCard component for better organization
-const ProjectCard = ({
+function ProjectCard({
   project,
   idx,
   hoveredProject,
@@ -293,7 +293,7 @@ const ProjectCard = ({
   setHoveredTech: (tech: string | null) => void;
   iconMap: Record<TechKey, any>;
   techNames: Record<TechKey, string>;
-}) => {
+}) {
   const { isInView, observerRef } = useProjectVisibility(project.title);
   const { videoRef, isReady, handleCanPlay, play, pause } = useVideoPlayback(project.title, isInView);
   const isHovered = hoveredProject === project.title;
@@ -479,6 +479,6 @@ const ProjectCard = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default Projects;

@@ -2,20 +2,26 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/footer";
 import Navbar from "@/components/Navbar";
-import { Instrument_Serif } from "next/font/google";
+import { Instrument_Serif, Instrument_Sans } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider";
+import ClientOnly from "@/components/client-only";
 import FractalTree from "@/components/ui/fractal-tree";
-import dynamic from "next/dynamic";
-
-const Chatbot = dynamic(() => import("@/components/chatbot"));
-
+import Chatbot from "@/components/chatbot";
 
 const instrumentSerif = Instrument_Serif({
   weight: ["400"],
   subsets: ["latin"],
-  display: "swap", // 🛠 Fix font loading
+  display: "swap",
+  variable: "--font-serif",
+});
+
+const instrumentSans = Instrument_Sans({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -57,16 +63,20 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>{/* 🛠 Important for dark mode */}
       <body
         suppressHydrationWarning
-        className={`${instrumentSerif.className} antialiased bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300 [--pattern-fg:var(--color-neutral-200)] dark:[--pattern-fg:var(--color-neutral-700)]`}
+        className={`${instrumentSerif.variable} ${instrumentSans.variable} antialiased bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300 [--pattern-fg:var(--color-neutral-200)] dark:[--pattern-fg:var(--color-neutral-700)]`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Analytics />
           <SpeedInsights />
-          <FractalTree />
+          <ClientOnly>
+            <FractalTree />
+          </ClientOnly>
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
-          <Chatbot />
+          <ClientOnly>
+            <Chatbot />
+          </ClientOnly>
         </ThemeProvider>
       </body>
     </html>

@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import dynamic from "next/dynamic";
 
-// Dynamic import of the heavy chat UI - only loads when first opened
 const ChatbotUI = dynamic(() => import("./chatbot-ui"), {
   ssr: false,
   loading: () => (
@@ -20,55 +19,50 @@ export default function Chatbot() {
   const [showButton, setShowButton] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const hasShownTooltip = useRef(false);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    // Check if tooltip was already shown
     const tooltipShown = localStorage.getItem("chatbot-tooltip-shown");
     if (!tooltipShown) {
       hasShownTooltip.current = false;
     }
   }, []);
 
+  const revealButton = useCallback(() => {
+    if (showButton) return;
+    setShowButton(true);
+
+    if (!hasShownTooltip.current) {
+      scrollTimeoutRef.current = setTimeout(() => {
+        setShowTooltip(true);
+        hasShownTooltip.current = true;
+        localStorage.setItem("chatbot-tooltip-shown", "true");
+
+        setTimeout(() => {
+          setShowTooltip(false);
+        }, 4000);
+      }, 1000);
+    }
+  }, [showButton]);
+
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      // Show button after scrolling past 500px (hero section)
-      const scrollY = window.scrollY;
-      if (scrollY > 500) {
-        setShowButton(true);
+      if (ticking) return;
+      ticking = true;
 
-        // Show tooltip once after button appears (if not shown before)
-        if (!hasShownTooltip.current) {
-          scrollTimeoutRef.current = setTimeout(() => {
-            setShowTooltip(true);
-            hasShownTooltip.current = true;
-            localStorage.setItem("chatbot-tooltip-shown", "true");
-
-            // Hide tooltip after 4 seconds
-            setTimeout(() => {
-              setShowTooltip(false);
-            }, 4000);
-          }, 1000);
+      rafRef.current = requestAnimationFrame(() => {
+        if (window.scrollY > 500) {
+          revealButton();
         }
-      }
+        ticking = false;
+      });
     };
 
-    // Fallback: Show button after 3 seconds even if no scroll
     const timeTimeout = setTimeout(() => {
-      setShowButton(true);
-
-      // Show tooltip on time-based reveal if not shown before
-      if (!hasShownTooltip.current) {
-        setTimeout(() => {
-          setShowTooltip(true);
-          hasShownTooltip.current = true;
-          localStorage.setItem("chatbot-tooltip-shown", "true");
-
-          setTimeout(() => {
-            setShowTooltip(false);
-          }, 4000);
-        }, 1000);
-      }
+      revealButton();
     }, 3000);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -76,11 +70,12 @@ export default function Chatbot() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       clearTimeout(timeTimeout);
+      cancelAnimationFrame(rafRef.current);
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, []);
+  }, [revealButton]);
 
   const handleOpenChat = () => {
     setIsOpen(true);

@@ -4,10 +4,14 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Container from "@/components/containers";
 import { motion, useScroll, useMotionValueEvent, type Variants } from "motion/react";
 import { ThemeToggleButton } from "@/components/ui/skiper-ui/skiper26";
-import { CommandMenu } from "@/components/command-menu";
+
+const CommandMenu = dynamic(() => import("@/components/command-menu").then(mod => ({ default: mod.CommandMenu })), {
+  ssr: false,
+});
 
 const Navbar = () => {
   const pathname = usePathname();

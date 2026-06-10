@@ -10,6 +10,7 @@ export default function FractalTree() {
     const [shouldAnimate, setShouldAnimate] = useState(true);
     const [isLargeScreen, setIsLargeScreen] = useState(false);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
 
     // Track if component is mounted on large screens only (md breakpoint: 768px)
     useEffect(() => {
@@ -40,6 +41,25 @@ export default function FractalTree() {
 
         mediaQuery.addEventListener("change", handleChange);
         return () => mediaQuery.removeEventListener("change", handleChange);
+    }, []);
+
+    // Pause animation when canvas is off-screen
+    useEffect(() => {
+        const canvasEl = el.current;
+        if (!canvasEl) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                if (entry) {
+                    setIsVisible(entry.isIntersecting);
+                }
+            },
+            { rootMargin: "100px" }
+        );
+
+        observer.observe(canvasEl);
+        return () => observer.disconnect();
     }, []);
 
     useEffect(() => {
@@ -195,8 +215,8 @@ export default function FractalTree() {
         };
 
         const frame = () => {
-            // Stop animation if shouldAnimate is false or prefers reduced motion
-            if (!shouldAnimate || prefersReducedMotion) {
+            // Stop animation if shouldAnimate is false, prefers reduced motion, or not visible
+            if (!shouldAnimate || prefersReducedMotion || !isVisible) {
                 return;
             }
 
@@ -255,7 +275,7 @@ export default function FractalTree() {
             if (document.hidden) {
                 setShouldAnimate(false);
                 cancelAnimationFrame(animationId);
-            } else {
+            } else if (isVisible) {
                 setShouldAnimate(true);
                 if (!prefersReducedMotion) {
                     start();
@@ -269,7 +289,7 @@ export default function FractalTree() {
             cancelAnimationFrame(animationId);
             document.removeEventListener("visibilitychange", handleVisibilityChange);
         };
-    }, [size, theme, shouldAnimate, prefersReducedMotion, isLargeScreen]);
+    }, [size, theme, shouldAnimate, prefersReducedMotion, isLargeScreen, isVisible]);
 
     // Don't render anything on small screens
     if (!isLargeScreen) {

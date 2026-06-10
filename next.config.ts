@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
         hostname: "ghchart.rshah.org",
       },
     ],
+    formats: ["image/avif", "image/webp"],
+  },
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "react-icons",
+      "motion",
+    ],
   },
 };
 

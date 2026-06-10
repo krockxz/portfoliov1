@@ -3,6 +3,7 @@ import Socials from "@/components/socials";
 import Separator from "@/components/separator";
 import { getGithubData } from "@/lib/github";
 import PageBorder from "@/components/ui/page-border";
+import { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 
@@ -11,6 +12,10 @@ const Timeline = dynamic(() => import("@/components/timeline"));
 const GithubGraph = dynamic(() => import("@/components/githubgraph"));
 const Skills = dynamic(() => import("@/components/skills"));
 const GetInTouch = dynamic(() => import("@/components/get-in-touch"));
+
+function SectionSkeleton() {
+  return <div className="w-full h-48 animate-pulse bg-neutral-100 dark:bg-neutral-900 rounded-lg" />;
+}
 
 export default async function Home() {
   const githubData = await getGithubData();
@@ -61,24 +66,34 @@ export default async function Home() {
 
 
 
-        <Projects />
+        <Suspense fallback={<SectionSkeleton />}>
+          <Projects />
+        </Suspense>
 
         <Separator />
 
 
-        <Timeline />
+        <Suspense fallback={<SectionSkeleton />}>
+          <Timeline />
+        </Suspense>
 
 
 
-        <GithubGraph data={githubData} />
+        <Suspense fallback={<SectionSkeleton />}>
+          <GithubGraph data={githubData} />
+        </Suspense>
 
         <Separator className="mt-12" />
 
-        <Skills />
+        <Suspense fallback={<SectionSkeleton />}>
+          <Skills />
+        </Suspense>
 
         <Separator className="mt-4" />
 
-        <GetInTouch />
+        <Suspense fallback={<SectionSkeleton />}>
+          <GetInTouch />
+        </Suspense>
 
 
       </Container>
