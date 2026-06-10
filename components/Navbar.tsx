@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/containers";
-import { motion, useScroll, useMotionValueEvent, type Variants } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, type Variants } from "motion/react";
 import { ThemeToggleButton } from "@/components/ui/skiper-ui/skiper26";
 import { CommandMenu } from "@/components/command-menu";
 
@@ -73,6 +73,7 @@ const Navbar = () => {
   return (
     <Container>
       <motion.nav
+        aria-label="Main navigation"
         initial={false}
         animate={scrolled ? "scrolled" : "top"}
         variants={navVariants}

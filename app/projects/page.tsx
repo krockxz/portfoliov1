@@ -1,25 +1,19 @@
-"use client";
-
 import Container from "@/components/containers";
 import Projects from "@/components/projects";
+import PageBorder from "@/components/ui/page-border";
+import type { Metadata } from "next";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Projects | Kunal",
+  description: "Projects and open source contributions by Kunal Roy Choudhury",
+};
+
+export default function ProjectsPage() {
   return (
     <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 mx-auto">
 
-      {/* RIGHT BORDER */}
-      <div
-        className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
-      ></div>
-
-      {/* LEFT BORDER */}
-      <div
-        className="absolute left-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
-      ></div>
+      <PageBorder side="right" />
+      <PageBorder side="left" />
 
       <h1 className="text-neutral-900 dark:text-neutral-50 font-custom font-semibold text-3xl tracking-tight ">
         <span className="link--elara">Projects</span>

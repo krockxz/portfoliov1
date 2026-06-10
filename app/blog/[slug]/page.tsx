@@ -1,18 +1,27 @@
 import Container from "@/components/containers";
+import PageBorder from "@/components/ui/page-border";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import { getSingleBlog } from "@/util/mdx_clean";
+import type { BlogMeta } from "@/util/mdx_clean";
 import remarkGfm from "remark-gfm";
-import { useMDXComponents } from "@/mdx-components";
+import { getMDXComponents } from "@/mdx-components";
 import rehypePrettyCode from "rehype-pretty-code";
 
-
-export const metadata: Metadata = {
-  title: "Blog | Kunal",
-  description: "Reading a blog...",
-};
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const { data } = await getSingleBlog(slug);
+    return {
+      title: data.title ? `${data.title} | Kunal` : "Blog | Kunal",
+      description: data.description ?? "Reading a blog...",
+    };
+  } catch {
+    return { title: "Blog | Kunal", description: "Reading a blog..." };
+  }
+}
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -28,29 +37,19 @@ export default async function SingleBlogPage({ params }: PageProps) {
   }
 
   let content: string;
-  let frontmatter: Record<string, any> = {};
+  let frontmatter: BlogMeta = {};
   try {
     const res = await getSingleBlog(slug);
     content = res.content;
     frontmatter = res.data || {};
-  } catch (err) {
+  } catch {
     notFound();
   }
 
   return (
     <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 font-custom2 tracking-tight">
-      <div
-        className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-90 dark:opacity-15"
-      />
-
-      {/* LEFT BORDER */}
-      <div
-        className="absolute left-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-90 dark:opacity-15"
-      />
+      <PageBorder side="right" />
+      <PageBorder side="left" />
       <h1 className="text-neutral-900 dark:text-neutral-50 text-4xl font-custom font-bold  md:text-5xl">
         {frontmatter.title ?? slug}
       </h1>
@@ -74,7 +73,7 @@ export default async function SingleBlogPage({ params }: PageProps) {
       <div className="prose tracking-normal font-custom2 mx-auto">
         <MDXRemote
           source={content}
-          components={useMDXComponents({})}
+          components={getMDXComponents({})}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],

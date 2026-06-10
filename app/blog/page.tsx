@@ -1,6 +1,7 @@
 
 import Container from "@/components/containers";
 import Separator from "@/components/separator";
+import PageBorder from "@/components/ui/page-border";
 import { getAllBlogs } from "@/util/mdx_clean";
 import type { Metadata } from "next";
 import Link from 'next/link';
@@ -17,18 +18,8 @@ export default async function BlogIndex() {
   return (
 
     <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 relative mx-auto">
-      <div
-        className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
-      />
-
-      {/* LEFT BORDER */}
-      <div
-        className="absolute left-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
-      />
+      <PageBorder side="right" />
+      <PageBorder side="left" />
       <div className="max-w-4xl mx-auto ">
 
         {/* Header */}

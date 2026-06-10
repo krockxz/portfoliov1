@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Send, X, Minimize2, Maximize2, User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { PORTFOLIO_CONTEXT } from "@/lib/context";
 
 interface ChatMessage {
+  id: string;
   role: "user" | "model";
   content: string;
 }
@@ -44,7 +45,7 @@ export default function ChatbotUI({ isOpen, onClose }: ChatbotUIProps) {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage: ChatMessage = { role: "user", content: input };
+    const userMessage: ChatMessage = { id: Date.now().toString(), role: "user", content: input };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput("");
@@ -83,7 +84,7 @@ export default function ChatbotUI({ isOpen, onClose }: ChatbotUIProps) {
 
       setMessages([
         ...newMessages,
-        { role: "model", content: fullResponse },
+        { id: Date.now().toString(), role: "model", content: fullResponse },
       ]);
       setStreamedResponse("");
     } catch (error) {
@@ -91,6 +92,7 @@ export default function ChatbotUI({ isOpen, onClose }: ChatbotUIProps) {
       setMessages([
         ...newMessages,
         {
+          id: Date.now().toString(),
           role: "model",
           content: "Sorry, I'm having trouble connecting. Please make sure the GEMINI_API_KEY is configured.",
         },
@@ -212,9 +214,9 @@ export default function ChatbotUI({ isOpen, onClose }: ChatbotUIProps) {
                   </div>
                 )}
 
-                {messages.map((msg, idx) => (
+                {messages.map((msg) => (
                   <motion.div
-                    key={idx}
+                    key={msg.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2 }}

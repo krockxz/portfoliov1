@@ -1,85 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-
-import {
-  SiReact,
-  SiPython,
-  SiDjango,
-  SiRedis,
-  SiCelery,
-  SiPostgresql,
-  SiGooglegemini,
-  SiVuedotjs,
-  SiDocker,
-  SiMongodb,
-  SiAmazons3,
-  SiJenkins,
-  SiRust,
-  SiFlutter,
-  SiAwsamplify,
-} from "react-icons/si";
-import type { IconType } from "react-icons";
-import { FaJava } from "react-icons/fa";
-
-type TechKey =
-  | "react"
-  | "python"
-  | "java"
-  | "django"
-  | "redis"
-  | "celery"
-  | "postgres"
-  | "gemini"
-  | "vue"
-  | "docker"
-  | "mongo"
-  | "s3"
-  | "jenkins"
-  | "rust"
-  | "flutter"
-  | "aws";
-
-const iconMap: Record<TechKey, IconType> = {
-  react: SiReact,
-  python: SiPython,
-  java: FaJava,
-  django: SiDjango,
-  redis: SiRedis,
-  celery: SiCelery,
-  postgres: SiPostgresql,
-  gemini: SiGooglegemini,
-  vue: SiVuedotjs,
-  docker: SiDocker,
-  mongo: SiMongodb,
-  s3: SiAmazons3,
-  jenkins: SiJenkins,
-  rust: SiRust,
-  flutter: SiFlutter,
-  aws: SiAwsamplify,
-};
-
-const techNames: Record<TechKey, string> = {
-  react: "React",
-  python: "Python",
-  java: "Java",
-  django: "Django",
-  redis: "Redis",
-  celery: "Celery",
-  postgres: "PostgreSQL",
-  gemini: "Gemini",
-  vue: "Vue.js",
-  docker: "Docker",
-  mongo: "MongoDB",
-  s3: "Amazon S3",
-  jenkins: "Jenkins",
-  rust: "Rust",
-  flutter: "Flutter",
-  aws: "AWS",
-};
+import { TechKey, iconMap, techNames } from "@/lib/tech-icons";
 
 interface ExperienceItem {
   company: string;
@@ -160,7 +85,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
       <div className="flex flex-col gap-4 px-4 md:px-0 my-6">
         {experiences.map((exp, idx) => (
           <div
-            key={idx}
+            key={exp.company}
             className="group relative rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 border border-transparent hover:border-neutral-100 dark:hover:border-neutral-800"
           >
             {/* Main Row */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { GripHorizontal } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useCallback, useEffect, useState } from "react";
@@ -486,9 +486,6 @@ export const useThemeToggle = ({
 
     let styleElement = document.getElementById(styleId) as HTMLStyleElement;
 
-    console.log("style ELement", styleElement);
-    console.log("name", name);
-
     if (!styleElement) {
       styleElement = document.createElement("style");
       styleElement.id = styleId;
@@ -497,8 +494,7 @@ export const useThemeToggle = ({
 
     styleElement.textContent = css;
 
-    console.log("content updated");
-  }, []);
+    }, []);
 
   const toggleTheme = useCallback(() => {
     setIsDark(!isDark);

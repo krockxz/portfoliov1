@@ -57,7 +57,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>{/* 🛠 Important for dark mode */}
       <body
         suppressHydrationWarning
-        className={`${instrumentSerif.className} antialiased bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300 [--pattern-fg:var(--color-neutral-200)]`}
+        className={`${instrumentSerif.className} antialiased bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300 [--pattern-fg:var(--color-neutral-200)] dark:[--pattern-fg:var(--color-neutral-700)]`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Analytics />

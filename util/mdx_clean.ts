@@ -23,8 +23,16 @@ function normalizeSlug(slug: string) {
   return slug.replace(/\.mdx?$/i, "");
 }
 
+function isValidSlug(slug: string): boolean {
+  const normalized = normalizeSlug(slug);
+  return !normalized.includes("..") && !normalized.includes("/") && !normalized.includes("\\");
+}
+
 export const getSingleBlog = async (slug: string): Promise<Blog> => {
   const key = normalizeSlug(slug);
+  if (!isValidSlug(slug)) {
+    throw new Error("Invalid slug");
+  }
   if (process.env.NODE_ENV !== 'development' && CACHE.has(key)) return CACHE.get(key)!;
 
   const filePath = path.join(config.DATA_DIR, `${key}.mdx`);
@@ -34,7 +42,7 @@ export const getSingleBlog = async (slug: string): Promise<Blog> => {
   data.slug = data.slug ?? key;
   // Convert date to string if it's a Date object
   if (data.date && typeof data.date === 'object' && 'toISOString' in data.date) {
-    data.date = (data.date as any).toISOString().split('T')[0];
+    data.date = (data.date as Date).toISOString().split('T')[0];
   }
 
   const result: Blog = { content: parsed.content, data };
@@ -55,7 +63,7 @@ export const getAllBlogs = async (): Promise<BlogMeta[]> => {
       meta.slug = meta.slug ?? normalizeSlug(file);
       // Convert date to string if it's a Date object
       if (meta.date && typeof meta.date === 'object' && 'toISOString' in meta.date) {
-        meta.date = (meta.date as any).toISOString().split('T')[0];
+        meta.date = (meta.date as Date).toISOString().split('T')[0];
       }
       blogs.push(meta);
     } catch (err) {

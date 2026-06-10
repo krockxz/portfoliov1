@@ -14,13 +14,46 @@ interface Message {
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, context } = await req.json();
+    const body = await req.json();
+    const { messages, context } = body;
 
-    if (!messages || !Array.isArray(messages)) {
-      return new Response(JSON.stringify({ error: "Invalid messages format" }), {
+    if (!Array.isArray(messages)) {
+      return new Response(JSON.stringify({ error: "Invalid request" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
+    }
+
+    if (messages.length > 50) {
+      return new Response(JSON.stringify({ error: "Invalid request" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    for (const msg of messages) {
+      if (
+        typeof msg !== "object" ||
+        msg === null ||
+        typeof msg.role !== "string" ||
+        (msg.role !== "user" && msg.role !== "model") ||
+        typeof msg.content !== "string" ||
+        msg.content.length > 10000
+      ) {
+        return new Response(JSON.stringify({ error: "Invalid request" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+    }
+
+    if (context !== undefined) {
+      if (typeof context !== "string" || context.length > 5000) {
+        return new Response(JSON.stringify({ error: "Invalid request" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
     }
 
     if (!GEMINI_API_KEY) {
@@ -88,8 +121,7 @@ User: ${userMessage}`,
     console.error("Chat API error:", error);
     return new Response(
       JSON.stringify({
-        error: "Failed to process chat request",
-        details: error instanceof Error ? error.message : "Unknown error",
+        error: "Internal server error",
       }),
       {
         status: 500,

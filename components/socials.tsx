@@ -6,6 +6,7 @@ import LinkedinIcon from "@/components/ui/linkedin-icon";
 import MailFilledIcon from "@/components/ui/mail-filled-icon";
 import FileDescriptionIcon from "@/components/ui/file-description-icon";
 import TwitterXIcon from "@/components/ui/twitter-x-icon";
+import { SOCIAL_LINKS } from "@/lib/social-links";
 
 const ICON_SIZE = 20;
 
@@ -16,17 +17,17 @@ export default function Socials() {
         {
             name: "GitHub",
             icon: GithubIcon,
-            action: () => window.open("https://github.com/krockxz", "_blank"),
+            action: () => window.open(SOCIAL_LINKS.github, "_blank"),
         },
         {
             name: "LinkedIn",
             icon: LinkedinIcon,
-            action: () => window.open("https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/", "_blank"),
+            action: () => window.open(SOCIAL_LINKS.linkedin, "_blank"),
         },
         {
             name: "X",
             icon: TwitterXIcon,
-            action: () => window.open("https://x.com/kunalgoesbyken", "_blank"),
+            action: () => window.open(SOCIAL_LINKS.x, "_blank"),
         },
         {
             name: "Email",
@@ -45,6 +46,7 @@ export default function Socials() {
             {socials.map((social) => (
                 <button
                     key={social.name}
+                    aria-label={social.name}
                     className="relative cursor-pointer group bg-transparent border-0 p-0 rounded-full focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:dark:ring-neutral-600 focus-visible:ring-offset-2 focus-visible:outline-none"
                     onMouseEnter={() => setHoveredSocial(social.name)}
                     onMouseLeave={() => setHoveredSocial(null)}

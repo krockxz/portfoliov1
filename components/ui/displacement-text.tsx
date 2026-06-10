@@ -189,7 +189,7 @@ const DisplacementText = ({
         return;
       }
 
-      (shaderMaterial.uniforms.uDisplacement.value as THREE.Vector3).copy(
+      (shaderMaterial.uniforms.uDisplacement?.value as THREE.Vector3)?.copy(
         intersection.point
       );
     };
@@ -223,7 +223,7 @@ const DisplacementText = ({
     const replaceTexture = (nextColor: string) => {
       const nextTexture = createTextTexture(text, fontSize, font, nextColor);
       nextTexture.needsUpdate = true;
-      shaderMaterial.uniforms.uTexture.value = nextTexture;
+      shaderMaterial.uniforms.uTexture!.value = nextTexture;
       textTexture.dispose();
       textTexture = nextTexture;
       currentColor = nextColor;

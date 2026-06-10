@@ -2,6 +2,7 @@ import Container from "@/components/containers";
 import Socials from "@/components/socials";
 import Separator from "@/components/separator";
 import { getGithubData } from "@/lib/github";
+import PageBorder from "@/components/ui/page-border";
 
 import dynamic from "next/dynamic";
 
@@ -18,19 +19,8 @@ export default async function Home() {
     <div className="relative flex min-h-screen justify-center font-sans overflow-hidden">
       <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 mx-auto">
 
-        {/* RIGHT BORDER */}
-        <div
-          className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)] opacity-80 dark:opacity-12
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed"
-        > </div>
-
-        {/* LEFT BORDER */}
-        <div
-          className="absolute left-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)] opacity-80 dark:opacity-12
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed"
-        ></div>
+        <PageBorder side="right" />
+        <PageBorder side="left" />
 
         {/* ---------------------------------------- */}
         {/* HEADING + SOCIALS (FIXED SAME LINE) */}

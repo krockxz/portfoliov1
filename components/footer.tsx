@@ -1,25 +1,25 @@
-import React from 'react'
 import Link from 'next/link'
 import GithubIcon from "@/components/ui/github-icon";
 import LinkedinIcon from "@/components/ui/linkedin-icon";
 import TwitterXIcon from "@/components/ui/twitter-x-icon";
 import Container from './containers'
+import { SOCIAL_LINKS } from '@/lib/social-links';
 
 const Footer = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      url: 'https://github.com/krockxz',
+      url: SOCIAL_LINKS.github,
       icon: GithubIcon
     },
     {
       name: 'X',
-      url: 'https://x.com/kunalgoesbyken',
+      url: SOCIAL_LINKS.x,
       icon: TwitterXIcon
     },
     {
       name: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/',
+      url: SOCIAL_LINKS.linkedin,
       icon: LinkedinIcon
     },
   ]

@@ -2,79 +2,22 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Globe, X } from "lucide-react";
 import GithubIcon from "@/components/ui/github-icon";
-import {
-  SiNextdotjs,
-  SiTypescript,
-  SiReact,
-  SiThreedotjs,
-  SiCloudflare,
-  SiNodedotjs,
-  SiGoland,
-  SiBun,
-  SiSupabase,
-  SiPrisma,
-  SiTailwindcss,
-  SiGmail,
-} from "react-icons/si";
-
-type TechKey =
-  | "next"
-  | "ts"
-  | "react"
-  | "three"
-  | "cloud"
-  | "node"
-  | "go"
-  | "bun"
-  | "supabase"
-  | "prisma"
-  | "tailwind"
-  | "gmail";
+import { TechKey, iconMap, techNames } from "@/lib/tech-icons";
 
 interface Project {
   title: string;
   src: string;
-  poster?: string;     // Static poster image (AVIF, ~30KB)
-  video?: string;      // Full quality video (loads on click)
-  thumbVideo?: string; // Preview video (loads on hover)
+  poster?: string;
+  video?: string;
+  thumbVideo?: string;
   description: string;
   tech: TechKey[];
   github: string;
   live?: string;
 }
-
-const iconMap: Record<TechKey, any> = {
-  next: SiNextdotjs,
-  ts: SiTypescript,
-  react: SiReact,
-  three: SiThreedotjs,
-  cloud: SiCloudflare,
-  node: SiNodedotjs,
-  go: SiGoland,
-  bun: SiBun,
-  supabase: SiSupabase,
-  prisma: SiPrisma,
-  tailwind: SiTailwindcss,
-  gmail: SiGmail,
-};
-
-const techNames: Record<TechKey, string> = {
-  next: "Next.js",
-  ts: "TypeScript",
-  react: "React",
-  three: "Three.js",
-  cloud: "Cloudflare",
-  node: "Node.js",
-  go: "Go",
-  bun: "Bun",
-  supabase: "Supabase",
-  prisma: "Prisma",
-  tailwind: "Tailwind CSS",
-  gmail: "Gmail API",
-};
 
 // Custom hook for intersection observing with project card detection
 const useProjectVisibility = (projectTitle: string) => {
@@ -88,7 +31,7 @@ const useProjectVisibility = (projectTitle: string) => {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsInView(true);
           // Once visible, no need to keep observing
           observer.unobserve(element);

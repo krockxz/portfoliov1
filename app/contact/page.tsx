@@ -4,7 +4,10 @@ import { useState } from "react";
 import Container from "@/components/containers";
 import { Github, Linkedin, Check, AlertCircle, X } from "lucide-react";
 import { SiX } from "react-icons/si";
-import DisplacementText from "@/components/ui/displacement-text";
+import dynamic from "next/dynamic";
+const DisplacementText = dynamic(() => import("@/components/ui/displacement-text"), { ssr: false });
+import PageBorder from "@/components/ui/page-border";
+import { SOCIAL_LINKS } from "@/lib/social-links";
 
 
 export default function Contact() {
@@ -95,18 +98,8 @@ export default function Contact() {
   return (
     <div className="relative flex min-h-screen justify-center font-sans overflow-hidden">
       <Container className="min-h-screen px-8 pt-24 md:p-20 md:pb-10 mx-auto">
-        {/* Background Pattern & Borders */}
-        <div
-          className="absolute right-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
-        ></div>
-
-        <div
-          className="absolute left-0 top-0 h-full w-6 border-x border-x-[var(--pattern-fg)]
-          bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)]
-          bg-[length:10px_10px] bg-fixed opacity-80 dark:opacity-12"
-        ></div>
+        <PageBorder side="right" />
+        <PageBorder side="left" />
 
         <h1 className="text-neutral-900 dark:text-neutral-50 font-custom font-semibold text-3xl tracking-tight">
           <span className="link--elara">Contact</span>
@@ -308,13 +301,13 @@ export default function Contact() {
             {/* Displacement Text - Visible and Hoverable */}
 
             <div className="flex items-center gap-4">
-              <a href="https://x.com/kunalgoesbyken" target="_blank" rel="noopener noreferrer">
+              <a href={SOCIAL_LINKS.x} target="_blank" rel="noopener noreferrer">
                 <SiX size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
               </a>
-              <a href="https://www.linkedin.com/in/kunal-roy-choudhury-7407211a7/" target="_blank" rel="noopener noreferrer">
+              <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
                 <Linkedin size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
               </a>
-              <a href="https://github.com/krockxz" target="_blank" rel="noopener noreferrer">
+              <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer">
                 <Github size={14} className="hover:text-neutral-900 dark:hover:text-neutral-200 cursor-pointer transition-colors" />
               </a>
             </div>
