@@ -164,7 +164,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
               <div className="overflow-hidden">
                 <div className="px-4 pb-4 md:pl-20 md:pr-4">
                   {/* Tech Stack */}
-                  {exp.tech && <TechIconTooltip tech={exp.tech} size="sm" scope={exp.company} />}
+                  {exp.tech && <div className="mb-3"><TechIconTooltip tech={exp.tech} size="sm" scope={exp.company} /></div>}
 
                   {/* Description */}
                   <ul className="list-disc pl-4 space-y-2 text-sm text-neutral-600 dark:text-neutral-300 font-custom2 leading-relaxed">
