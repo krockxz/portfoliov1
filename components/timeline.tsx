@@ -4,7 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-import { TechKey, iconMap, techNames } from "@/lib/tech-icons";
+import { TechKey } from "@/lib/tech-icons";
+import { TechIconTooltip } from "@/components/ui/tech-icon-tooltip";
 
 interface ExperienceItem {
   company: string;
@@ -19,7 +20,6 @@ interface ExperienceItem {
 }
 
 export const Timeline = () => {
-  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const experiences: ExperienceItem[] = [
@@ -27,11 +27,11 @@ export const Timeline = () => {
       company: "CollectEdge",
       designation: "Software Development Engineer",
       date: "March 2026 - Present",
-      description: `Scaled event-driven microservices architecture in Rust to 50K+ daily messages via horizontal partitioning across 10+ AWS SQS queues, with backpressure-aware consumers, circuit-breaker controls, and idempotent processing for AI voice bots, async transcription workers, and WhatsApp campaigns.
-Architected an AI-powered call analytics platform in React Native with polyglot persistence (S3 + PostgreSQL) and CQRS read/write separation, delivering async audio pipelines with ML inference for sentiment/disposition extraction and automatic interaction synthesis.
-Built a self-optimizing predictive dialer using weighted fair queueing, 5-tier priority strata, graph-based contact scoring to maximize agent utilization through real-time routing and ML-assisted dial timing.
-Implemented a real-time credit risk engine with 18 parallel rule workers on reactive streams, multi-bureau aggregation and 40% cost optimization via LRU cache plus request batching, achieving sub-100ms risk scoring.`,
+      description: `Scaled Rust microservices to 50K+ daily messages across 10+ queues because voice bots and WhatsApp campaigns don't wait politely.
+Built an AI call analytics platform that listens, transcribes, and judges your sentiment so humans don't have to scrub through calls.
+Shipped a predictive dialer that knows who to call and when, and a credit risk engine scoring in under 100ms because nobody likes being on hold.`,
       logo: "/images/logos/collectedge.jpeg",
+      href: "https://www.collectedge.in/",
       logoWidth: 199,
       logoHeight: 36,
       tech: ["rust", "flutter", "aws", "react", "postgres"],
@@ -164,39 +164,7 @@ Optimized SQL pagination so fast it feels like the data was always there.`,
               <div className="overflow-hidden">
                 <div className="px-4 pb-4 md:pl-20 md:pr-4">
                   {/* Tech Stack */}
-                  {exp.tech && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {exp.tech.map((key) => {
-                        const Icon = iconMap[key];
-                        const uniqueId = `${exp.company}-${key}`;
-
-                        return (
-                          <button
-                            key={key}
-                            type="button"
-                            className="group/tech relative cursor-pointer bg-transparent border-0 p-0"
-                            onMouseEnter={() => setHoveredTech(uniqueId)}
-                            onMouseLeave={() => setHoveredTech(null)}
-                            onFocus={() => setHoveredTech(uniqueId)}
-                            onBlur={() => setHoveredTech(null)}
-                          >
-                            <Icon
-                              className="w-4 h-4 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-                              aria-label={techNames[key]}
-                            />
-                            {hoveredTech === uniqueId && (
-                              <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-20" role="tooltip">
-                                <div className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-[10px] font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap border border-neutral-200 dark:border-neutral-700">
-                                  {techNames[key]}
-                                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-100 dark:bg-neutral-800 rotate-45 border-b border-r border-neutral-200 dark:border-neutral-700"></div>
-                                </div>
-                              </div>
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
+                  {exp.tech && <TechIconTooltip tech={exp.tech} size="sm" scope={exp.company} />}
 
                   {/* Description */}
                   <ul className="list-disc pl-4 space-y-2 text-sm text-neutral-600 dark:text-neutral-300 font-custom2 leading-relaxed">
