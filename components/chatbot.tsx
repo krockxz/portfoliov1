@@ -110,7 +110,7 @@ export default function Chatbot() {
                   className="absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap"
                 >
                   <div className="relative bg-neutral-900 dark:bg-neutral-100 text-neutral-50 dark:text-neutral-900 px-4 py-2 rounded-lg text-sm font-custom2 shadow-lg">
-                    Ask me about my work
+                    Ask me anything
                     {/* Tooltip arrow */}
                     <div className="absolute top-1/2 -translate-y-1/2 right-0 translate-x-full w-0 h-0 border-t-8 border-t-transparent border-l-8 border-l-neutral-900 dark:border-l-neutral-100 border-b-8 border-b-transparent" />
                   </div>

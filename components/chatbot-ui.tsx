@@ -151,7 +151,7 @@ export default function ChatbotUI({ isOpen, onClose }: ChatbotUIProps) {
                 />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 font-custom">
+<h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 font-custom">
                   Ask about Kunal
                 </h3>
               </div>
@@ -191,16 +191,16 @@ export default function ChatbotUI({ isOpen, onClose }: ChatbotUIProps) {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 font-custom">
-                        Hi! I'm Kunal's AI assistant
-                      </p>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400 font-custom2 mt-1 max-w-[200px]">
-                        Ask me about his skills, projects, experience, or how to get in touch.
-                      </p>
+<div>
+                       <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 font-custom">
+                         Hey, I'm Kunal's AI assistant
+                       </p>
+                       <p className="text-xs text-neutral-500 dark:text-neutral-400 font-custom2 mt-1 max-w-[200px]">
+                         Ask about skills, projects, experience — anything on the site.
+                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2 justify-center mt-2">
-                      {["What skills do you have?", "Tell me about Gostman", "Your experience"].map((suggestion) => (
+                      {["Skills & tech stack", "What did you build at CollectEdge?", "How to reach Kunal"].map((suggestion) => (
                         <button
                           key={suggestion}
                           onClick={() => setInput(suggestion)}
@@ -344,7 +344,7 @@ export default function ChatbotUI({ isOpen, onClose }: ChatbotUIProps) {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask about Kunal..."
+                    placeholder="Ask anything..."
                     disabled={isLoading}
                     className="flex-1 px-4 py-2.5 bg-neutral-100 dark:bg-neutral-800 border-0 rounded-xl text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-300 dark:focus:ring-neutral-600 disabled:opacity-50 font-custom2"
                   />
