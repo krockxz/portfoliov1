@@ -185,12 +185,10 @@ const Projects = ({ full = false }: { full?: boolean }) => {
 
       {showOpenSource && (
         <div className="mt-2">
-          <div className="flex items-center gap-3 mb-1">
-            <h3 className="font-custom text-xs tracking-[0.15em] uppercase text-neutral-500 dark:text-neutral-400">
-              Open Source &amp; Libraries
-            </h3>
-            <div className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
-          </div>
+          <h2 className="text-neutral-900 dark:text-neutral-50 font-custom font-bold text-2xl tracking-tight py-2">
+            <span className="link--elara">Open Source &amp; Libraries</span>
+          </h2>
+          <div className="hidden md:block absolute right-6 left-0 h-px bg-[var(--pattern-fg)] my-0.5 opacity-90 dark:opacity-15"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
             {OPEN_SOURCE_PROJECTS.map((project, idx) => (
               <OpenSourceCard key={project.title} project={project} idx={idx} />
