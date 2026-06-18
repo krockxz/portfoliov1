@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { Globe } from "lucide-react";
+import { SiPypi } from "react-icons/si";
 import GithubIcon from "@/components/ui/github-icon";
 import { TechKey, techNames } from "@/lib/tech-icons";
 import { TechIconTooltip } from "@/components/ui/tech-icon-tooltip";
@@ -21,7 +22,15 @@ interface Project {
   live?: string;
 }
 
-const PROJECTS: Project[] = [
+interface OpenSourceProject {
+  title: string;
+  description: string;
+  tech: TechKey[];
+  github: string;
+  pypi?: string;
+}
+
+const DEPLOYED_PROJECTS: Project[] = [
   {
     title: "Gostman",
     src: "/images/project3.png",
@@ -47,14 +56,6 @@ const PROJECTS: Project[] = [
     live: "https://taskflow-deploy-eta.vercel.app",
   },
   {
-    title: "Un-Nexted",
-    src: "/images/un-nexted.avif",
-    description:
-      "De-mystifying the meta-framework. A raw implementation of Next.js core features like SSR, hydration, and file-system routing from scratch, revealing the magic behind modern web frameworks.",
-    tech: ["bun", "react", "ts"],
-    github: "https://github.com/krockxz/Un-nexted",
-  },
-  {
     title: "MailFlowAI",
     src: "/images/mailflow-ai.png",
     description:
@@ -63,13 +64,30 @@ const PROJECTS: Project[] = [
     github: "https://github.com/krockxz/MailFlowAI",
     live: "https://ai-mail-app-pearl.vercel.app/",
   },
+];
+
+const OPEN_SOURCE_PROJECTS: OpenSourceProject[] = [
+  {
+    title: "Un-Nexted",
+    description:
+      "De-mystifying the meta-framework. A raw implementation of Next.js core features like SSR, hydration, and file-system routing from scratch, revealing the magic behind modern web frameworks.",
+    tech: ["bun", "react", "ts"],
+    github: "https://github.com/krockxz/Un-nexted",
+  },
   {
     title: "codebase-indexer",
-    src: "/images/codebase-indexer.svg",
     description:
       "Offline semantic code search. Walks a codebase, chunks source files with tree-sitter ASTs, embeds them with nomic-embed (INT8 ONNX), and indexes for hybrid BM25 + vector search with RRF fusion.",
     tech: ["rust", "onnx"],
     github: "https://github.com/krockxz/codebase-indexer",
+  },
+  {
+    title: "pdf2docx-healer",
+    description:
+      "A drop-in replacement for pdf2docx that preserves formatting — heals bullet lists, hyperlinks, CJK fonts, and scanned PDFs via OCR in a post-processing pass. Published on PyPI.",
+    tech: ["python"],
+    github: "https://github.com/krockxz/pdf2docx-healer",
+    pypi: "https://pypi.org/project/pdf2docx-healer/",
   },
 ];
 
@@ -144,7 +162,9 @@ const Projects = ({ full = false }: { full?: boolean }) => {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  const visibleProjects = (showAll || full) ? PROJECTS : PROJECTS.slice(0, 2);
+  const visibleDeployed = (showAll || full) ? DEPLOYED_PROJECTS : DEPLOYED_PROJECTS.slice(0, 2);
+  const showOpenSource = showAll || full;
+  const remaining = DEPLOYED_PROJECTS.length + OPEN_SOURCE_PROJECTS.length - 2;
 
   return (
     <div className="mt-8">
@@ -153,7 +173,7 @@ const Projects = ({ full = false }: { full?: boolean }) => {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 py-7">
-        {visibleProjects.map((project, idx) => (
+        {visibleDeployed.map((project, idx) => (
           <ProjectCard
             key={project.title}
             project={project}
@@ -163,18 +183,34 @@ const Projects = ({ full = false }: { full?: boolean }) => {
         ))}
       </div>
 
-      {!showAll && !full && PROJECTS.length > 2 && (
+      {showOpenSource && (
+        <div className="mt-2">
+          <div className="flex items-center gap-3 mb-1">
+            <h3 className="font-custom text-xs tracking-[0.15em] uppercase text-neutral-500 dark:text-neutral-400">
+              Open Source &amp; Libraries
+            </h3>
+            <div className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
+            {OPEN_SOURCE_PROJECTS.map((project, idx) => (
+              <OpenSourceCard key={project.title} project={project} idx={idx} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!showAll && !full && remaining > 0 && (
         <div
           onClick={() => setShowAll(true)}
           className="flex justify-center items-center cursor-pointer pt-4 pb-6"
         >
           <span className="font-custom2 text-xs text-neutral-500 dark:text-neutral-400 border-b border-dashed border-neutral-300 dark:border-neutral-700 pb-[2px] tracking-wide hover:text-neutral-900 dark:hover:text-neutral-100 hover:border-neutral-500 dark:hover:border-neutral-400 transition-colors duration-200">
-            Show {PROJECTS.length - 2} more project{PROJECTS.length - 2 > 1 ? "s" : ""}
+            Show {remaining} more project{remaining > 1 ? "s" : ""}
           </span>
         </div>
       )}
 
-      {showAll && !full && PROJECTS.length > 2 && (
+      {showAll && !full && remaining > 0 && (
         <div className="flex justify-center pt-2 pb-6">
           <button
             onClick={() => setShowAll(false)}
@@ -280,6 +316,62 @@ function ProjectCard({
                 aria-label={`View live site for ${project.title}`}
               >
                 <Globe size={16} className="text-neutral-700 dark:text-neutral-300" />
+              </button>
+            )}
+            <button
+              onClick={() => window.open(project.github, "_blank")}
+              className="opacity-75 hover:opacity-100 transition cursor-pointer"
+              aria-label={`View GitHub repository for ${project.title}`}
+            >
+              <GithubIcon size={16} className="text-neutral-700 dark:text-neutral-300" />
+            </button>
+          </div>
+        </div>
+
+        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed tracking-wide font-custom2">
+          {project.description}
+        </p>
+
+        <p className="text-xs text-neutral-500 font-medium mb-2 font-custom2 mt-auto">
+          Tech Stack
+        </p>
+
+        <TechIconTooltip tech={project.tech} scope={project.title} />
+      </div>
+    </motion.div>
+  );
+}
+
+function OpenSourceCard({
+  project,
+  idx,
+}: {
+  project: OpenSourceProject;
+  idx: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, filter: "blur(0px)" }}
+      transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.12 }}
+      viewport={{ once: true, amount: 0.2 }}
+      className="relative group overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black hover:shadow-md transition-all duration-300 flex flex-col h-full"
+    >
+      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_130%,rgba(0,0,0,0.08),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_130%,rgba(255,255,255,0.10),transparent_75%)]" />
+
+      <div className="p-5 flex flex-col flex-grow">
+        <div className="flex items-center justify-between mb-2">
+          <h2 className="text-lg font-custom font-semibold text-neutral-900 dark:text-neutral-50">
+            {project.title}
+          </h2>
+          <div className="flex gap-3">
+            {project.pypi && (
+              <button
+                onClick={() => window.open(project.pypi, "_blank")}
+                className="opacity-75 hover:opacity-100 transition cursor-pointer bg-transparent border-0 p-0"
+                aria-label={`View PyPI package for ${project.title}`}
+              >
+                <SiPypi size={16} className="text-neutral-700 dark:text-neutral-300" />
               </button>
             )}
             <button
