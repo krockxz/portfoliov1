@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, type ReactNode, type Ref } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { Globe } from "lucide-react";
 import { SiPypi } from "react-icons/si";
 import GithubIcon from "@/components/ui/github-icon";
-import { TechKey, techNames } from "@/lib/tech-icons";
+import { TechKey } from "@/lib/tech-icons";
 import { TechIconTooltip } from "@/components/ui/tech-icon-tooltip";
 import { Lightbox, type MediaItem } from "@/components/ui/lightbox";
 
@@ -150,6 +150,94 @@ const useVideoPlayback = (isInView: boolean) => {
   return { videoRef, isReady, handleCanPlay, play, pause };
 };
 
+const cardMotion = (idx: number) => ({
+  initial: { opacity: 0, filter: "blur(10px)" },
+  whileInView: { opacity: 1, filter: "blur(0px)" },
+  transition: { duration: 0.6, ease: "easeOut" as const, delay: idx * 0.12 },
+  viewport: { once: true, amount: 0.2 },
+});
+
+function CardShell({
+  idx,
+  ref,
+  onMouseEnter,
+  onMouseLeave,
+  children,
+}: {
+  idx: number;
+  ref?: Ref<HTMLDivElement>;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <motion.div
+      ref={ref}
+      {...cardMotion(idx)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="group card-surface"
+    >
+      <div className="card-radial-overlay" />
+      {children}
+    </motion.div>
+  );
+}
+
+function CardBody({ children }: { children: ReactNode }) {
+  return <div className="p-5 flex flex-col flex-grow">{children}</div>;
+}
+
+function CardHeader({ title, children }: { title: string; children?: ReactNode }) {
+  return (
+    <div className="flex items-center justify-between mb-2">
+      <h2 className="text-lg font-custom font-semibold text-neutral-900 dark:text-neutral-50">
+        {title}
+      </h2>
+      {children && <div className="flex gap-3">{children}</div>}
+    </div>
+  );
+}
+
+function CardDescription({ children }: { children: ReactNode }) {
+  return (
+    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed tracking-wide font-custom2">
+      {children}
+    </p>
+  );
+}
+
+function CardTechFooter({ tech, scope }: { tech: TechKey[]; scope: string }) {
+  return (
+    <>
+      <p className="text-xs text-neutral-500 font-medium mb-2 font-custom2 mt-auto">
+        Tech Stack
+      </p>
+      <TechIconTooltip tech={tech} scope={scope} />
+    </>
+  );
+}
+
+function IconButton({
+  href,
+  ariaLabel,
+  children,
+}: {
+  href: string;
+  ariaLabel: string;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      onClick={() => window.open(href, "_blank")}
+      className="icon-btn-ghost"
+      aria-label={ariaLabel}
+    >
+      {children}
+    </button>
+  );
+}
+
 const Projects = ({ full = false }: { full?: boolean }) => {
   const [activeMedia, setActiveMedia] = useState<MediaItem | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -249,18 +337,12 @@ function ProjectCard({
   const shouldMountVideo = !isTouchDevice && !!project.thumbVideo && isInView;
 
   return (
-    <motion.div
+    <CardShell
+      idx={idx}
       ref={observerRef}
-      initial={{ opacity: 0, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.12 }}
-      viewport={{ once: true, amount: 0.2 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative group overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black hover:shadow-md transition-all duration-300 flex flex-col h-full"
     >
-      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_130%,rgba(0,0,0,0.08),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_130%,rgba(255,255,255,0.10),transparent_75%)]" />
-
       <div
         className="relative w-full h-44 overflow-hidden shrink-0 cursor-pointer"
         style={{ aspectRatio: "16/9" }}
@@ -301,42 +383,21 @@ function ProjectCard({
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300" />
       </div>
 
-      <div className="p-5 flex flex-col flex-grow">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-custom font-semibold text-neutral-900 dark:text-neutral-50">
-            {project.title}
-          </h2>
-          <div className="flex gap-3">
-            {project.live && (
-              <button
-                onClick={() => window.open(project.live, "_blank")}
-                className="opacity-75 hover:opacity-100 transition cursor-pointer"
-                aria-label={`View live site for ${project.title}`}
-              >
-                <Globe size={16} className="text-neutral-700 dark:text-neutral-300" />
-              </button>
-            )}
-            <button
-              onClick={() => window.open(project.github, "_blank")}
-              className="opacity-75 hover:opacity-100 transition cursor-pointer"
-              aria-label={`View GitHub repository for ${project.title}`}
-            >
-              <GithubIcon size={16} className="text-neutral-700 dark:text-neutral-300" />
-            </button>
-          </div>
-        </div>
-
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed tracking-wide font-custom2">
-          {project.description}
-        </p>
-
-        <p className="text-xs text-neutral-500 font-medium mb-2 font-custom2 mt-auto">
-          Tech Stack
-        </p>
-
-        <TechIconTooltip tech={project.tech} scope={project.title} />
-      </div>
-    </motion.div>
+      <CardBody>
+        <CardHeader title={project.title}>
+          {project.live && (
+            <IconButton href={project.live} ariaLabel={`View live site for ${project.title}`}>
+              <Globe size={16} />
+            </IconButton>
+          )}
+          <IconButton href={project.github} ariaLabel={`View GitHub repository for ${project.title}`}>
+            <GithubIcon size={16} />
+          </IconButton>
+        </CardHeader>
+        <CardDescription>{project.description}</CardDescription>
+        <CardTechFooter tech={project.tech} scope={project.title} />
+      </CardBody>
+    </CardShell>
   );
 }
 
@@ -348,51 +409,22 @@ function OpenSourceCard({
   idx: number;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.12 }}
-      viewport={{ once: true, amount: 0.2 }}
-      className="relative group overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black hover:shadow-md transition-all duration-300 flex flex-col h-full"
-    >
-      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_130%,rgba(0,0,0,0.08),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_130%,rgba(255,255,255,0.10),transparent_75%)]" />
-
-      <div className="p-5 flex flex-col flex-grow">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-custom font-semibold text-neutral-900 dark:text-neutral-50">
-            {project.title}
-          </h2>
-          <div className="flex gap-3">
-            {project.pypi && (
-              <button
-                onClick={() => window.open(project.pypi, "_blank")}
-                className="opacity-75 hover:opacity-100 transition cursor-pointer bg-transparent border-0 p-0"
-                aria-label={`View PyPI package for ${project.title}`}
-              >
-                <SiPypi size={16} className="text-neutral-700 dark:text-neutral-300" />
-              </button>
-            )}
-            <button
-              onClick={() => window.open(project.github, "_blank")}
-              className="opacity-75 hover:opacity-100 transition cursor-pointer"
-              aria-label={`View GitHub repository for ${project.title}`}
-            >
-              <GithubIcon size={16} className="text-neutral-700 dark:text-neutral-300" />
-            </button>
-          </div>
-        </div>
-
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed tracking-wide font-custom2">
-          {project.description}
-        </p>
-
-        <p className="text-xs text-neutral-500 font-medium mb-2 font-custom2 mt-auto">
-          Tech Stack
-        </p>
-
-        <TechIconTooltip tech={project.tech} scope={project.title} />
-      </div>
-    </motion.div>
+    <CardShell idx={idx}>
+      <CardBody>
+        <CardHeader title={project.title}>
+          {project.pypi && (
+            <IconButton href={project.pypi} ariaLabel={`View PyPI package for ${project.title}`}>
+              <SiPypi size={16} />
+            </IconButton>
+          )}
+          <IconButton href={project.github} ariaLabel={`View GitHub repository for ${project.title}`}>
+            <GithubIcon size={16} />
+          </IconButton>
+        </CardHeader>
+        <CardDescription>{project.description}</CardDescription>
+        <CardTechFooter tech={project.tech} scope={project.title} />
+      </CardBody>
+    </CardShell>
   );
 }
 
