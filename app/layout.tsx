@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     "Backend systems engineer building scalable systems, AI tools, and production-grade web apps.",
   openGraph: {
     title: "Kunal",
-    description: "Backend systems architect who occasionally touches the frontend. Building AI tools and debugging why the LLM thinks it's a poet.",
+    description: "Backend systems architect. Rust and Go services at scale, and AI tools shipped to production.",
     url: "https://krockxz.com",
     siteName: "Kunal's Portfolio",
     images: [

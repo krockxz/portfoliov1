@@ -26,10 +26,10 @@ export const Timeline = () => {
     {
       company: "CollectEdge",
       designation: "Software Development Engineer",
-      date: "March 2026 - Present",
-      description: `Scaled Rust microservices to 50K+ daily messages across 10+ queues because voice bots and WhatsApp campaigns don't wait politely.
-Built an AI call analytics platform that listens, transcribes, and judges your sentiment so humans don't have to scrub through calls.
-Shipped a predictive dialer that knows who to call and when, and a credit risk engine scoring in under 100ms because nobody likes being on hold.`,
+      date: "March 2026 - June 2026",
+      description: `Scaled Rust microservices to 50K+ daily messages across 10+ queues.
+Built an AI call analytics platform — transcription, analysis, and sentiment scoring.
+Shipped a predictive dialer and a credit risk engine that scores in under 100ms.`,
       logo: "/images/logos/collectedge.jpeg",
       href: "https://www.collectedge.in/",
       logoWidth: 199,
@@ -40,9 +40,8 @@ Shipped a predictive dialer that knows who to call and when, and a credit risk e
       company: "Indian Kanoon",
       designation: "Software Developer",
       date: "April 2025 - Feb 2026",
-      description: `Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch.
-Teaching AI to be a lawyer so humans don't have to read 5,000 documents manually.
-Scaled the system to handle 5,000+ concurrent users without the server filing a lawsuit against me.`,
+      description: `Built <a href="https://indiankanoon.org/prism/" target="_blank" class="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">Prism</a> from scratch — AI that analyzes case law and legal documents at scale.
+Scaled it to 5,000+ concurrent users.`,
       logo: "/images/logos/indian_kanoon_logo.jpeg",
       href: "https://indiankanoon.org/",
       tech: ["python", "django", "react", "redis", "celery", "postgres", "gemini"],
@@ -51,9 +50,9 @@ Scaled the system to handle 5,000+ concurrent users without the server filing a 
       company: "Chargebee",
       designation: "Software Engineer Intern",
       date: "Sept 2024 - April 2025",
-      description: `Refined large-scale data migration systems and optimized database interactions.
-Moved 2 million records closer to their new home, reducing query time by 45% because nobody likes waiting.
-Built a validation system that stops bad data at the door, saving 500k subscriptions from an identity crisis.`,
+      description: `Led large-scale data migration and database optimization.
+Migrated 2 million records, cutting query time by 45%.
+Built a validation layer that caught bad data before it reached 500k subscriptions.`,
       logo: "/images/logos/chargebee.jpg",
       href: "https://www.chargebee.com/",
       tech: ["java", "vue", "postgres", "docker"],
@@ -63,8 +62,8 @@ Built a validation system that stops bad data at the door, saving 500k subscript
       designation: "Software Engineer Intern",
       date: "Jan 2024 - Sept 2024",
       description: `Designed scalable APIs and data retrieval frameworks.
-Decomposed a massive monolith into microservices because code needs personal space too.
-Optimized SQL pagination so fast it feels like the data was always there.`,
+Decomposed a monolith into microservices.
+Optimized SQL pagination for near-instant retrieval.`,
       logo: "/images/logos/aidash.jpg",
       href: "https://www.linkedin.com/company/aidash/",
       tech: ["java", "python", "django", "mongo", "postgres", "s3", "docker", "jenkins"],

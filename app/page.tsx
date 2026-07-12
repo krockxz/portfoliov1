@@ -46,18 +46,18 @@ export default async function Home() {
         <div className="text-secondary font-custom2 text-s mt-1">
           <p>
             <span className="text-neutral-950 dark:text-neutral-100 font-semibold font-custom">⚀ </span>
-            <span className="text-neutral-700 dark:text-neutral-300">Turning caffeine into production-ready code</span>
+            <span className="text-neutral-700 dark:text-neutral-300">I build backends that don't fall over — and frontends like this one.</span>
           </p>
 
           <p>
             <span className="text-neutral-950 dark:text-neutral-100 font-semibold">⚁ </span>
-            <span className="text-neutral-700 dark:text-neutral-300">Backend systems architect who occasionally touches the frontend (when necessary)</span>
+            <span className="text-neutral-700 dark:text-neutral-300">Rust, Go, and the boring reliability work most people skip.</span>
           </p>
 
           <p>
             <span className="text-neutral-950 dark:text-neutral-100 font-semibold">⚂ </span>
             <span className="text-neutral-700 dark:text-neutral-300">
-              Building AI tools and debugging why the LLM thinks it's a poet
+              AI tools, shipped and in production. Not demos.
             </span>
           </p>
         </div>

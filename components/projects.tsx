@@ -59,7 +59,7 @@ const DEPLOYED_PROJECTS: Project[] = [
     title: "MailFlowAI",
     src: "/images/mailflow-ai.png",
     description:
-      "Next-gen AI email assistant with Gmail integration and CopilotKit for natural language control. Features 30s auto-sync, AI-powered drafting, and a sleek modern UI.",
+      "AI email assistant with Gmail integration and CopilotKit for natural-language control. 30-second auto-sync and AI-powered drafting.",
     tech: ["react", "ts", "tailwind", "gmail"],
     github: "https://github.com/krockxz/MailFlowAI",
     live: "https://ai-mail-app-pearl.vercel.app/",
@@ -70,7 +70,7 @@ const OPEN_SOURCE_PROJECTS: OpenSourceProject[] = [
   {
     title: "Un-Nexted",
     description:
-      "De-mystifying the meta-framework. A raw implementation of Next.js core features like SSR, hydration, and file-system routing from scratch, revealing the magic behind modern web frameworks.",
+      "Next.js core features — SSR, hydration, and file-system routing — reimplemented from scratch to show how the meta-framework actually works.",
     tech: ["bun", "react", "ts"],
     github: "https://github.com/krockxz/Un-nexted",
   },
