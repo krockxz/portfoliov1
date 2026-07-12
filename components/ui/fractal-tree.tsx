@@ -6,6 +6,9 @@ import { useTheme } from "next-themes";
 export default function FractalTree() {
     const el = useRef<HTMLCanvasElement>(null);
     const { theme } = useTheme();
+    // Stroke color lives in a ref so a theme change updates the color live
+    // instead of tearing down and rebuilding the whole canvas animation.
+    const colorRef = useRef(theme === "dark" ? "#88888825" : "#33333325");
     const [size, setSize] = useState({ width: 0, height: 0 });
     const [shouldAnimate, setShouldAnimate] = useState(true);
     const [isLargeScreen, setIsLargeScreen] = useState(false);
@@ -42,6 +45,11 @@ export default function FractalTree() {
         mediaQuery.addEventListener("change", handleChange);
         return () => mediaQuery.removeEventListener("change", handleChange);
     }, []);
+
+    // Keep the stroke color in sync with the theme without restarting the animation
+    useEffect(() => {
+        colorRef.current = theme === "dark" ? "#88888825" : "#33333325";
+    }, [theme]);
 
     // Pause animation when canvas is off-screen
     useEffect(() => {
@@ -102,7 +110,6 @@ export default function FractalTree() {
         const r180 = Math.PI;
         const r90 = Math.PI / 2;
         const r15 = Math.PI / 12;
-        const color = theme === 'dark' ? '#88888825' : '#33333325';
 
         const { random } = Math;
         const MIN_BRANCH = 30;
@@ -153,7 +160,7 @@ export default function FractalTree() {
         const drawStatic = () => {
             ctx.clearRect(0, 0, size.width, size.height);
             ctx.lineWidth = 1;
-            ctx.strokeStyle = color;
+            ctx.strokeStyle = colorRef.current;
 
             // Draw a few static fractal branches
             const drawStaticBranch = (x: number, y: number, rad: number, depth: number = 0) => {
@@ -236,6 +243,8 @@ export default function FractalTree() {
                 }
             }
 
+            // Adopt the current theme color for new segments (no rebuild needed)
+            ctx.strokeStyle = colorRef.current;
             prevSteps.forEach((i) => {
                 if (random() < 0.5)
                     steps.push(i);
@@ -249,7 +258,7 @@ export default function FractalTree() {
         const start = () => {
             ctx.clearRect(0, 0, size.width, size.height);
             ctx.lineWidth = 1;
-            ctx.strokeStyle = color;
+            ctx.strokeStyle = colorRef.current;
             prevSteps = [];
             steps = [];
 
@@ -289,7 +298,7 @@ export default function FractalTree() {
             cancelAnimationFrame(animationId);
             document.removeEventListener("visibilitychange", handleVisibilityChange);
         };
-    }, [size, theme, shouldAnimate, prefersReducedMotion, isLargeScreen, isVisible]);
+    }, [size, shouldAnimate, prefersReducedMotion, isLargeScreen, isVisible]);
 
     // Don't render anything on small screens
     if (!isLargeScreen) {

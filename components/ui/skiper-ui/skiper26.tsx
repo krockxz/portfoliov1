@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { GripHorizontal } from "lucide-react";
 import { useTheme } from "next-themes";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -600,6 +600,10 @@ export const ThemeToggleButton = ({
     gifUrl,
   });
 
+  // Reuse a single preloaded Audio instance across clicks instead of
+  // constructing (and re-decoding) a new one every toggle.
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   return (
     <button
       type="button"
@@ -608,9 +612,12 @@ export const ThemeToggleButton = ({
         className,
       )}
       onClick={() => {
-        const audio = new Audio("/sounds/switch.mp3");
-        audio.volume = 0.5;
-        audio.play().catch((e) => console.error("Audio play failed", e));
+        if (!audioRef.current) {
+          audioRef.current = new Audio("/sounds/switch.mp3");
+          audioRef.current.volume = 0.5;
+        }
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch((e) => console.error("Audio play failed", e));
         toggleTheme();
       }}
       aria-label="Toggle theme"
