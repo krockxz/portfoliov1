@@ -191,7 +191,7 @@ body {
 
 /* Blockquote - editorial style */
 .prose blockquote {
-  @apply border-l-4 border-amber-500 dark:border-amber-400 pl-4 py-1 my-6 italic text-neutral-600 dark:text-neutral-400 bg-neutral-50 dark:bg-neutral-900/50 rounded-r;
+  @apply border-l-2 border-amber-500 dark:border-amber-400 pl-4 py-1 my-6 italic text-neutral-600 dark:text-neutral-400;
 }
 
 /* Horizontal rule */
